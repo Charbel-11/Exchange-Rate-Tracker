@@ -9,8 +9,30 @@ from flask_cors import CORS , cross_origin
 import jwt
 import datetime
 
+
+
+
+
+
+#### Setup ####
+app = Flask(__name__)
+ma = Marshmallow(app)
+bcrypt = Bcrypt(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Arsenal.123@localhost:3306/exchange'
+CORS(app)
+
+db = SQLAlchemy(app)
+
 SECRET_KEY = "b'|\xe7\xbfU3`\xc4\xec\xa7\xa9zf:}\xb5\xc7\xb9\x139^3@Dv'"
 
+
+
+
+
+
+
+
+#### Helper Functions ####    
 def create_token(user_id):
     payload = {
         'exp': datetime.datetime.utcnow() + datetime.timedelta(days=4),
@@ -34,18 +56,16 @@ def decode_token(token):
     payload = jwt.decode(token, SECRET_KEY, 'HS256')
     return payload['sub']
 
-app = Flask(__name__)
-ma = Marshmallow(app)
-bcrypt = Bcrypt(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Arsenal.123@localhost:3306/exchange'
-CORS(app)
 
-db = SQLAlchemy(app)
 
-#Testing Our API
-@app.route('/hello', methods = ['GET'])
-def hello_world():
-    return 'Hello World'
+
+
+
+
+
+
+#### API CALLS ####
+
 
 #Add a new user to the Users Table
 @app.route('/addUser', methods = ['POST'])
@@ -61,6 +81,16 @@ def add_user():
         db.session.commit()
         return jsonify(user_schema.dump(new_User))
     return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
+
+
+#Get the user_names of all users in the database
+@app.route('/getUsers', methods = ['GET'])
+def get_users():
+    users = User.query.with_entities(User.user_name, User.id)
+    return jsonify(users_schema.dump(users))
+
+
+
 
 #Authenticate a User
 @app.route('/authenticate', methods = ['POST'])
@@ -109,6 +139,84 @@ def add_transaction():
         return jsonify(transaction_schema.dump(new_Transaction))
     return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
 
+
+#Post a transaction between two users.
+@app.route('/addUserTransaction/<username>', methods = ['POST'])
+def add_user_transaction(username):
+    usd = request.json.get('usd')
+    lbp = request.json.get('lbp')
+    usd_to_lbp = request.json.get('usd_to_lbp')
+
+    token = extract_auth_token(request)
+    if(token):
+        try :
+            user1_id = decode_token(token)
+
+            user1_name = User.query.filter_by(id = user1_id).all()[0].user_name
+
+            #Just to make sure that the username passed is valid. If not, it will throw an exception
+            user2 = User.query.filter_by(user_name = username)
+
+            if usd and lbp and usd_to_lbp is not None:
+                new_Transaction = Transaction(
+                    usd = usd,
+                    lbp = lbp,
+                    usd_to_lbp = usd_to_lbp,
+                    user_id = user1_id,
+                )
+                db.session.add(new_Transaction)
+                db.session.commit()
+                
+                new_User_Transaction = UserTransactions(
+                    user1_name = user1_name,
+                    user2_name = username,
+                    transaction_id = new_Transaction.id
+                )
+
+                db.session.add(new_User_Transaction)
+                db.session.commit()
+
+                return jsonify(transaction_schema.dump(new_Transaction))
+
+        except :
+            return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
+    
+    return Response("{ 'Message' : 'You're not signed in! }", status=400, mimetype='application/json')
+
+#Get all UserTransactions for a certain user
+@app.route('/getUserTransactions', methods = ['GET'])
+def get_User_Transactions():
+    token = extract_auth_token(request)
+    if(token):
+        try : 
+            user1_id = decode_token(token)
+
+            username = User.query.filter_by(id = user1_id).all()[0].user_name
+
+            #If he was the buyer or the seller
+            allUserTransactions = []
+
+            user_transactions1 = UserTransactions.query.filter_by(user1_name = username).all()
+            user_transactions2 = UserTransactions.query.filter_by(user2_name = username).all()
+
+            for user_transaction in user_transactions1:
+                transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
+                current = [user_transaction.user2_name,transaction.usd,transaction.lbp,transaction.usd_to_lbp,transaction.added_date]
+                allUserTransactions.append(current)
+            
+            for user_transaction in user_transactions2:
+                transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
+                current = [user_transaction.user1_name,transaction.usd,transaction.lbp,transaction.usd_to_lbp,transaction.added_date]
+                allUserTransactions.append(current)
+
+            res = jsonify(allUserTransactions)
+            return res
+        
+        except : 
+            return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
+
+    return Response("{ 'Message' : 'You're not signed in! }", status=400, mimetype='application/json')
+
 #Get all transactions for a certain user
 @app.route('/getTransactions', methods = ['GET'])
 def getTransactions():
@@ -156,6 +264,24 @@ def exchangeRate():
         lbp_to_usd = avg2
     )
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Models ####
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     usd = db.Column(db.Float)
@@ -195,3 +321,13 @@ class UserSchema(ma.Schema):
         model = User
 
 user_schema = UserSchema()
+
+users_schema = UserSchema(many = True)
+
+# A table that shows transactions between users.
+class UserTransactions(db.Model):
+    transaction_id = db.Column(db.Integer, db.ForeignKey('transaction.id'), primary_key=True)
+    user1_name = db.Column(db.String(30), db.ForeignKey('user.user_name'))
+    user2_name = db.Column(db.String(30), db.ForeignKey('user.user_name'))
+
+
