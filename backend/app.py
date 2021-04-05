@@ -8,7 +8,8 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS , cross_origin
 import jwt
 import datetime
-
+import requests
+import json
 
 
 
@@ -265,7 +266,23 @@ def exchangeRate(number):
         lbp_to_usd = avg2
     )
 
+@app.route('/graph/usd_to_lbp/<number>', methods = ['GET'])
+def sortedGraph(number):
+    usd_to_lbp_graph = []
+    for i in range(int(number)):
+        req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
+        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y ")  , "rate" : req['usd_to_lbp']}
+        usd_to_lbp_graph.append(current)
+    return jsonify(usd_to_lbp_graph)
 
+@app.route('/graph/lbp_to_usd/<number>', methods = ['GET'])
+def sortedGraph2(number):
+    lbp_to_usd_graph = []
+    for i in range(int(number)):
+        req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
+        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y ")  , "rate" : req['lbp_to_usd']}
+        lbp_to_usd_graph.append(current)
+    return jsonify(lbp_to_usd_graph)
 
 
 
