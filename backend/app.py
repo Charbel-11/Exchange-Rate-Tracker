@@ -231,9 +231,9 @@ def getTransactions():
 
 
 #Returns the exchange rate from the Transaction Table
-@app.route('/exchangeRate', methods = ['GET'])
-def exchangeRate():
-    START_DATE = datetime.datetime.now() - datetime.timedelta(days = 3)
+@app.route('/exchangeRate/<number>', methods = ['GET'])
+def exchangeRate(number):
+    START_DATE = datetime.datetime.now() - datetime.timedelta(days = int(number))
     END_DATE = datetime.datetime.now()
     usd_to_lbp = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == True).all()
     lbp_to_usd = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == False).all()
@@ -254,6 +254,7 @@ def exchangeRate():
 
     avg1 = "Not Available Yet"
     avg2 = "Not Available Yet"
+
     if(len1 != 0):
         avg1 = sum1 / len1
     if(len2 != 0):
