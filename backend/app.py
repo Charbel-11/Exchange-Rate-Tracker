@@ -10,6 +10,7 @@ import jwt
 import datetime
 import requests
 import json
+import statistics
 
 
 
@@ -56,8 +57,6 @@ def extract_auth_token(authenticated_request):
 def decode_token(token):
     payload = jwt.decode(token, SECRET_KEY, 'HS256')
     return payload['sub']
-
-
 
 
 
@@ -266,6 +265,41 @@ def exchangeRate(number):
         lbp_to_usd = avg2
     )
 
+
+#Returns a bunch of stats for the exchange rate for a range of days
+@app.route('/stats/<number>', methods = ['GET'])
+def get_stats(number):
+    START_DATE = datetime.datetime.now() - datetime.timedelta(days = int(number))
+    END_DATE = datetime.datetime.now()
+    usd_to_lbp = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == True).all()
+    lbp_to_usd = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == False).all()
+
+    usd_numbers = []
+    for transaction in usd_to_lbp:
+        usd_numbers.append(transaction.lbp / transaction.usd)
+    
+    lbp_numbers =[]
+    for transaction in lbp_to_usd:
+        lbp_numbers.append(transaction.lbp / transaction.usd)
+
+    # Dictionary to store the stats calculated
+    stats = {}
+
+    stats["max-usd_to_lbp"] = max(usd_numbers)
+    stats["max-lbp-to-usd"] = max(lbp_numbers)
+    stats["median-usd_to_lbp"] = statistics.median(usd_numbers)
+    stats["median-lbp_to_usd"] = statistics.median(lbp_numbers)
+    stats["stdev-usd_to_lbp"] = statistics.stdev(usd_numbers)
+    stats["stdev-lbp_to_usd"] = statistics.stdev(lbp_numbers)
+    stats["mode-usd_to_lbp"] = statistics.mode(usd_numbers)
+    stats["mode-lbp_to_usd"] = statistics.mode(lbp_numbers)
+    stats["variance-usd_to_lbp"] = statistics.variance(usd_numbers)
+    stats["variance-lbp_to_usd"] = statistics.variance(lbp_numbers)
+
+
+    return jsonify(stats)
+
+# Returns the average usd_to_lbp per rate for a range of days requested by the user
 @app.route('/graph/usd_to_lbp/<number>', methods = ['GET'])
 def sortedGraph(number):
     usd_to_lbp_graph = []
@@ -275,6 +309,7 @@ def sortedGraph(number):
         usd_to_lbp_graph.append(current)
     return jsonify(usd_to_lbp_graph)
 
+# Returns the average lbp_to_usd per rate for a range of days requested by the user
 @app.route('/graph/lbp_to_usd/<number>', methods = ['GET'])
 def sortedGraph2(number):
     lbp_to_usd_graph = []
