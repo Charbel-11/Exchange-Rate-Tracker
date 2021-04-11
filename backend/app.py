@@ -67,8 +67,11 @@ def decode_token(token):
 #### API CALLS ####
 
 
+
+## User ##
+
 #Add a new user to the Users Table
-@app.route('/addUser', methods = ['POST'])
+@app.route('/user', methods = ['POST'])
 def add_user():
     user_name = request.json.get('user_name')
     password = request.json.get('password')
@@ -84,16 +87,14 @@ def add_user():
 
 
 #Get the user_names of all users in the database
-@app.route('/getUsers', methods = ['GET'])
+@app.route('/users', methods = ['GET'])
 def get_users():
     users = User.query.with_entities(User.user_name, User.id)
     return jsonify(users_schema.dump(users))
 
 
-
-
 #Authenticate a User
-@app.route('/authenticate', methods = ['POST'])
+@app.route('/authentication', methods = ['POST'])
 def authenticate_user():
     user_name = request.json.get('user_name')
     password = request.json.get('password')
@@ -112,11 +113,18 @@ def authenticate_user():
         )
 
 
+## USER DONE ##
+
+
+
+## Transaction ##
+
+
 #Add a transaction to our Transaction Table
-@app.route('/addTransaction', methods = ['POST'])
+@app.route('/transaction', methods = ['POST'])
 def add_transaction():
-    usd = request.json.get('usd')
-    lbp = request.json.get('lbp')
+    usd_amount = request.json.get('usd_amount')
+    lbp_amount = request.json.get('lbp_amount')
     usd_to_lbp = request.json.get('usd_to_lbp')
     user_id = None
 
@@ -127,10 +135,10 @@ def add_transaction():
         except :
             return Response("{ 'Message' : 'Invalid Token :(' }", status=403, mimetype='application/json')
         
-    if usd and lbp and usd_to_lbp is not None:
+    if usd_amount and lbp_amount and usd_to_lbp is not None:
         new_Transaction = Transaction(
-            usd = usd,
-            lbp = lbp,
+            usd_amount = usd_amount,
+            lbp_amount = lbp_amount,
             usd_to_lbp = usd_to_lbp,
             user_id = user_id,
         )
@@ -141,10 +149,10 @@ def add_transaction():
 
 
 #Post a transaction between two users.
-@app.route('/addUserTransaction/<username>', methods = ['POST'])
+@app.route('/userTransaction/<username>', methods = ['POST'])
 def add_user_transaction(username):
-    usd = request.json.get('usd')
-    lbp = request.json.get('lbp')
+    usd_amount = request.json.get('usd_amount')
+    lbp_amount = request.json.get('lbp_amount')
     usd_to_lbp = request.json.get('usd_to_lbp')
 
     token = extract_auth_token(request)
@@ -157,10 +165,10 @@ def add_user_transaction(username):
             #Just to make sure that the username passed is valid. If not, it will throw an exception
             user2 = User.query.filter_by(user_name = username)
 
-            if usd and lbp and usd_to_lbp is not None:
+            if usd_amount and lbp_amount and usd_to_lbp is not None:
                 new_Transaction = Transaction(
-                    usd = usd,
-                    lbp = lbp,
+                    usd_amount = usd_amount,
+                    lbp_amount = lbp_amount,
                     usd_to_lbp = usd_to_lbp,
                     user_id = user1_id,
                 )
@@ -184,7 +192,7 @@ def add_user_transaction(username):
     return Response("{ 'Message' : 'You're not signed in! }", status=400, mimetype='application/json')
 
 #Get all UserTransactions for a certain user
-@app.route('/getUserTransactions', methods = ['GET'])
+@app.route('/userTransactions', methods = ['GET'])
 def get_User_Transactions():
     token = extract_auth_token(request)
     if(token):
@@ -201,24 +209,32 @@ def get_User_Transactions():
 
             for user_transaction in user_transactions1:
                 transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
-                current = [user_transaction.user2_name,transaction.usd,transaction.lbp,transaction.usd_to_lbp,transaction.added_date]
+                current = [user_transaction.user2_name,transaction.usd_amount,transaction.lbp_amount,transaction.usd_to_lbp,transaction.added_date.strftime("%d %b %Y ")]
                 allUserTransactions.append(current)
             
             for user_transaction in user_transactions2:
                 transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
-                current = [user_transaction.user1_name,transaction.usd,transaction.lbp,transaction.usd_to_lbp,transaction.added_date]
+                current = [user_transaction.user1_name,transaction.usd_amount,transaction.lbp_amount,transaction.usd_to_lbp,transaction.added_date.strftime("%d %b %Y ")]
                 allUserTransactions.append(current)
 
-            res = jsonify(allUserTransactions)
-            return res
+            return jsonify(allUserTransactions)
         
         except : 
             return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
 
     return Response("{ 'Message' : 'You're not signed in! }", status=400, mimetype='application/json')
 
+# Example Output : For user Hussein, these are his User Transactions returned :
+# [
+#   ["MariaMattar20",1.0,11500.0,true,"11 Apr 2021 "],
+#   ["CharbelChucri20",1.0,11500.0,true,"11 Apr 2021 "],
+#   ["OmarKhodr20",1.0,11500.0,true,"11 Apr 2021 "],
+#   ["OmarKhodr20",1.0,10500.0,false,"11 Apr 2021 "]
+# ]
+
+
 #Get all transactions for a certain user
-@app.route('/getTransactions', methods = ['GET'])
+@app.route('/transaction', methods = ['GET'])
 def getTransactions():
     token = extract_auth_token(request)
     if(token):
@@ -229,6 +245,9 @@ def getTransactions():
         except :
             return Response("{ 'Message' : 'Invalid Token :(' }", status=400, mimetype='application/json')
 
+
+
+## Features ##
 
 #Returns the exchange rate from the Transaction Table
 @app.route('/exchangeRate/<number>', methods = ['GET'])
@@ -242,14 +261,14 @@ def exchangeRate(number):
     len1 = 0
     for transaction in usd_to_lbp:
         len1 = len1 + 1
-        difference = transaction.lbp / transaction.usd
+        difference = transaction.lbp_amount / transaction.usd_amount
         sum1 = sum1 + difference
     
     sum2 = 0.0
     len2 = 0
     for transaction in lbp_to_usd:
         len2 = len2 + 1
-        difference = transaction.lbp / transaction.usd
+        difference = transaction.lbp_amount / transaction.usd_amount
         sum2 = sum2 + difference
 
     avg1 = "Not Available Yet"
@@ -276,11 +295,11 @@ def get_stats(number):
 
     usd_numbers = []
     for transaction in usd_to_lbp:
-        usd_numbers.append(transaction.lbp / transaction.usd)
+        usd_numbers.append(transaction.lbp_amount / transaction.usd_amount)
     
     lbp_numbers =[]
     for transaction in lbp_to_usd:
-        lbp_numbers.append(transaction.lbp / transaction.usd)
+        lbp_numbers.append(transaction.lbp_amount / transaction.usd_amount)
 
     # Dictionary to store the stats calculated
     stats = {}
@@ -337,21 +356,24 @@ def sortedGraph2(number):
 #### Models ####
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    usd = db.Column(db.Float)
-    lbp = db.Column(db.Float)
+    usd_amount = db.Column(db.Float)
+    lbp_amount = db.Column(db.Float)
     usd_to_lbp = db.Column(db.Boolean)
     added_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
-    def __init__(self, usd, lbp, usd_to_lbp, user_id):
-        super(Transaction, self).__init__(usd=usd,
-        lbp=lbp, usd_to_lbp=usd_to_lbp,
-        user_id=user_id,
-        added_date=datetime.datetime.now())
+    def __init__(self, usd_amount, lbp_amount, usd_to_lbp, user_id):
+        super(Transaction, self).__init__(
+            usd_amount=usd_amount,
+            lbp_amount=lbp_amount, 
+            usd_to_lbp=usd_to_lbp,
+            user_id=user_id,
+            added_date=datetime.datetime.now()
+        )
 
 class TransactionSchema(ma.Schema):
     class Meta:
-        fields = ("id", "usd", "lbp", "usd_to_lbp", "added_date", "user_id")
+        fields = ("id", "usd_amount", "lbp_amount", "usd_to_lbp", "added_date", "user_id")
         model = Transaction
 
 transaction_schema = TransactionSchema()
