@@ -21,8 +21,13 @@
 
             <Button fx:id="transactionButton"
                     styleClass="nav-button"
-                    text="Transactions"
+                    text="Your Transactions"
                     onAction="#transactionsSelected"/>
+
+            <Button fx:id="statsButton"
+                    styleClass="nav-button"
+                    text="Stats"
+                    onAction="#statsSelected"/>
 
             <Button fx:id="loginButton"
                     styleClass="nav-button"
@@ -38,6 +43,7 @@
                     styleClass="nav-button"
                     text="Logout"
                     onAction="#logoutSelected"/>
+
         </VBox>
     </left>
     <center>

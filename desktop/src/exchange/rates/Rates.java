@@ -26,6 +26,7 @@ public class Rates implements Initializable {
     public TextField lbpTextField;
     public TextField usdTextField;
     public ToggleGroup transactionType;
+    public TextField numberOfDays;
 
     //calculator
     public TextField calculatorInput;
@@ -33,7 +34,8 @@ public class Rates implements Initializable {
     public ToggleGroup conversionType;
 
     private void fetchRates() {
-        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
+        Integer numDays = Integer.parseInt(numberOfDays.getText());
+        ExchangeService.exchangeApi().getExchangeRates(numDays).enqueue(new Callback<ExchangeRates>() {
              @Override
              public void onResponse(Call<ExchangeRates> call,
                                     Response<ExchangeRates> response) {
@@ -48,6 +50,10 @@ public class Rates implements Initializable {
 
              }
         });
+    }
+
+    public void fetchRatesActionEvent(ActionEvent actionEvent){
+        fetchRates();
     }
 
     public void addTransaction(ActionEvent actionEvent) {

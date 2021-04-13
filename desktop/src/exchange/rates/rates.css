@@ -10,3 +10,7 @@
 .value {
     -fx-font-size: 18;
 }
+
+.text-label {
+    -fx-font-size: 12;
+}

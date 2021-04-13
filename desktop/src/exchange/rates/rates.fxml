@@ -17,6 +17,18 @@
            GridPane.rowIndex="1"
            GridPane.halignment="CENTER"/>
 
+    <Label styleClass="text-label" text="Choose number of days included in the Exchange Rate"
+           GridPane.columnSpan="2"
+           textAlignment="CENTER"
+           GridPane.rowIndex="2"/>
+
+    <TextField fx:id="numberOfDays" text="3" GridPane.columnIndex="0" GridPane.rowIndex="3">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    </TextField>
+
+    <Button text="Get Rates" GridPane.columnIndex="1" GridPane.rowIndex="3"
+            onAction="#fetchRatesActionEvent"/>
+
     <Label styleClass="value-label" text="Buy USD Rate" GridPane.columnIndex="0"
            GridPane.rowIndex="4"/>
 
@@ -29,27 +41,38 @@
     <Label fx:id="sellUsdRateLabel" styleClass="value" text="Sell Rate"
            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
+
+
     <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
                GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+
 
     <TextField fx:id="usdTextField" text="enter USD value" GridPane.columnIndex="0" GridPane.rowIndex="7">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="7"/>
     </TextField>
 
-    <TextField fx:id="lbpTextField" text="enter LBP value" GridPane.columnIndex="1" GridPane.rowIndex="7">
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <TextField fx:id="lbpTextField" text="enter LBP value" GridPane.columnIndex="0" GridPane.rowIndex="8">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="8"/>
     </TextField>
 
-    <RadioButton text="Buy USD" GridPane.columnIndex="0" GridPane.rowIndex="8">
+    <RadioButton text="Buy USD" GridPane.columnIndex="1" GridPane.rowIndex="7">
         <toggleGroup>
             <ToggleGroup fx:id="transactionType"/>
         </toggleGroup>
     </RadioButton>
 
-    <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+    <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
-    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="10"
+    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="9"
             onAction="#addTransaction"/>
+
+
+
+    <Separator orientation="HORIZONTAL" GridPane.RowIndex="10"
+               GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+
 
     <Label styleClass="value-label" text="Exchange Calculator" GridPane.columnIndex="0"
            GridPane.rowIndex="11"/>
