@@ -60,8 +60,12 @@ extension ExchangeViewController {
     }
     
     @objc private func addTransactionTapped() {
-        let addTransactionVC = AddTransactionViewController()
+        let addTransactionVC = AddTransactionViewController(successAction: addTransactionSuccessful)
         present(addTransactionVC, animated: true, completion: nil)
+    }
+    
+    private func addTransactionSuccessful() {
+        fetchRates()
     }
     
     @objc private func loginTapped() {
