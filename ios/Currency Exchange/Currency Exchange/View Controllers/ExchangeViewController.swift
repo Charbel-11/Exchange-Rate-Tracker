@@ -21,6 +21,9 @@ class ExchangeViewController: UIViewController {
     let calculatorAmountTextField = BoldBorderlessTextField(placeholder: "Amount")
     var calculatorSegmentedControl: UISegmentedControl! = nil
     let calculateButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
+    
+    let authentication = Authentication()
+    let voyage = Voyage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +32,10 @@ class ExchangeViewController: UIViewController {
         setupNavBar()
         setupSubviews()
         setupLayout()
-        
-        
+        setupTargets()
+        fetchRates()
     }
+    
 }
 
 // MARK: Navigation Bar
@@ -48,19 +52,26 @@ extension ExchangeViewController {
         let registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
         let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
         
-        navigationItem.leftBarButtonItems = [registerButton, loginButton]
+        if authentication.getToken() != nil {
+            navigationItem.leftBarButtonItem = logoutButton
+        } else {
+            navigationItem.leftBarButtonItems = [registerButton, loginButton]
+        }
     }
     
     @objc private func addTransactionTapped() {
-        print("Tapped Add")
+        let addTransactionVC = AddTransactionViewController()
+        present(addTransactionVC, animated: true, completion: nil)
     }
     
     @objc private func loginTapped() {
-        print("Tapped Login")
+        let authVC = AuthenticationViewController(submitAction: loginAction(user:), submitTitle: "Login")
+        present(authVC, animated: true, completion: nil)
     }
     
     @objc private func registerTapped() {
-        print("Tapped Register")
+        let authVC = AuthenticationViewController(submitAction: registerAction(user:), submitTitle: "Register")
+        present(authVC, animated: true, completion: nil)
     }
     
     @objc private func logoutTapped() {
@@ -74,12 +85,12 @@ extension ExchangeViewController {
         buyUsdLabel.text = "Buy USD"
         buyUsdLabel.font = .preferredFont(forTextStyle: .title2)
         buyUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
-        buyUsdAmountLabel.text = "N/A"
+        buyUsdAmountLabel.text = "Potato"
         
         sellUsdLabel.text = "Sell USD"
         sellUsdLabel.font = .preferredFont(forTextStyle: .title2)
         sellUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
-        sellUsdAmountLabel.text = "N/A"
+        sellUsdAmountLabel.text = "Potato"
         
         pastTransactionsButton.setTitle("Past Transactions", for: .normal)
         
@@ -89,8 +100,7 @@ extension ExchangeViewController {
         
         let segmentItems = ["USD", "LBP"]
         calculatorSegmentedControl = UISegmentedControl(items: segmentItems)
-        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
-        calculatorSegmentedControl.selectedSegmentIndex = 1
+        calculatorSegmentedControl.selectedSegmentIndex = 0
         
         calculateButton.setTitle("Calculate", for: .normal)
     }
@@ -101,9 +111,7 @@ extension ExchangeViewController {
 extension ExchangeViewController {
     private func setupLayout() {
         let buyVStack = createVStack([buyUsdLabel, buyUsdAmountLabel])
-//        buyVStack.backgroundColor = .red
         let sellVStack = createVStack([sellUsdLabel, sellUsdAmountLabel])
-//        sellVStack.backgroundColor = .red
         
         let rateHStack = UIStackView(arrangedSubviews: [buyVStack, sellVStack])
         rateHStack.translatesAutoresizingMaskIntoConstraints = false
@@ -126,7 +134,7 @@ extension ExchangeViewController {
         
         view.addSubview(contentVStack)
         NSLayoutConstraint.activate([
-            contentVStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40)
         ])
@@ -144,7 +152,47 @@ extension ExchangeViewController {
 
 // MARK: Actions
 extension ExchangeViewController {
+    private func setupTargets() {
+        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
+    }
+    
     @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
+        print("value: \(segmentedControl.selectedSegmentIndex)")
+    }
+    
+    private func loginAction(user: User) {
+        UserManager.login(user: user, callback: didAuthenticate(token:))
+    }
+    
+    private func registerAction(user: User) {
         
+    }
+    
+    private func didAuthenticate(token: Token) {
+        
+    }
+}
+
+
+// MARK: Networking Calls
+extension ExchangeViewController {
+    private func fetchRates() {
+        let url = URL(string: "\(K.url)/exchangeRate")!
+        voyage.get(with: url, completion: didFetchRates(exchangeRates:), fail: didFailToFetchRates(error:), bearerToken: authentication.getToken())
+    }
+    
+    private func didFetchRates(exchangeRates: ExchangeRates) {
+        print("Fetched Rates!")
+        let buyUsd = exchangeRates.lbpToUsd
+        let sellUsd = exchangeRates.usdToLbp
+        
+        DispatchQueue.main.async {
+            self.buyUsdAmountLabel.text = buyUsd == -1 ? "N/A" : String(format: "$%.2f", buyUsd)
+            self.sellUsdAmountLabel.text = sellUsd == -1 ? "N/A" : String(format: "$%.2f", sellUsd)
+        }
+    }
+    
+    private func didFailToFetchRates(error: Error) {
+        print("Failed to fetch rates: \(error)")
     }
 }

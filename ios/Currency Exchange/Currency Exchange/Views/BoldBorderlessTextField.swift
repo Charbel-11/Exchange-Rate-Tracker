@@ -19,7 +19,7 @@ class BoldBorderlessTextField: UITextField {
         self.attributedPlaceholder = attributedString
         self.font = font
         self.borderStyle = .none
-        self.tintColor = .systemGreen
+        self.tintColor = .systemBlue
         self.textAlignment = .center
     }
     

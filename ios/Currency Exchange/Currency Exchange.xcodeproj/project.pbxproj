@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2309D4EE2620584B00BF816F /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4ED2620584B00BF816F /* Token.swift */; };
+		2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F02620587200BF816F /* ExchangeRates.swift */; };
+		2309D4F4262058A800BF816F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F3262058A800BF816F /* User.swift */; };
+		2309D4F72620623500BF816F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F62620623500BF816F /* UserManager.swift */; };
+		2309D4FE2620629400BF816F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4FD2620629400BF816F /* Constants.swift */; };
+		2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D500262078C500BF816F /* UITextField+ContentType.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
+		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66F8261C0FF600B36C85 /* AppDelegate.swift */; };
 		23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */; };
 		23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FC261C0FF600B36C85 /* ExchangeViewController.swift */; };
@@ -20,7 +27,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2309D4ED2620584B00BF816F /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		2309D4F02620587200BF816F /* ExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRates.swift; sourceTree = "<group>"; };
+		2309D4F3262058A800BF816F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2309D4F62620623500BF816F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		2309D4FD2620629400BF816F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2309D500262078C500BF816F /* UITextField+ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ContentType.swift"; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23FE66F5261C0FF600B36C85 /* Currency Exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Exchange.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FE66F8261C0FF600B36C85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2309D4FB2620626C00BF816F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2309D4FD2620629400BF816F /* Constants.swift */,
+				2309D500262078C500BF816F /* UITextField+ContentType.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		23FE66EC261C0FF600B36C85 = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +94,7 @@
 				23FE6713261C18A800B36C85 /* View Controllers */,
 				23FE6701261C0FF700B36C85 /* Assets.xcassets */,
 				23FE6703261C0FF700B36C85 /* LaunchScreen.storyboard */,
+				2309D4FB2620626C00BF816F /* Supporting Files */,
 				23FE6706261C0FF700B36C85 /* Info.plist */,
 			);
 			path = "Currency Exchange";
@@ -98,6 +122,9 @@
 		23FE6723261C342300B36C85 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2309D4ED2620584B00BF816F /* Token.swift */,
+				2309D4F3262058A800BF816F /* User.swift */,
+				2309D4F02620587200BF816F /* ExchangeRates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -105,7 +132,9 @@
 		23FE6725261C343200B36C85 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				23719AC82638A6710045DE41 /* Voyage.swift */,
 				23FE671F261C341C00B36C85 /* Authentication.swift */,
+				2309D4F62620623500BF816F /* UserManager.swift */,
 				23FE6723261C342300B36C85 /* Model */,
 			);
 			path = API;
@@ -180,14 +209,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2309D4EE2620584B00BF816F /* Token.swift in Sources */,
 				23FE6720261C341C00B36C85 /* Authentication.swift in Sources */,
+				23719AC92638A6710045DE41 /* Voyage.swift in Sources */,
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
 				23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */,
 				23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */,
+				2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */,
 				23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */,
+				2309D4F72620623500BF816F /* UserManager.swift in Sources */,
+				2309D4FE2620629400BF816F /* Constants.swift in Sources */,
 				23FE6716261C191600B36C85 /* BoldBorderlessTextField.swift in Sources */,
 				23FE6711261C189E00B36C85 /* AddTransactionViewController.swift in Sources */,
+				2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */,
 				23FE671A261C2F2300B36C85 /* FilledButton.swift in Sources */,
+				2309D4F4262058A800BF816F /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
