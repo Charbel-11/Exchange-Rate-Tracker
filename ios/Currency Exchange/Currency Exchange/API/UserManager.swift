@@ -9,7 +9,7 @@ import Foundation
 
 class UserManager {
     
-    public static func login(user: User, callback: @escaping(Token) -> Void) {
+    public static func login(user: UserCredentials, callback: @escaping(Token) -> Void) {
         let urlString = "\(K.url)/authentication"
         
         guard let url = URL(string: urlString) else {

@@ -14,10 +14,10 @@ class AuthenticationViewController: UIViewController {
     let passwordTextField = BoldBorderlessTextField(placeholder: "Password")
     let submitButton = FilledButton(textColor: .white, backgroundColor: .systemOrange)
     
-    var submitAction: ((User) -> Void)?
+    var submitAction: ((UserCredentials) -> Void)?
     var submitTitle: String?
     
-    init(submitAction: @escaping(User) -> Void, submitTitle: String) {
+    init(submitAction: @escaping(UserCredentials) -> Void, submitTitle: String) {
         super.init(nibName: nil, bundle: nil)
         self.submitAction = submitAction
         self.submitTitle = submitTitle
@@ -90,7 +90,7 @@ extension AuthenticationViewController {
     
     @objc private func submitTapped() {
         if let username = usernameTextField.text, let password = passwordTextField.text {
-            let user = User(userName: username, password: password)
+            let user = UserCredentials(userName: username, password: password)
             submitAction?(user)
         }
     }

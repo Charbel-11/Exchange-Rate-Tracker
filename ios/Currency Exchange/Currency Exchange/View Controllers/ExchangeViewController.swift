@@ -164,11 +164,11 @@ extension ExchangeViewController {
         print("value: \(segmentedControl.selectedSegmentIndex)")
     }
     
-    private func loginAction(user: User) {
+    private func loginAction(user: UserCredentials) {
         UserManager.login(user: user, callback: didAuthenticate(token:))
     }
     
-    private func registerAction(user: User) {
+    private func registerAction(user: UserCredentials) {
         voyage.post(with: URL(string: "\(K.url)/user")!,
                     body: user,
                     completion: didRegisterUser(token:), fail: didFailRegisterUser(error:))
