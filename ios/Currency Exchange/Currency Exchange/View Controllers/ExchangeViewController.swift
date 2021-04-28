@@ -169,7 +169,17 @@ extension ExchangeViewController {
     }
     
     private func registerAction(user: User) {
-        
+        voyage.post(with: URL(string: "\(K.url)/user")!,
+                    body: user,
+                    completion: didRegisterUser(token:), fail: didFailRegisterUser(error:))
+    }
+    
+    private func didRegisterUser(token: Token) {
+        authentication.saveToken(token: token.token)
+    }
+    
+    private func didFailRegisterUser(error: Error) {
+        print("Failed to register user: \(error)")
     }
     
     private func didAuthenticate(token: Token) {
