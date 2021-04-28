@@ -272,8 +272,8 @@ def exchangeRate(number):
         difference = transaction.lbp_amount / transaction.usd_amount
         sum2 = sum2 + difference
 
-    avg1 = "Not Available Yet"
-    avg2 = "Not Available Yet"
+    avg1 = -1
+    avg2 = -1
 
     if(len1 != 0):
         avg1 = sum1 / len1

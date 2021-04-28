@@ -181,7 +181,7 @@ extension ExchangeViewController {
 // MARK: Networking Calls
 extension ExchangeViewController {
     private func fetchRates() {
-        let url = URL(string: "\(K.url)/exchangeRate")!
+        let url = URL(string: "\(K.url)/exchangeRate/3")!
         voyage.get(with: url, completion: didFetchRates(exchangeRates:), fail: didFailToFetchRates(error:), bearerToken: authentication.getToken())
     }
     
