@@ -23,7 +23,7 @@ class Voyage {
                 }
                 
             } else if let safeData = data {
-                
+                print(String(data: safeData, encoding: .utf8)!)
                 if let response: Response = self.decodeResponse(from: safeData) {
                     DispatchQueue.main.async {
                         completion(response)
@@ -64,7 +64,7 @@ class Voyage {
                 }
                 
             } else if let safeData = data {
-                
+                print(String(data: safeData, encoding: .utf8)!)
                 if let response: Response = self.decodeResponse(from: safeData) {
                     DispatchQueue.main.async {
                         completion(response)

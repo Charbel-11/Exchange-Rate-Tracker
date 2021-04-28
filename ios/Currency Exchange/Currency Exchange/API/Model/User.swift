@@ -13,6 +13,6 @@ struct UserCredentials: Codable {
 }
 
 struct User: Codable {
-    let id: String
+    let id: Int
     let userName: String
 }

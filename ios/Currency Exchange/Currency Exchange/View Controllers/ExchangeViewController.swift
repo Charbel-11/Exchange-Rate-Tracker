@@ -9,6 +9,10 @@ import UIKit
 
 class ExchangeViewController: UIViewController {
     
+    var loginButton: UIBarButtonItem! = nil
+    var registerButton: UIBarButtonItem! = nil
+    var logoutButton: UIBarButtonItem! = nil
+    
     let buyUsdLabel = UILabel()
     let buyUsdAmountLabel = UILabel()
     
@@ -48,9 +52,9 @@ extension ExchangeViewController {
         let addTransactionButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTransactionTapped))
         navigationItem.rightBarButtonItem = addTransactionButton
         
-        let loginButton = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(loginTapped))
-        let registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
-        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
+        loginButton = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(loginTapped))
+        registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
+        logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
         
         if authentication.getToken() != nil {
             navigationItem.leftBarButtonItem = logoutButton
@@ -69,12 +73,12 @@ extension ExchangeViewController {
     }
     
     @objc private func loginTapped() {
-        let authVC = AuthenticationViewController(submitAction: loginAction(user:), submitTitle: "Login")
+        let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
         present(authVC, animated: true, completion: nil)
     }
     
     @objc private func registerTapped() {
-        let authVC = AuthenticationViewController(submitAction: registerAction(user:), submitTitle: "Register")
+        let authVC = AuthenticationViewController(submitAction: registerAction(userCredentials:), submitTitle: "Register")
         present(authVC, animated: true, completion: nil)
     }
     
@@ -164,22 +168,23 @@ extension ExchangeViewController {
         print("value: \(segmentedControl.selectedSegmentIndex)")
     }
     
-    private func loginAction(user: UserCredentials) {
-        UserManager.login(user: user, callback: didAuthenticate(token:))
+    private func loginAction(userCredentials: UserCredentials) {
+        voyage.post(with: URL(string: "\(K.url)/authentication")!, body: userCredentials)
+        { [weak self] (tokenModel: Token) in
+            self?.authentication.saveToken(token: tokenModel.token)
+            self?.navigationItem.setLeftBarButton(self?.logoutButton, animated: true)
+        } fail: { error in
+            print("Failed to login user: \(error)")
+        }
     }
     
-    private func registerAction(user: UserCredentials) {
-        voyage.post(with: URL(string: "\(K.url)/user")!,
-                    body: user,
-                    completion: didRegisterUser(token:), fail: didFailRegisterUser(error:))
-    }
-    
-    private func didRegisterUser(token: Token) {
-        authentication.saveToken(token: token.token)
-    }
-    
-    private func didFailRegisterUser(error: Error) {
-        print("Failed to register user: \(error)")
+    private func registerAction(userCredentials: UserCredentials) {
+        voyage.post(with: URL(string: "\(K.url)/user")!, body: userCredentials)
+        { [weak self] (user: User) in
+            self?.loginAction(userCredentials: userCredentials)
+        } fail: { error in
+            print("Failed to register user: \(error)")
+        }
     }
     
     private func didAuthenticate(token: Token) {

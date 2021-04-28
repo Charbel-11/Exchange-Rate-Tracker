@@ -92,6 +92,7 @@ extension AuthenticationViewController {
         if let username = usernameTextField.text, let password = passwordTextField.text {
             let user = UserCredentials(userName: username, password: password)
             submitAction?(user)
+            dismiss(animated: true, completion: nil)
         }
     }
 }
