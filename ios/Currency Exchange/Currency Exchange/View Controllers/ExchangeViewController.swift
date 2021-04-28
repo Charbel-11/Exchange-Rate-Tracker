@@ -192,7 +192,7 @@ extension ExchangeViewController {
         
         DispatchQueue.main.async {
             self.buyUsdAmountLabel.text = buyUsd == -1 ? "N/A" : String(format: "$%.2f", buyUsd)
-            self.sellUsdAmountLabel.text = sellUsd == -1 ? "N/A" : String(format: "$%.2f", sellUsd)
+            self.sellUsdAmountLabel.text = sellUsd == -1 ? "N/A" : String(format: "LBP%.2f", sellUsd)
         }
     }
     

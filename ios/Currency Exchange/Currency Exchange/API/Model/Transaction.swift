@@ -11,5 +11,6 @@ struct Transaction: Codable {
     let usdAmount: Float
     let lbpAmount: Float
     let usdToLbp: Bool
-    let userId: Int
+    let id: Int
+    let addedDate: String
 }

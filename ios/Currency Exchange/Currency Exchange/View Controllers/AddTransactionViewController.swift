@@ -115,6 +115,8 @@ extension AddTransactionViewController {
     
     private func didAddTransaction(transaction: Transaction) {
         print("Added transaction successfully!")
+        successAction()
+        dismiss(animated: true, completion: nil)
     }
     
     private func didFailAddTransaction(error: Error) {
