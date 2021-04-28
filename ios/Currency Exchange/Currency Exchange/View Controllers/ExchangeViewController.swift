@@ -83,7 +83,8 @@ extension ExchangeViewController {
     }
     
     @objc private func logoutTapped() {
-        print("Tapped Logout")
+        authentication.clearToken()
+        navigationItem.setLeftBarButtonItems([registerButton, loginButton], animated: true)
     }
 }
 
@@ -170,9 +171,9 @@ extension ExchangeViewController {
     
     private func loginAction(userCredentials: UserCredentials) {
         voyage.post(with: URL(string: "\(K.url)/authentication")!, body: userCredentials)
-        { [weak self] (tokenModel: Token) in
-            self?.authentication.saveToken(token: tokenModel.token)
-            self?.navigationItem.setLeftBarButton(self?.logoutButton, animated: true)
+        { (tokenModel: Token) in
+            self.authentication.saveToken(token: tokenModel.token)
+            self.navigationItem.setLeftBarButtonItems([self.logoutButton], animated: true)
         } fail: { error in
             print("Failed to login user: \(error)")
         }
@@ -189,7 +190,7 @@ extension ExchangeViewController {
 }
 
 
-// MARK: Networking Calls
+// MARK: Fetching Exchange Rates
 extension ExchangeViewController {
     private func fetchRates() {
         let url = URL(string: "\(K.url)/exchangeRate/3")!
