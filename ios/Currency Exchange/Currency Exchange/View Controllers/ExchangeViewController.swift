@@ -186,10 +186,6 @@ extension ExchangeViewController {
             print("Failed to register user: \(error)")
         }
     }
-    
-    private func didAuthenticate(token: Token) {
-        
-    }
 }
 
 
