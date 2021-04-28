@@ -89,10 +89,9 @@ extension AuthenticationViewController {
     }
     
     @objc private func submitTapped() {
-        guard let username = usernameTextField.text, let password = passwordTextField.text else {
-            return
+        if let username = usernameTextField.text, let password = passwordTextField.text {
+            let user = User(username: username, password: password)
+            submitAction?(user)
         }
-        let user = User(username: username, password: password)
-        submitAction?(user)
     }
 }
