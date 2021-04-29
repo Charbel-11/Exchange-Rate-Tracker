@@ -151,20 +151,9 @@ extension ExchangeViewController {
     }
 }
 
-// MARK: Actions
+
+// MARK: Authentication Actions
 extension ExchangeViewController {
-    private func setupTargets() {
-        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
-        pastTransactionsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
-    }
-    
-    @objc private func addTransactionTapped() {
-        let addTransactionVC = AddTransactionViewController(successAction: {
-            self.fetchRates()
-        })
-        present(addTransactionVC, animated: true, completion: nil)
-    }
-    
     @objc private func loginTapped() {
         let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
         present(authVC, animated: true, completion: nil)
@@ -178,15 +167,6 @@ extension ExchangeViewController {
     @objc private func logoutTapped() {
         authentication.clearToken()
         navigationItem.setLeftBarButtonItems([registerButton, loginButton], animated: true)
-    }
-    
-    @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
-        print("value: \(segmentedControl.selectedSegmentIndex)")
-    }
-    
-    @objc private func pastTransactionsTapped(_ sender: UIButton) {
-        let transactionsVC = TransactionsViewController()
-        present(UINavigationController(rootViewController: transactionsVC), animated: true, completion: nil)
     }
     
     private func loginAction(userCredentials: UserCredentials) {
@@ -207,6 +187,31 @@ extension ExchangeViewController {
         } fail: { error in
             print("Failed to register user: \(error)")
         }
+    }
+}
+
+
+// MARK: Actions
+extension ExchangeViewController {
+    private func setupTargets() {
+        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
+        pastTransactionsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func addTransactionTapped() {
+        let addTransactionVC = AddTransactionViewController(successAction: {
+            self.fetchRates()
+        })
+        present(addTransactionVC, animated: true, completion: nil)
+    }
+    
+    @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
+        print("value: \(segmentedControl.selectedSegmentIndex)")
+    }
+    
+    @objc private func pastTransactionsTapped(_ sender: UIButton) {
+        let transactionsVC = TransactionsViewController()
+        present(UINavigationController(rootViewController: transactionsVC), animated: true, completion: nil)
     }
 }
 
