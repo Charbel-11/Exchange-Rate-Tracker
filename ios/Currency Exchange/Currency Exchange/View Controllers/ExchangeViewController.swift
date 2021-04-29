@@ -62,28 +62,6 @@ extension ExchangeViewController {
             navigationItem.leftBarButtonItems = [registerButton, loginButton]
         }
     }
-    
-    @objc private func addTransactionTapped() {
-        let addTransactionVC = AddTransactionViewController(successAction: {
-            self.fetchRates()
-        })
-        present(addTransactionVC, animated: true, completion: nil)
-    }
-    
-    @objc private func loginTapped() {
-        let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
-        present(authVC, animated: true, completion: nil)
-    }
-    
-    @objc private func registerTapped() {
-        let authVC = AuthenticationViewController(submitAction: registerAction(userCredentials:), submitTitle: "Register")
-        present(authVC, animated: true, completion: nil)
-    }
-    
-    @objc private func logoutTapped() {
-        authentication.clearToken()
-        navigationItem.setLeftBarButtonItems([registerButton, loginButton], animated: true)
-    }
 }
 
 // MARK: Subviews Config
@@ -178,6 +156,28 @@ extension ExchangeViewController {
     private func setupTargets() {
         calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
         pastTransactionsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func addTransactionTapped() {
+        let addTransactionVC = AddTransactionViewController(successAction: {
+            self.fetchRates()
+        })
+        present(addTransactionVC, animated: true, completion: nil)
+    }
+    
+    @objc private func loginTapped() {
+        let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
+        present(authVC, animated: true, completion: nil)
+    }
+    
+    @objc private func registerTapped() {
+        let authVC = AuthenticationViewController(submitAction: registerAction(userCredentials:), submitTitle: "Register")
+        present(authVC, animated: true, completion: nil)
+    }
+    
+    @objc private func logoutTapped() {
+        authentication.clearToken()
+        navigationItem.setLeftBarButtonItems([registerButton, loginButton], animated: true)
     }
     
     @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
