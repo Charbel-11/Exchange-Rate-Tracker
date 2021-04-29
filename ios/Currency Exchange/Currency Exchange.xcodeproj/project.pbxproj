@@ -17,6 +17,7 @@
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
 		23719ACD2638B57B0045DE41 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACC2638B57B0045DE41 /* Transaction.swift */; };
+		23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */; };
 		23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66F8261C0FF600B36C85 /* AppDelegate.swift */; };
 		23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */; };
 		23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FC261C0FF600B36C85 /* ExchangeViewController.swift */; };
@@ -39,6 +40,7 @@
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
 		23719ACC2638B57B0045DE41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		23FE66F5261C0FF600B36C85 /* Currency Exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Exchange.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FE66F8261C0FF600B36C85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				23FE66FC261C0FF600B36C85 /* ExchangeViewController.swift */,
 				23FE6710261C189E00B36C85 /* AddTransactionViewController.swift */,
 				23591713261DB54300F14399 /* AuthenticationViewController.swift */,
+				23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			files = (
 				2309D4EE2620584B00BF816F /* Token.swift in Sources */,
 				23FE6720261C341C00B36C85 /* Authentication.swift in Sources */,
+				23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */,
 				23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */,
 				23719AC92638A6710045DE41 /* Voyage.swift in Sources */,
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,

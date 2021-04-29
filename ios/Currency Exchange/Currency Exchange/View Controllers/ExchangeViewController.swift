@@ -101,11 +101,16 @@ extension ExchangeViewController {
         sellUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
         sellUsdAmountLabel.text = "Potato"
         
+        pastTransactionsButton.translatesAutoresizingMaskIntoConstraints = false
         pastTransactionsButton.setTitle("Past Transactions", for: .normal)
+        if authentication.getToken() == nil {
+            pastTransactionsButton.isHidden = true
+        }
         
         calculatorTitleLabel.text = "Calculator"
         calculatorTitleLabel.textAlignment = .center
-        calculatorTitleLabel.font = .preferredFont(forTextStyle: .title1)
+        calculatorTitleLabel.font = .systemFont(ofSize: 34, weight: .bold)
+        calculatorTitleLabel.textAlignment = .natural
         
         let segmentItems = ["USD", "LBP"]
         calculatorSegmentedControl = UISegmentedControl(items: segmentItems)
@@ -129,8 +134,13 @@ extension ExchangeViewController {
         rateHStack.alignment = .top
         rateHStack.spacing = 60
         
+        let separator = UIView()
+        separator.backgroundColor = .quaternaryLabel
+        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
         let contentVStack = UIStackView(arrangedSubviews: [
             rateHStack,
+            separator,
             calculatorTitleLabel,
             calculatorAmountTextField,
             calculatorSegmentedControl,
@@ -139,13 +149,19 @@ extension ExchangeViewController {
         contentVStack.translatesAutoresizingMaskIntoConstraints = false
         contentVStack.axis = .vertical
         contentVStack.spacing = 20
-        contentVStack.setCustomSpacing(60, after: rateHStack)
+//        contentVStack.setCustomSpacing(10, after: separator)
         
         view.addSubview(contentVStack)
+        view.addSubview(pastTransactionsButton)
+        
         NSLayoutConstraint.activate([
             contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40)
+            contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
+            pastTransactionsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            pastTransactionsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            pastTransactionsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
     }
     
@@ -163,10 +179,16 @@ extension ExchangeViewController {
 extension ExchangeViewController {
     private func setupTargets() {
         calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
+        pastTransactionsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
     }
     
     @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
         print("value: \(segmentedControl.selectedSegmentIndex)")
+    }
+    
+    @objc private func pastTransactionsTapped(_ sender: UIButton) {
+        let transactionsVC = TransactionsViewController()
+        present(UINavigationController(rootViewController: transactionsVC), animated: true, completion: nil)
     }
     
     private func loginAction(userCredentials: UserCredentials) {
@@ -174,6 +196,7 @@ extension ExchangeViewController {
         { (tokenModel: Token) in
             self.authentication.saveToken(token: tokenModel.token)
             self.navigationItem.setLeftBarButtonItems([self.logoutButton], animated: true)
+            self.pastTransactionsButton.isHidden = false
         } fail: { error in
             print("Failed to login user: \(error)")
         }
