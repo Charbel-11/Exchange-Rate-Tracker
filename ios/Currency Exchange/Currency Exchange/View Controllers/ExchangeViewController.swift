@@ -37,6 +37,7 @@ class ExchangeViewController: UIViewController {
         setupSubviews()
         setupLayout()
         setupTargets()
+        updateAuthenticationUI()
         fetchRates()
     }
     
@@ -55,12 +56,6 @@ extension ExchangeViewController {
         loginButton = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(loginTapped))
         registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
         logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
-        
-        if authentication.getToken() != nil {
-            navigationItem.leftBarButtonItem = logoutButton
-        } else {
-            navigationItem.leftBarButtonItems = [registerButton, loginButton]
-        }
     }
 }
 
@@ -79,9 +74,7 @@ extension ExchangeViewController {
         
         pastTransactionsButton.translatesAutoresizingMaskIntoConstraints = false
         pastTransactionsButton.setTitle("Past Transactions", for: .normal)
-        if authentication.getToken() == nil {
-            pastTransactionsButton.isHidden = true
-        }
+        pastTransactionsButton.layer.opacity = 0
         
         calculatorTitleLabel.text = "Calculator"
         calculatorTitleLabel.textAlignment = .center
@@ -154,6 +147,16 @@ extension ExchangeViewController {
 
 // MARK: Authentication Actions
 extension ExchangeViewController {
+    private func updateAuthenticationUI() {
+        let token = authentication.getToken()
+        
+        navigationItem.setLeftBarButtonItems(token == nil ? [registerButton, loginButton] : [logoutButton],
+                                             animated: true)
+        UIView.animate(withDuration: 0.2) {
+            self.pastTransactionsButton.layer.opacity = token == nil ? 0 : 1.0
+        }
+    }
+    
     @objc private func loginTapped() {
         let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
         present(authVC, animated: true, completion: nil)
@@ -166,15 +169,14 @@ extension ExchangeViewController {
     
     @objc private func logoutTapped() {
         authentication.clearToken()
-        navigationItem.setLeftBarButtonItems([registerButton, loginButton], animated: true)
+        updateAuthenticationUI()
     }
     
     private func loginAction(userCredentials: UserCredentials) {
         voyage.post(with: URL(string: "\(K.url)/authentication")!, body: userCredentials)
         { (tokenModel: Token) in
             self.authentication.saveToken(token: tokenModel.token)
-            self.navigationItem.setLeftBarButtonItems([self.logoutButton], animated: true)
-            self.pastTransactionsButton.isHidden = false
+            self.updateAuthenticationUI()
         } fail: { error in
             print("Failed to login user: \(error)")
         }
