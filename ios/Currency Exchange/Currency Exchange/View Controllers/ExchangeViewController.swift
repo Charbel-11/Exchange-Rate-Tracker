@@ -118,7 +118,6 @@ extension ExchangeViewController {
         contentVStack.translatesAutoresizingMaskIntoConstraints = false
         contentVStack.axis = .vertical
         contentVStack.spacing = 20
-//        contentVStack.setCustomSpacing(10, after: separator)
         
         view.addSubview(contentVStack)
         view.addSubview(pastTransactionsButton)
