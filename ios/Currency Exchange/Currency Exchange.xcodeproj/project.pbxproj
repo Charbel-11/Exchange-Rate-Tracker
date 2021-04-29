@@ -13,6 +13,7 @@
 		2309D4F72620623500BF816F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F62620623500BF816F /* UserManager.swift */; };
 		2309D4FE2620629400BF816F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4FD2620629400BF816F /* Constants.swift */; };
 		2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D500262078C500BF816F /* UITextField+ContentType.swift */; };
+		230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAEE263B4A6C0007A856 /* TransactionCell.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
@@ -36,6 +37,7 @@
 		2309D4F62620623500BF816F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		2309D4FD2620629400BF816F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2309D500262078C500BF816F /* UITextField+ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ContentType.swift"; sourceTree = "<group>"; };
+		230FDAEE263B4A6C0007A856 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				23FE6710261C189E00B36C85 /* AddTransactionViewController.swift */,
 				23591713261DB54300F14399 /* AuthenticationViewController.swift */,
 				23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */,
+				230FDAEE263B4A6C0007A856 /* TransactionCell.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				2309D4EE2620584B00BF816F /* Token.swift in Sources */,
 				23FE6720261C341C00B36C85 /* Authentication.swift in Sources */,
 				23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */,
+				230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */,
 				23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */,
 				23719AC92638A6710045DE41 /* Voyage.swift in Sources */,
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
