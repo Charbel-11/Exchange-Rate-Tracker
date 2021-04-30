@@ -67,7 +67,6 @@ extension AddTransactionViewController {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 20
-        stackView.setCustomSpacing(40, after: segmentedControl)
         
         view.addSubview(cancelButton)
         view.addSubview(stackView)
@@ -76,9 +75,9 @@ extension AddTransactionViewController {
             cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             cancelButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            stackView.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 40),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40)
+            stackView.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
 }

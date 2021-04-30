@@ -249,11 +249,13 @@ extension ExchangeViewController {
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
+        
+        calculatorAmountTextField.resignFirstResponder()
     }
     
     @objc private func pastTransactionsTapped(_ sender: UIButton) {
         let transactionsVC = TransactionsViewController()
-        present(UINavigationController(rootViewController: transactionsVC), animated: true, completion: nil)
+        show(transactionsVC, sender: self)
     }
 }
 
@@ -270,7 +272,7 @@ extension ExchangeViewController {
         sellUsd = exchangeRates.usdToLbp
         
         DispatchQueue.main.async {
-            self.buyUsdAmountLabel.text = self.buyUsd == -1 ? "N/A" : String(format: "$%.2f", self.buyUsd)
+            self.buyUsdAmountLabel.text = self.buyUsd == -1 ? "N/A" : String(format: "LBP%.2f", self.buyUsd)
             self.sellUsdAmountLabel.text = self.sellUsd == -1 ? "N/A" : String(format: "LBP%.2f", self.sellUsd)
         }
     }
