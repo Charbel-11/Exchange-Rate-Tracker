@@ -19,12 +19,8 @@ class ExchangeViewController: UIViewController {
     let sellUsdLabel = UILabel()
     let sellUsdAmountLabel = UILabel()
     
+    let calculatorButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     let statisticsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
-    
-    let calculatorTitleLabel = UILabel()
-    let calculatorAmountTextField = BoldBorderlessTextField(placeholder: "Amount")
-    var calculatorSegmentedControl: UISegmentedControl! = nil
-    let calculateButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     
     let authentication = Authentication()
     let voyage = Voyage()
@@ -75,20 +71,10 @@ extension ExchangeViewController {
         sellUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
         sellUsdAmountLabel.text = "Potato"
         
-        statisticsButton.translatesAutoresizingMaskIntoConstraints = false
+        calculatorButton.setTitle("Exchange Calculator", for: .normal)
+        
         statisticsButton.setTitle("Statistics", for: .normal)
         statisticsButton.layer.opacity = 0
-        
-        calculatorTitleLabel.text = "Calculator"
-        calculatorTitleLabel.textAlignment = .center
-        calculatorTitleLabel.font = .systemFont(ofSize: 34, weight: .bold)
-        calculatorTitleLabel.textAlignment = .natural
-        
-        let segmentItems = ["USD", "LBP"]
-        calculatorSegmentedControl = UISegmentedControl(items: segmentItems)
-        calculatorSegmentedControl.selectedSegmentIndex = 0
-        
-        calculateButton.setTitle("Calculate", for: .normal)
     }
 }
 
@@ -113,26 +99,19 @@ extension ExchangeViewController {
         let contentVStack = UIStackView(arrangedSubviews: [
             rateHStack,
             separator,
-            calculatorTitleLabel,
-            calculatorAmountTextField,
-            calculatorSegmentedControl,
-            calculateButton
+            calculatorButton,
+            statisticsButton
         ])
         contentVStack.translatesAutoresizingMaskIntoConstraints = false
         contentVStack.axis = .vertical
         contentVStack.spacing = 20
         
         view.addSubview(contentVStack)
-        view.addSubview(statisticsButton)
         
         NSLayoutConstraint.activate([
             contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
-            statisticsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            statisticsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            statisticsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     
@@ -198,8 +177,7 @@ extension ExchangeViewController {
 // MARK: Actions
 extension ExchangeViewController {
     private func setupTargets() {
-        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
-        calculateButton.addTarget(self, action: #selector(calculateTapped(_:)), for: .touchUpInside)
+        calculatorButton.addTarget(self, action: #selector(calculatorTapped(_:)), for: .touchUpInside)
         statisticsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
     }
     
@@ -210,47 +188,9 @@ extension ExchangeViewController {
         present(addTransactionVC, animated: true, completion: nil)
     }
     
-    @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
-        print("value: \(segmentedControl.selectedSegmentIndex)")
-    }
-    
-    @objc private func calculateTapped(_ sender: UIButton) {
-        if let amountText = calculatorAmountTextField.text, let amount = Float(amountText) {
-            
-            let usdToLbp = calculatorSegmentedControl.selectedSegmentIndex == 0
-            if usdToLbp && sellUsd == -1 || !usdToLbp && buyUsd == -1 {
-                let alert = UIAlertController(title: "Exchange Calculator",
-                                              message: "Exchange rate not available for given conversion type.",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                self.present(alert, animated: true)
-                return
-            }
-            
-            var convertedAmount: Float = 0
-            var startCurrency = ""
-            var endCurrency = ""
-            
-            if usdToLbp {
-                convertedAmount = amount * sellUsd
-                startCurrency = "USD"
-                endCurrency = "LBP"
-            } else {
-                convertedAmount = amount * buyUsd
-                startCurrency = "LBP"
-                endCurrency = "USD"
-            }
-            
-            let message = "\(startCurrency)\(amountText) converted to \(endCurrency) is \(endCurrency)" + String(format: "%.2f", convertedAmount) + "."
-            
-            let alert = UIAlertController(title: "Exchange Calculator",
-                                          message: message,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-            self.present(alert, animated: true)
-        }
-        
-        calculatorAmountTextField.resignFirstResponder()
+    @objc private func calculatorTapped(_ sender: UIButton) {
+        let calcVC = CalculatorViewController(buyUsd: buyUsd, sellUsd: sellUsd)
+        show(calcVC, sender: self)
     }
     
     @objc private func pastTransactionsTapped(_ sender: UIButton) {
