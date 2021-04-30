@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
           
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UINavigationController(rootViewController: ExchangeViewController()) // Your initial view controller.
+//        window.rootViewController = GraphViewController()
         window.makeKeyAndVisible()
         self.window = window
     }

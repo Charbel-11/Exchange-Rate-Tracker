@@ -25,6 +25,13 @@ class TransactionsViewController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.title = "Past Transactions"
+        
+        let graphButton = UIBarButtonItem(title: "Graph", style: .plain, target: self, action: #selector(graphTapped))
+        navigationItem.rightBarButtonItem = graphButton
+    }
+    
+    @objc private func graphTapped() {
+        
     }
     
     private func setupTableView() {

@@ -73,7 +73,7 @@ class TransactionCell: UITableViewCell {
             rateLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             rateLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
-            dateLabel.centerYAnchor.constraint(equalTo: rateLabel.centerYAnchor),
+            dateLabel.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
             dateLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }

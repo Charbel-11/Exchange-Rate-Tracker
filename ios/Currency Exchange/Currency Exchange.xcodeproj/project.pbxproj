@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		2309D4FE2620629400BF816F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4FD2620629400BF816F /* Constants.swift */; };
 		2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D500262078C500BF816F /* UITextField+ContentType.swift */; };
 		230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAEE263B4A6C0007A856 /* TransactionCell.swift */; };
+		230FDAF1263C2AE50007A856 /* ImageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAF0263C2AE50007A856 /* ImageLabel.swift */; };
+		230FDAF3263C307D0007A856 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAF2263C307D0007A856 /* GraphViewController.swift */; };
+		230FDAFF263C36E70007A856 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 230FDAFE263C36E70007A856 /* Charts */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
@@ -38,6 +41,8 @@
 		2309D4FD2620629400BF816F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2309D500262078C500BF816F /* UITextField+ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ContentType.swift"; sourceTree = "<group>"; };
 		230FDAEE263B4A6C0007A856 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		230FDAF0263C2AE50007A856 /* ImageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabel.swift; sourceTree = "<group>"; };
+		230FDAF2263C307D0007A856 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
@@ -61,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				230FDAFF263C36E70007A856 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +122,7 @@
 				23591713261DB54300F14399 /* AuthenticationViewController.swift */,
 				23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */,
 				230FDAEE263B4A6C0007A856 /* TransactionCell.swift */,
+				230FDAF2263C307D0007A856 /* GraphViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -125,6 +132,7 @@
 			children = (
 				23FE6715261C191600B36C85 /* BoldBorderlessTextField.swift */,
 				23FE6719261C2F2300B36C85 /* FilledButton.swift */,
+				230FDAF0263C2AE50007A856 /* ImageLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +176,9 @@
 			dependencies = (
 			);
 			name = "Currency Exchange";
+			packageProductDependencies = (
+				230FDAFE263C36E70007A856 /* Charts */,
+			);
 			productName = "Currency Exchange";
 			productReference = 23FE66F5261C0FF600B36C85 /* Currency Exchange.app */;
 			productType = "com.apple.product-type.application";
@@ -195,6 +206,9 @@
 				Base,
 			);
 			mainGroup = 23FE66EC261C0FF600B36C85;
+			packageReferences = (
+				230FDAFD263C36E70007A856 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 23FE66F6261C0FF600B36C85 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -230,11 +244,13 @@
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
 				23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */,
 				23719ACD2638B57B0045DE41 /* Transaction.swift in Sources */,
+				230FDAF3263C307D0007A856 /* GraphViewController.swift in Sources */,
 				23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */,
 				2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */,
 				23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */,
 				2309D4F72620623500BF816F /* UserManager.swift in Sources */,
 				2309D4FE2620629400BF816F /* Constants.swift in Sources */,
+				230FDAF1263C2AE50007A856 /* ImageLabel.swift in Sources */,
 				23FE6716261C191600B36C85 /* BoldBorderlessTextField.swift in Sources */,
 				23FE6711261C189E00B36C85 /* AddTransactionViewController.swift in Sources */,
 				2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */,
@@ -433,6 +449,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		230FDAFD263C36E70007A856 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		230FDAFE263C36E70007A856 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 230FDAFD263C36E70007A856 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 23FE66ED261C0FF600B36C85 /* Project object */;
 }

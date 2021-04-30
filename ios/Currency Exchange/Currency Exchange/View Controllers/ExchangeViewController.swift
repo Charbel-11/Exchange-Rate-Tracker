@@ -19,7 +19,7 @@ class ExchangeViewController: UIViewController {
     let sellUsdLabel = UILabel()
     let sellUsdAmountLabel = UILabel()
     
-    let pastTransactionsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
+    let statisticsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     
     let calculatorTitleLabel = UILabel()
     let calculatorAmountTextField = BoldBorderlessTextField(placeholder: "Amount")
@@ -75,9 +75,9 @@ extension ExchangeViewController {
         sellUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
         sellUsdAmountLabel.text = "Potato"
         
-        pastTransactionsButton.translatesAutoresizingMaskIntoConstraints = false
-        pastTransactionsButton.setTitle("Past Transactions", for: .normal)
-        pastTransactionsButton.layer.opacity = 0
+        statisticsButton.translatesAutoresizingMaskIntoConstraints = false
+        statisticsButton.setTitle("Statistics", for: .normal)
+        statisticsButton.layer.opacity = 0
         
         calculatorTitleLabel.text = "Calculator"
         calculatorTitleLabel.textAlignment = .center
@@ -123,16 +123,16 @@ extension ExchangeViewController {
         contentVStack.spacing = 20
         
         view.addSubview(contentVStack)
-        view.addSubview(pastTransactionsButton)
+        view.addSubview(statisticsButton)
         
         NSLayoutConstraint.activate([
             contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            pastTransactionsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            pastTransactionsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            pastTransactionsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            statisticsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            statisticsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            statisticsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
     }
     
@@ -155,7 +155,7 @@ extension ExchangeViewController {
         navigationItem.setLeftBarButtonItems(token == nil ? [registerButton, loginButton] : [logoutButton],
                                              animated: true)
         UIView.animate(withDuration: 0.2) {
-            self.pastTransactionsButton.layer.opacity = token == nil ? 0 : 1.0
+            self.statisticsButton.layer.opacity = token == nil ? 0 : 1.0
         }
     }
     
@@ -200,7 +200,7 @@ extension ExchangeViewController {
     private func setupTargets() {
         calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
         calculateButton.addTarget(self, action: #selector(calculateTapped(_:)), for: .touchUpInside)
-        pastTransactionsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
+        statisticsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
     }
     
     @objc private func addTransactionTapped() {
