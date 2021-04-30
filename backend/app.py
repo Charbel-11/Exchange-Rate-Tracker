@@ -305,16 +305,16 @@ def get_stats(number):
     # Dictionary to store the stats calculated
     stats = {}
 
-    stats["max-usd_to_lbp"] = max(usd_numbers)
-    stats["max-lbp-to-usd"] = max(lbp_numbers)
-    stats["median-usd_to_lbp"] = statistics.median(usd_numbers)
-    stats["median-lbp_to_usd"] = statistics.median(lbp_numbers)
-    stats["stdev-usd_to_lbp"] = statistics.stdev(usd_numbers)
-    stats["stdev-lbp_to_usd"] = statistics.stdev(lbp_numbers)
-    stats["mode-usd_to_lbp"] = statistics.mode(usd_numbers)
-    stats["mode-lbp_to_usd"] = statistics.mode(lbp_numbers)
-    stats["variance-usd_to_lbp"] = statistics.variance(usd_numbers)
-    stats["variance-lbp_to_usd"] = statistics.variance(lbp_numbers)
+    stats["max_usd_to_lbp"] = max(usd_numbers)
+    stats["max_lbp_to_usd"] = max(lbp_numbers)
+    stats["median_usd_to_lbp"] = statistics.median(usd_numbers)
+    stats["median_lbp_to_usd"] = statistics.median(lbp_numbers)
+    stats["stdev_usd_to_lbp"] = statistics.stdev(usd_numbers)
+    stats["stdev_lbp_to_usd"] = statistics.stdev(lbp_numbers)
+    stats["mode_usd_to_lbp"] = statistics.mode(usd_numbers)
+    stats["mode_lbp_to_usd"] = statistics.mode(lbp_numbers)
+    stats["variance_usd_to_lbp"] = statistics.variance(usd_numbers)
+    stats["variance_lbp_to_usd"] = statistics.variance(lbp_numbers)
 
 
     return jsonify(stats)
