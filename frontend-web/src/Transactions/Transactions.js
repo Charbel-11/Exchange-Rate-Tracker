@@ -2,7 +2,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect, useCallback } from "react";
 import { AppBar, Toolbar, Button, Typography, Snackbar, Box, Select, MenuItem, TextField } from '@material-ui/core';
 
-export default function Transactions({userToken, SERVER_URL}){
+export default function Transactions({ userToken, SERVER_URL, back }) {
   let [lbpInput, setLbpInput] = useState("");
   let [usdInput, setUsdInput] = useState("");
   let [transactionType, setTransactionType] = useState("usd-to-lbp");
@@ -29,6 +29,7 @@ export default function Transactions({userToken, SERVER_URL}){
         "usd_to_lbp": transactionType == "usd-to-lbp"
       })
     })
+      .then(() => { if (userToken !== null) fetchUserTransactions(); })
 
     setLbpInput("")
     setUsdInput("")
@@ -50,27 +51,27 @@ export default function Transactions({userToken, SERVER_URL}){
   }, [fetchUserTransactions, userToken]);
 
   return (
-      <div className="wrapper">
-        <Box mb={2} ><Typography variant="h5" style={{ fontWeight: 600 }}>Record a recent transaction</Typography></Box>
-        <form name="transaction-entry">
-          <div>
-            <TextField id="lbp-amount" label="LBP Amount" value={lbpInput} onChange={e => setLbpInput(e.target.value)} />
-          </div>
-          <div>
-            <TextField id="usd-amount" label="USD Amount" value={usdInput} onChange={e => setUsdInput(e.target.value)} />
-          </div>
+    <div className="wrapper">
+      <Typography variant="h5" style={{ fontWeight: 600 }}>Record a recent transaction</Typography>
+      <form name="transaction-entry">
+        <div>
+          <TextField id="lbp-amount" label="LBP Amount" value={lbpInput} onChange={e => setLbpInput(e.target.value)} />
+        </div>
+        <div>
+          <TextField id="usd-amount" label="USD Amount" value={usdInput} onChange={e => setUsdInput(e.target.value)} />
+        </div>
 
-          <Box my={2}>
-            <Select id="transaction-type" value={transactionType} onChange={e => { setTransactionType(e.target.value); }}>
-              <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
-              <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
-            </Select>
-          </Box>
+        <Box my={2}>
+          <Select id="transaction-type" value={transactionType} onChange={e => { setTransactionType(e.target.value); }}>
+            <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
+            <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
+          </Select>
+        </Box>
 
-          <Box mt={1}><Button id="add-button" variant="contained" color="primary" onClick={addItem}>Add</Button></Box>
-        </form>
+        <Box mt={1}><Button id="add-button" variant="contained" color="primary" onClick={addItem}>Add</Button></Box>
+      </form>
 
-        {userToken && (
+      {userToken && (
         <div className="wrapper">
           <Box mb={2}><Typography variant="h5" style={{ fontWeight: 600 }}>Your Transactions</Typography></Box>
           <DataGrid
@@ -85,6 +86,10 @@ export default function Transactions({userToken, SERVER_URL}){
           />
         </div>
       )}
-    </div>
+
+      <div>
+        <Button variant="contained" color="primary" onClick={back}> Back </Button>
+      </div>
+    </div >
   );
 }

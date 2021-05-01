@@ -1,6 +1,6 @@
 import './App.css';
-import { AppBar, Toolbar, Button, Typography, Snackbar, Box, Select, MenuItem, TextField } from '@material-ui/core';
-import { useState, useEffect, useCallback } from "react";
+import { AppBar, Toolbar, Button, Typography, Snackbar } from '@material-ui/core';
+import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 import UserCredentialsDialog from "./UserCredentialsDialog/UserCredentialsDialog";
 import { getUserToken, saveUserToken } from "./localStorage";
@@ -26,6 +26,7 @@ function App() {
   let [userToken, setUserToken] = useState(getUserToken());
   let [authState, setAuthState] = useState(AuthStates.PENDING);
   let [pageState, setPageState] = useState(PageStates.MAIN);
+  let [rates, setRates] = useState({});
 
   function login(username, password) {
     return fetch(`${SERVER_URL}/authentication`, {
@@ -98,32 +99,55 @@ function App() {
                 Logout
               </Button>
             ) : (
-                <div>
-                  <Button
-                    color="inherit"
-                    onClick={() => setAuthState(AuthStates.USER_CREATION)}
-                  >
-                    Register
+              <div>
+                <Button
+                  color="inherit"
+                  onClick={() => setAuthState(AuthStates.USER_CREATION)}
+                >
+                  Register
                   </Button>
-                  <Button
-                    color="inherit"
-                    onClick={() => setAuthState(AuthStates.USER_LOG_IN)}
-                  >
-                    Login
+                <Button
+                  color="inherit"
+                  onClick={() => setAuthState(AuthStates.USER_LOG_IN)}
+                >
+                  Login
                   </Button>
-                </div>
-              )}
+              </div>
+            )}
           </div>
         </Toolbar>
       </AppBar>
 
-      <div className="wrapper">
-        <ExchangeRates SERVER_URL={SERVER_URL} />
-        <hr />
-        <Conversion SERVER_URL={SERVER_URL}/>
-      </div>
+      {pageState === PageStates.MAIN &&
+        <div className="wrapper">
+          <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
 
-      <Transactions userToken={userToken} SERVER_URL={SERVER_URL}/>
+          <Button variant="contained" color="primary" onClick={() => setPageState(PageStates.TRANSACTIONS)}> Transactions </Button>
+          <Button variant="contained" color="primary" onClick={() => setPageState(PageStates.CONVERSION)}> Conversions </Button>
+        </div>
+      }
+
+      {pageState === PageStates.CONVERSION &&
+        <div className="wrapper">
+          <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
+          <hr />
+          <Conversion
+            SERVER_URL={SERVER_URL}
+            rates={rates}
+            back={() => setPageState(PageStates.MAIN)}
+          />
+        </div>
+      }
+
+      {pageState == PageStates.TRANSACTIONS &&
+        <div>
+          <Transactions
+            userToken={userToken}
+            SERVER_URL={SERVER_URL}
+            back={() => setPageState(PageStates.MAIN)}
+          />
+        </div>
+      }
     </div>
   );
 }
