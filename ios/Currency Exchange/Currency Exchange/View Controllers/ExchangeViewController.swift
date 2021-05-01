@@ -9,18 +9,24 @@ import UIKit
 
 class ExchangeViewController: UIViewController {
     
+    var loginButton: UIBarButtonItem! = nil
+    var registerButton: UIBarButtonItem! = nil
+    var logoutButton: UIBarButtonItem! = nil
+    
     let buyUsdLabel = UILabel()
     let buyUsdAmountLabel = UILabel()
     
     let sellUsdLabel = UILabel()
     let sellUsdAmountLabel = UILabel()
     
-    let pastTransactionsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
+    let calculatorButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
+    let statisticsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     
-    let calculatorTitleLabel = UILabel()
-    let calculatorAmountTextField = BoldBorderlessTextField(placeholder: "Amount")
-    var calculatorSegmentedControl: UISegmentedControl! = nil
-    let calculateButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
+    let authentication = Authentication()
+    let voyage = Voyage()
+    
+    var buyUsd: Float = -1
+    var sellUsd: Float = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +35,11 @@ class ExchangeViewController: UIViewController {
         setupNavBar()
         setupSubviews()
         setupLayout()
-        
-        
+        setupTargets()
+        updateAuthenticationUI()
+        fetchRates()
     }
+    
 }
 
 // MARK: Navigation Bar
@@ -44,27 +52,9 @@ extension ExchangeViewController {
         let addTransactionButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTransactionTapped))
         navigationItem.rightBarButtonItem = addTransactionButton
         
-        let loginButton = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(loginTapped))
-        let registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
-        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
-        
-        navigationItem.leftBarButtonItems = [registerButton, loginButton]
-    }
-    
-    @objc private func addTransactionTapped() {
-        print("Tapped Add")
-    }
-    
-    @objc private func loginTapped() {
-        print("Tapped Login")
-    }
-    
-    @objc private func registerTapped() {
-        print("Tapped Register")
-    }
-    
-    @objc private func logoutTapped() {
-        print("Tapped Logout")
+        loginButton = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(loginTapped))
+        registerButton = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerTapped))
+        logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
     }
 }
 
@@ -74,25 +64,17 @@ extension ExchangeViewController {
         buyUsdLabel.text = "Buy USD"
         buyUsdLabel.font = .preferredFont(forTextStyle: .title2)
         buyUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
-        buyUsdAmountLabel.text = "N/A"
+        buyUsdAmountLabel.text = "Potato"
         
         sellUsdLabel.text = "Sell USD"
         sellUsdLabel.font = .preferredFont(forTextStyle: .title2)
         sellUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
-        sellUsdAmountLabel.text = "N/A"
+        sellUsdAmountLabel.text = "Potato"
         
-        pastTransactionsButton.setTitle("Past Transactions", for: .normal)
+        calculatorButton.setTitle("Exchange Calculator", for: .normal)
         
-        calculatorTitleLabel.text = "Calculator"
-        calculatorTitleLabel.textAlignment = .center
-        calculatorTitleLabel.font = .preferredFont(forTextStyle: .title1)
-        
-        let segmentItems = ["USD", "LBP"]
-        calculatorSegmentedControl = UISegmentedControl(items: segmentItems)
-        calculatorSegmentedControl.addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
-        calculatorSegmentedControl.selectedSegmentIndex = 1
-        
-        calculateButton.setTitle("Calculate", for: .normal)
+        statisticsButton.setTitle("Statistics", for: .normal)
+        statisticsButton.layer.opacity = 0
     }
 }
 
@@ -101,9 +83,7 @@ extension ExchangeViewController {
 extension ExchangeViewController {
     private func setupLayout() {
         let buyVStack = createVStack([buyUsdLabel, buyUsdAmountLabel])
-//        buyVStack.backgroundColor = .red
         let sellVStack = createVStack([sellUsdLabel, sellUsdAmountLabel])
-//        sellVStack.backgroundColor = .red
         
         let rateHStack = UIStackView(arrangedSubviews: [buyVStack, sellVStack])
         rateHStack.translatesAutoresizingMaskIntoConstraints = false
@@ -112,23 +92,26 @@ extension ExchangeViewController {
         rateHStack.alignment = .top
         rateHStack.spacing = 60
         
+        let separator = UIView()
+        separator.backgroundColor = .quaternaryLabel
+        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
         let contentVStack = UIStackView(arrangedSubviews: [
             rateHStack,
-            calculatorTitleLabel,
-            calculatorAmountTextField,
-            calculatorSegmentedControl,
-            calculateButton
+            separator,
+            calculatorButton,
+            statisticsButton
         ])
         contentVStack.translatesAutoresizingMaskIntoConstraints = false
         contentVStack.axis = .vertical
         contentVStack.spacing = 20
-        contentVStack.setCustomSpacing(60, after: rateHStack)
         
         view.addSubview(contentVStack)
+        
         NSLayoutConstraint.activate([
-            contentVStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40)
+            contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     
@@ -142,9 +125,99 @@ extension ExchangeViewController {
     }
 }
 
+
+// MARK: Authentication Actions
+extension ExchangeViewController {
+    private func updateAuthenticationUI() {
+        let token = authentication.getToken()
+        
+        navigationItem.setLeftBarButtonItems(token == nil ? [registerButton, loginButton] : [logoutButton],
+                                             animated: true)
+        UIView.animate(withDuration: 0.2) {
+            self.statisticsButton.layer.opacity = token == nil ? 0 : 1.0
+        }
+    }
+    
+    @objc private func loginTapped() {
+        let authVC = AuthenticationViewController(submitAction: loginAction(userCredentials:), submitTitle: "Login")
+        present(authVC, animated: true, completion: nil)
+    }
+    
+    @objc private func registerTapped() {
+        let authVC = AuthenticationViewController(submitAction: registerAction(userCredentials:), submitTitle: "Register")
+        present(authVC, animated: true, completion: nil)
+    }
+    
+    @objc private func logoutTapped() {
+        authentication.clearToken()
+        updateAuthenticationUI()
+    }
+    
+    private func loginAction(userCredentials: UserCredentials) {
+        voyage.post(with: URL(string: "\(K.url)/authentication")!, body: userCredentials)
+        { (tokenModel: Token) in
+            self.authentication.saveToken(token: tokenModel.token)
+            self.updateAuthenticationUI()
+        } fail: { error in
+            print("Failed to login user: \(error)")
+        }
+    }
+    
+    private func registerAction(userCredentials: UserCredentials) {
+        voyage.post(with: URL(string: "\(K.url)/user")!, body: userCredentials)
+        { [weak self] (user: User) in
+            self?.loginAction(userCredentials: userCredentials)
+        } fail: { error in
+            print("Failed to register user: \(error)")
+        }
+    }
+}
+
+
 // MARK: Actions
 extension ExchangeViewController {
-    @objc private func segmentControl(_ segmentedControl: UISegmentedControl) {
+    private func setupTargets() {
+        calculatorButton.addTarget(self, action: #selector(calculatorTapped(_:)), for: .touchUpInside)
+        statisticsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func addTransactionTapped() {
+        let addTransactionVC = AddTransactionViewController(successAction: {
+            self.fetchRates()
+        })
+        present(addTransactionVC, animated: true, completion: nil)
+    }
+    
+    @objc private func calculatorTapped(_ sender: UIButton) {
+        let calcVC = CalculatorViewController(buyUsd: buyUsd, sellUsd: sellUsd)
+        show(calcVC, sender: self)
+    }
+    
+    @objc private func pastTransactionsTapped(_ sender: UIButton) {
+        let transactionsVC = TransactionsViewController()
+        show(transactionsVC, sender: self)
+    }
+}
+
+
+// MARK: Fetching Exchange Rates
+extension ExchangeViewController {
+    private func fetchRates() {
+        let url = URL(string: "\(K.url)/exchangeRate/3")!
+        voyage.get(with: url, completion: didFetchRates(exchangeRates:), fail: didFailToFetchRates(error:), bearerToken: authentication.getToken())
+    }
+    
+    private func didFetchRates(exchangeRates: ExchangeRates) {
+        buyUsd = exchangeRates.lbpToUsd
+        sellUsd = exchangeRates.usdToLbp
         
+        DispatchQueue.main.async {
+            self.buyUsdAmountLabel.text = self.buyUsd == -1 ? "N/A" : String(format: "LBP%.2f", self.buyUsd)
+            self.sellUsdAmountLabel.text = self.sellUsd == -1 ? "N/A" : String(format: "LBP%.2f", self.sellUsd)
+        }
+    }
+    
+    private func didFailToFetchRates(error: Error) {
+        print("Failed to fetch rates: \(error)")
     }
 }
