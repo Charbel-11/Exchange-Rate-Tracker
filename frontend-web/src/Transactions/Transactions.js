@@ -1,16 +1,18 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect, useCallback } from "react";
-import { AppBar, Toolbar, Button, Typography, Snackbar, Box, Select, MenuItem, TextField } from '@material-ui/core';
+import { Button, Typography, Box, Select, MenuItem, TextField } from '@material-ui/core';
 
 export default function Transactions({ userToken, SERVER_URL, back }) {
   let [lbpInput, setLbpInput] = useState("");
   let [usdInput, setUsdInput] = useState("");
   let [transactionType, setTransactionType] = useState("usd-to-lbp");
+  let [errorMsg, setErrorMsg] = useState("");
   let [userTransactions, setUserTransactions] = useState([]);
 
   function addItem() {
     var ratio = lbpInput / usdInput;
-    if (isNaN(ratio) || ratio == Infinity || ratio == 0) { return; }
+    if (isNaN(ratio) || ratio == Infinity || ratio == 0) { setErrorMsg("Invalid Transaction"); return; }
+    setErrorMsg("");
 
     var h = { 'Content-Type': 'application/json' };
     if (userToken !== null) {
@@ -50,6 +52,7 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
     }
   }, [fetchUserTransactions, userToken]);
 
+  //TODO: Fix the error color
   return (
     <div className="wrapper">
       <Typography variant="h5" style={{ fontWeight: 600 }}>Record a recent transaction</Typography>
@@ -68,6 +71,7 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
           </Select>
         </Box>
 
+        <Typography>{errorMsg}</Typography>
         <Box mt={1}><Button id="add-button" variant="contained" color="primary" onClick={addItem}>Add</Button></Box>
       </form>
 
@@ -88,6 +92,7 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
       )}
 
       <div>
+        <br/>
         <Button variant="contained" color="primary" onClick={back}> Back </Button>
       </div>
     </div >
