@@ -7,20 +7,20 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Chart } from 'react-charts'
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 export default function Statistics({ SERVER_URL }) {
     let [rows, setRows] = useState([]);
     let [graphUsdToLbpData, setGraphUsdToLbpData] = useState([]);
     let [graphLbpToUsdData, setGraphLbptoUsdData] = useState([]);
+    let [graphData, setGraphData] = useState([])
 
     function createData(name, max, median, stdev, mode, variance) {
         return { name, max, median, stdev, mode, variance };
     }
 
     function fetchStats() {
-        fetch(`${SERVER_URL}/stats/30`)
+        return fetch(`${SERVER_URL}/stats/30`)
             .then(response => response.json())
             .then(data => {
                 setRows(
@@ -38,14 +38,12 @@ export default function Statistics({ SERVER_URL }) {
     useEffect(fetchStats, []);
 
     function fetchGraph1() {
-        fetch(`${SERVER_URL}/graph/usd_to_lbp/20`)
+        return fetch(`${SERVER_URL}/graph/usd_to_lbp/20`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 var usdToLbpArr = []
                 for (var i = 0; i < data.length; i++) {
-                    var curDate = new Date(data[i].date);
-                    usdToLbpArr.push([curDate, data[i].rate]);
+                    usdToLbpArr.push({ name: data[i].date, usdToLbp: Math.max(0, data[i].rate.toFixed(2)) });
                 }
                 setGraphUsdToLbpData(usdToLbpArr);
             });
@@ -53,20 +51,34 @@ export default function Statistics({ SERVER_URL }) {
     useEffect(fetchGraph1, []);
 
     function fetchGraph2() {
-        fetch(`${SERVER_URL}/graph/lbp_to_usd/20`)
+        return fetch(`${SERVER_URL}/graph/lbp_to_usd/20`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 var lbpToUsdArr = []
                 for (var i = 0; i < data.length; i++) {
-                    var curDate = new Date(data[i].date);
-                    lbpToUsdArr.push([curDate, Math.max(0, data[i].rate)]);
+                    lbpToUsdArr.push({ name: data[i].date, lbpToUsd: Math.max(0, data[i].rate.toFixed(2)) });
                 }
                 setGraphLbptoUsdData(lbpToUsdArr);
             });
     }
     useEffect(fetchGraph2, []);
 
+    function setGraph() {
+        if (graphLbpToUsdData.length == 0 || graphLbpToUsdData.length != graphUsdToLbpData.length) {
+            return;
+        }
+
+        var curData = []
+        for (var i = 0; i < graphLbpToUsdData.length; i++) {
+            curData.push({
+                name: graphLbpToUsdData[i].name,
+                lbpToUsd: graphLbpToUsdData[i].lbpToUsd,
+                usdToLbp: graphUsdToLbpData[i].usdToLbp
+            })
+        }
+        setGraphData(curData)
+    }
+    useEffect(setGraph, [graphLbpToUsdData, graphUsdToLbpData]);
 
     return (
         <div>
@@ -105,30 +117,15 @@ export default function Statistics({ SERVER_URL }) {
 
             <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 15 }}>Rates over Time</Typography>
 
-            <div style={{ width: '800px', height: '300px' }}>
-                <Chart
-                    data={
-                        [
-                            {
-                                label: 'USD to LBP',
-                                data: graphUsdToLbpData
-                            },
-                            {
-                                label: 'LBP to USD',
-                                data: graphLbpToUsdData
-                            }
-                        ]
-                    }
-                    axes={
-                        [
-                            { primary: true, type: 'utc', position: 'bottom' },
-                            { type: 'linear', position: 'left' }
-                        ]
-                    }
-                    tooltip
-                />
-            </div>
-
+            <LineChart width={900} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <Line type="monotone" dataKey="usdToLbp" name="USD to LBP" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="lbpToUsd" name="LBP to USD" stroke="#8884d8" />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Legend />
+                <Tooltip />
+            </LineChart>
         </div>
     );
 }

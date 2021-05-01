@@ -6,7 +6,7 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
   let [sellUsdRate, setSellUsdRate] = useState(-1);
 
   function fetchRates() {
-    fetch(`${SERVER_URL}/exchangeRate/30`)
+    return fetch(`${SERVER_URL}/exchangeRate/30`)
       .then(response => response.json())
       .then(data => {
         setRates(data);
