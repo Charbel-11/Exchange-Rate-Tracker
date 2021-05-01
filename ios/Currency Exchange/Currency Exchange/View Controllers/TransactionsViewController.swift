@@ -31,13 +31,20 @@ class TransactionsViewController: UIViewController {
     }
     
     @objc private func graphTapped() {
-        
+        let graphVC = GraphViewController()
+        show(graphVC, sender: self)
     }
     
     private func setupTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(TransactionCell.self, forCellReuseIdentifier: TransactionCell.reuseIdentifier)
         tableView.dataSource = self
+        let test = UIView()
+        test.translatesAutoresizingMaskIntoConstraints = false
+        test.backgroundColor = .systemPurple
+        test.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        test.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        tableView.tableHeaderView = test
         tableView.tableFooterView = UIView()
         
         view.addSubview(tableView)

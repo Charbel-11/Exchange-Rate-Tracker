@@ -10,7 +10,6 @@
 		2309D4EE2620584B00BF816F /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4ED2620584B00BF816F /* Token.swift */; };
 		2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F02620587200BF816F /* ExchangeRates.swift */; };
 		2309D4F4262058A800BF816F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F3262058A800BF816F /* User.swift */; };
-		2309D4F72620623500BF816F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4F62620623500BF816F /* UserManager.swift */; };
 		2309D4FE2620629400BF816F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D4FD2620629400BF816F /* Constants.swift */; };
 		2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D500262078C500BF816F /* UITextField+ContentType.swift */; };
 		230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAEE263B4A6C0007A856 /* TransactionCell.swift */; };
@@ -18,6 +17,7 @@
 		230FDAF3263C307D0007A856 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDAF2263C307D0007A856 /* GraphViewController.swift */; };
 		230FDAFF263C36E70007A856 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 230FDAFE263C36E70007A856 /* Charts */; };
 		230FDB01263C93420007A856 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB00263C93420007A856 /* CalculatorViewController.swift */; };
+		230FDB03263C9B450007A856 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB02263C9B450007A856 /* Statistics.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
@@ -38,13 +38,13 @@
 		2309D4ED2620584B00BF816F /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		2309D4F02620587200BF816F /* ExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRates.swift; sourceTree = "<group>"; };
 		2309D4F3262058A800BF816F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		2309D4F62620623500BF816F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		2309D4FD2620629400BF816F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2309D500262078C500BF816F /* UITextField+ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ContentType.swift"; sourceTree = "<group>"; };
 		230FDAEE263B4A6C0007A856 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		230FDAF0263C2AE50007A856 /* ImageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabel.swift; sourceTree = "<group>"; };
 		230FDAF2263C307D0007A856 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		230FDB00263C93420007A856 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
+		230FDB02263C9B450007A856 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 				2309D4F02620587200BF816F /* ExchangeRates.swift */,
 				23719ACA2638B3CB0045DE41 /* NewTransaction.swift */,
 				23719ACC2638B57B0045DE41 /* Transaction.swift */,
+				230FDB02263C9B450007A856 /* Statistics.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -157,7 +158,6 @@
 			children = (
 				23719AC82638A6710045DE41 /* Voyage.swift */,
 				23FE671F261C341C00B36C85 /* Authentication.swift */,
-				2309D4F62620623500BF816F /* UserManager.swift */,
 				23FE6723261C342300B36C85 /* Model */,
 			);
 			path = API;
@@ -240,6 +240,7 @@
 			files = (
 				2309D4EE2620584B00BF816F /* Token.swift in Sources */,
 				23FE6720261C341C00B36C85 /* Authentication.swift in Sources */,
+				230FDB03263C9B450007A856 /* Statistics.swift in Sources */,
 				230FDB01263C93420007A856 /* CalculatorViewController.swift in Sources */,
 				23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */,
 				230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */,
@@ -252,7 +253,6 @@
 				23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */,
 				2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */,
 				23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */,
-				2309D4F72620623500BF816F /* UserManager.swift in Sources */,
 				2309D4FE2620629400BF816F /* Constants.swift in Sources */,
 				230FDAF1263C2AE50007A856 /* ImageLabel.swift in Sources */,
 				23FE6716261C191600B36C85 /* BoldBorderlessTextField.swift in Sources */,
