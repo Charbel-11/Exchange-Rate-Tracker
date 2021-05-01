@@ -39,14 +39,15 @@ class TransactionsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(TransactionCell.self, forCellReuseIdentifier: TransactionCell.reuseIdentifier)
         tableView.dataSource = self
-        let test = UIView()
-        test.translatesAutoresizingMaskIntoConstraints = false
-        test.backgroundColor = .systemPurple
-        test.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        test.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        tableView.tableHeaderView = test
-        tableView.tableFooterView = UIView()
         
+        let header = StatisticsView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        header.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        tableView.tableHeaderView = header
+        
+        tableView.tableFooterView = UIView()
+
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -59,8 +60,15 @@ class TransactionsViewController: UIViewController {
 }
 
 
+// MARK: Delegate
+extension TransactionsViewController: UITableViewDelegate {
+    
+}
+
+
 // MARK: Data Source
 extension TransactionsViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactions.count
     }

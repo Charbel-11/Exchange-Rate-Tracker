@@ -27,7 +27,7 @@ class ExchangeViewController: UIViewController {
     
     var buyUsd: Float = -1
     var sellUsd: Float = -1
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
