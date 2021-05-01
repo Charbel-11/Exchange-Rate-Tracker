@@ -12,7 +12,8 @@ import { Chart } from 'react-charts'
 
 export default function Statistics({ SERVER_URL }) {
     let [rows, setRows] = useState([]);
-    let [graphData, setGraphData] = useState([]);
+    let [graphUsdToLbpData, setGraphUsdToLbpData] = useState([]);
+    let [graphLbpToUsdData, setGraphLbptoUsdData] = useState([]);
 
     function createData(name, max, median, stdev, mode, variance) {
         return { name, max, median, stdev, mode, variance };
@@ -37,31 +38,34 @@ export default function Statistics({ SERVER_URL }) {
     useEffect(fetchStats, []);
 
     function fetchGraph1() {
-        fetch(`${SERVER_URL}/graph/usd_to_lbp/10`)
+        fetch(`${SERVER_URL}/graph/usd_to_lbp/20`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
+                var usdToLbpArr = []
+                for (var i = 0; i < data.length; i++) {
+                    var curDate = new Date(data[i].date);
+                    usdToLbpArr.push([curDate, data[i].rate]);
+                }
+                setGraphUsdToLbpData(usdToLbpArr);
             });
     }
     useEffect(fetchGraph1, []);
 
-
-
-
-
-    const data = [
-        {
-            label: 'USD to LBP',
-            data: [[2, 1]]
-        },
-        {
-            label: 'LBP to USD',
-            data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
-        }
-    ]
-
-
-
+    function fetchGraph2() {
+        fetch(`${SERVER_URL}/graph/lbp_to_usd/20`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                var lbpToUsdArr = []
+                for (var i = 0; i < data.length; i++) {
+                    var curDate = new Date(data[i].date);
+                    lbpToUsdArr.push([curDate, Math.max(0, data[i].rate)]);
+                }
+                setGraphLbptoUsdData(lbpToUsdArr);
+            });
+    }
+    useEffect(fetchGraph2, []);
 
 
     return (
@@ -101,16 +105,23 @@ export default function Statistics({ SERVER_URL }) {
 
             <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 15 }}>Rates over Time</Typography>
 
-            <div
-                style={{
-                    width: '400px',
-                    height: '300px'
-                }}
-            >
-                <Chart data={data}
+            <div style={{ width: '800px', height: '300px' }}>
+                <Chart
+                    data={
+                        [
+                            {
+                                label: 'USD to LBP',
+                                data: graphUsdToLbpData
+                            },
+                            {
+                                label: 'LBP to USD',
+                                data: graphLbpToUsdData
+                            }
+                        ]
+                    }
                     axes={
                         [
-                            { primary: true, type: 'time', position: 'bottom' },
+                            { primary: true, type: 'utc', position: 'bottom' },
                             { type: 'linear', position: 'left' }
                         ]
                     }
