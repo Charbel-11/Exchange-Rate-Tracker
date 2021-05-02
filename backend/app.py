@@ -325,7 +325,7 @@ def sortedGraph(number):
     usd_to_lbp_graph = []
     for i in range(int(number)):
         req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
-        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y ")  , "rate" : req['usd_to_lbp']}
+        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")  , "rate" : req['usd_to_lbp']}
         usd_to_lbp_graph.append(current)
     return jsonify(usd_to_lbp_graph)
 
@@ -335,7 +335,7 @@ def sortedGraph2(number):
     lbp_to_usd_graph = []
     for i in range(int(number)):
         req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
-        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y ")  , "rate" : req['lbp_to_usd']}
+        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")  , "rate" : req['lbp_to_usd']}
         lbp_to_usd_graph.append(current)
     return jsonify(lbp_to_usd_graph)
 
