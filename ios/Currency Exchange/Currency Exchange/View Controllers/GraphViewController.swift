@@ -31,6 +31,7 @@ class GraphViewController: UIViewController {
         
         lineChartView.translatesAutoresizingMaskIntoConstraints = false
         lineChartView.backgroundColor = .systemBlue
+        lineChartView.delegate = self
         
         lineChartView.rightAxis.enabled = false
         
@@ -62,20 +63,7 @@ class GraphViewController: UIViewController {
     }
     
     private func setData() {
-        let set1 = LineChartDataSet(entries: values, label: "Y-AXIS LABEL")
-        set1.drawCirclesEnabled = false
-        set1.mode = .cubicBezier
-        set1.lineWidth = 3.0
-        set1.setColor(.white)
-        set1.fillColor = .white
-        set1.fillAlpha = 0.8
-        set1.drawFilledEnabled = true
-        set1.drawHorizontalHighlightIndicatorEnabled = false
         
-        let data = LineChartData(dataSet: set1)
-        data.setDrawValues(false)
-        
-        lineChartView.data = data
     }
 
 }
