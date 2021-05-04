@@ -18,7 +18,10 @@
 		230FDAFF263C36E70007A856 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 230FDAFE263C36E70007A856 /* Charts */; };
 		230FDB01263C93420007A856 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB00263C93420007A856 /* CalculatorViewController.swift */; };
 		230FDB03263C9B450007A856 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB02263C9B450007A856 /* Statistics.swift */; };
+		230FDB09263D69C40007A856 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB08263D69C40007A856 /* StatisticsView.swift */; };
+		230FDB0B263DD4C20007A856 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB0A263DD4C20007A856 /* GraphView.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
+		236240FB263EC8F500263D1F /* GraphRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236240FA263EC8F500263D1F /* GraphRate.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
 		23719ACD2638B57B0045DE41 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACC2638B57B0045DE41 /* Transaction.swift */; };
@@ -45,7 +48,10 @@
 		230FDAF2263C307D0007A856 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		230FDB00263C93420007A856 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		230FDB02263C9B450007A856 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		230FDB08263D69C40007A856 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		230FDB0A263DD4C20007A856 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		236240FA263EC8F500263D1F /* GraphRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRate.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
 		23719ACC2638B57B0045DE41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 				23FE6715261C191600B36C85 /* BoldBorderlessTextField.swift */,
 				23FE6719261C2F2300B36C85 /* FilledButton.swift */,
 				230FDAF0263C2AE50007A856 /* ImageLabel.swift */,
+				230FDB08263D69C40007A856 /* StatisticsView.swift */,
+				230FDB0A263DD4C20007A856 /* GraphView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +157,7 @@
 				23719ACA2638B3CB0045DE41 /* NewTransaction.swift */,
 				23719ACC2638B57B0045DE41 /* Transaction.swift */,
 				230FDB02263C9B450007A856 /* Statistics.swift */,
+				236240FA263EC8F500263D1F /* GraphRate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,8 +258,10 @@
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
 				23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */,
 				23719ACD2638B57B0045DE41 /* Transaction.swift in Sources */,
+				236240FB263EC8F500263D1F /* GraphRate.swift in Sources */,
 				230FDAF3263C307D0007A856 /* GraphViewController.swift in Sources */,
 				23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */,
+				230FDB09263D69C40007A856 /* StatisticsView.swift in Sources */,
 				2309D501262078C500BF816F /* UITextField+ContentType.swift in Sources */,
 				23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */,
 				2309D4FE2620629400BF816F /* Constants.swift in Sources */,
@@ -260,6 +271,7 @@
 				2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */,
 				23FE671A261C2F2300B36C85 /* FilledButton.swift in Sources */,
 				2309D4F4262058A800BF816F /* User.swift in Sources */,
+				230FDB0B263DD4C20007A856 /* GraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

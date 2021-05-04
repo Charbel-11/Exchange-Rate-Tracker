@@ -22,12 +22,14 @@ class ExchangeViewController: UIViewController {
     let calculatorButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     let statisticsButton = FilledButton(textColor: .white, backgroundColor: .systemBlue)
     
+    let graphView = GraphView()
+    
     let authentication = Authentication()
     let voyage = Voyage()
     
     var buyUsd: Float = -1
     var sellUsd: Float = -1
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -38,6 +40,7 @@ class ExchangeViewController: UIViewController {
         setupTargets()
         updateAuthenticationUI()
         fetchRates()
+        fetchGraph()
     }
     
 }
@@ -75,6 +78,8 @@ extension ExchangeViewController {
         
         statisticsButton.setTitle("Statistics", for: .normal)
         statisticsButton.layer.opacity = 0
+        
+        graphView.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 
@@ -107,11 +112,17 @@ extension ExchangeViewController {
         contentVStack.spacing = 20
         
         view.addSubview(contentVStack)
+        view.addSubview(graphView)
         
         NSLayoutConstraint.activate([
             contentVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             contentVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            contentVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
+            graphView.topAnchor.constraint(equalTo: contentVStack.bottomAnchor, constant: 40),
+            graphView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            graphView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            graphView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     
@@ -219,5 +230,24 @@ extension ExchangeViewController {
     
     private func didFailToFetchRates(error: Error) {
         print("Failed to fetch rates: \(error)")
+    }
+}
+
+
+// MARK: Fetching Graph
+extension ExchangeViewController {
+    private func fetchGraph() {
+        voyage.get(with: URL(string: "\(K.url)/graph/usd_to_lbp/90")!,
+                   completion: didFetchUsdToLbpGraph(graphRates:),
+                   fail: didFailFetchUsdToLbpGraph(error:),
+                   bearerToken: authentication.getToken())
+    }
+    
+    private func didFetchUsdToLbpGraph(graphRates: [GraphRate]) {
+        print("Fetched graph!")
+    }
+    
+    private func didFailFetchUsdToLbpGraph(error: Error) {
+        
     }
 }
