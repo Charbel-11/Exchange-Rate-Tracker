@@ -20,8 +20,8 @@ import statistics
 app = Flask(__name__)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Arsenal.123@localhost:3306/exchange'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234567qW!@localhost:3306/exchange'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Arsenal.123@localhost:3306/exchange'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234567qW!@localhost:3306/exchange'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:lobster@localhost:3306/exchange'
 CORS(app)
 
@@ -323,22 +323,53 @@ def get_stats(number):
 # Returns the average usd_to_lbp per rate for a range of days requested by the user
 @app.route('/graph/usd_to_lbp/<number>', methods = ['GET'])
 def sortedGraph(number):
-    usd_to_lbp_graph = []
-    for i in range(int(number)):
-        req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
-        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")  , "rate" : req['usd_to_lbp']}
-        usd_to_lbp_graph.append(current)
-    return jsonify(usd_to_lbp_graph)
+    START_DATE = datetime.datetime.now() - datetime.timedelta(days = int(number))
+    END_DATE = datetime.datetime.now()
+    usd_to_lbp = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == True).all()
+
+    dates = {}
+
+    for transaction in usd_to_lbp:
+        if transaction.added_date.strftime("%d %b %Y") not in dates:
+            dates[transaction.added_date.strftime("%d %b %Y")] = [0,0.0]
+        dates[transaction.added_date.strftime("%d %b %Y")][0] += 1
+        dates[transaction.added_date.strftime("%d %b %Y")][1] += (transaction.lbp_amount / transaction.usd_amount)
+
+    res = []
+    for i in range(int(number)-1,-1,-1):
+        date = (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")
+        if date not in dates:
+            res.append({'date' : date, 'rate' : -1})
+        else :
+            res.append({'date' : date, 'rate' : dates[date][1]/dates[date][0]})
+
+    return jsonify(res)
 
 # Returns the average lbp_to_usd per rate for a range of days requested by the user
 @app.route('/graph/lbp_to_usd/<number>', methods = ['GET'])
 def sortedGraph2(number):
-    lbp_to_usd_graph = []
-    for i in range(int(number)):
-        req = requests.get('http://localhost:5000/exchangeRate/' + str(i)).json()
-        current = {"date" : (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")  , "rate" : req['lbp_to_usd']}
-        lbp_to_usd_graph.append(current)
-    return jsonify(lbp_to_usd_graph)
+    START_DATE = datetime.datetime.now() - datetime.timedelta(days = int(number))
+    END_DATE = datetime.datetime.now()
+    lbp_to_usd = Transaction.query.filter(Transaction.added_date.between(START_DATE, END_DATE),Transaction.usd_to_lbp == False).all()
+
+    dates = {}
+
+    for transaction in lbp_to_usd:
+        if transaction.added_date.strftime("%d %b %Y") not in dates:
+            dates[transaction.added_date.strftime("%d %b %Y")] = [0,0.0]
+        dates[transaction.added_date.strftime("%d %b %Y")][0] += 1
+        dates[transaction.added_date.strftime("%d %b %Y")][1] += (transaction.lbp_amount / transaction.usd_amount)
+
+    res = []
+    for i in range(int(number)-1,-1,-1):
+        date = (datetime.datetime.now() - datetime.timedelta(days = i)).strftime("%d %b %Y")
+        if date not in dates:
+            res.append({'date' : date, 'rate' : -1})
+        else :
+            res.append({'date' : date, 'rate' : dates[date][1]/dates[date][0]})
+
+    return jsonify(res)
+
 
 
 
