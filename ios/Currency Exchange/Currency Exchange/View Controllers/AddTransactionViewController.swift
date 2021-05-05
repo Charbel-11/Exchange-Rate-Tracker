@@ -9,11 +9,11 @@ import UIKit
 
 class AddTransactionViewController: UIViewController {
     
-    let cancelButton = UIButton()
     let usdTextField = BoldBorderlessTextField(placeholder: "USD Amount")
     let lbpTextField = BoldBorderlessTextField(placeholder: "LBP Amount")
     var segmentedControl: UISegmentedControl! = nil
     let addButton = FilledButton(textColor: .white, backgroundColor: .systemOrange)
+    let debugButton = FilledButton(textColor: .white, backgroundColor: .systemPurple)
     
     let authentication = Authentication()
     let voyage = Voyage()
@@ -32,6 +32,8 @@ class AddTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        setupNavBar()
         setupSubviews()
         setupLayout()
         setupTargets()
@@ -39,12 +41,21 @@ class AddTransactionViewController: UIViewController {
 }
 
 
+// MARK: Navigation Bar
+extension AddTransactionViewController {
+    private func setupNavBar() {
+        navigationItem.title = "New Transaction"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelTapped))
+        navigationItem.rightBarButtonItem = cancelButton
+    }
+}
+
+
 // MARK: Subviews + Layout
 extension AddTransactionViewController {
     private func setupSubviews() {
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setImage(UIImage(systemName: "xmark.circle.fill")!.withConfiguration(UIImage.SymbolConfiguration(scale: .large)), for: .normal)
-        cancelButton.tintColor = .secondaryLabel
         
         usdTextField.setupForPriceContent()
         lbpTextField.setupForPriceContent()
@@ -54,6 +65,7 @@ extension AddTransactionViewController {
         segmentedControl.selectedSegmentIndex = 0
         
         addButton.setTitle("Add Transaction", for: .normal)
+        debugButton.setTitle("Add 10 Random Transaction", for: .normal)
     }
     
     private func setupLayout() {
@@ -68,14 +80,10 @@ extension AddTransactionViewController {
         stackView.alignment = .fill
         stackView.spacing = 20
         
-        view.addSubview(cancelButton)
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            cancelButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
-            stackView.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 20),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
@@ -85,8 +93,8 @@ extension AddTransactionViewController {
 // MARK: Targets + Actions
 extension AddTransactionViewController {
     private func setupTargets() {
-        cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        debugButton.addTarget(self, action: #selector(debugTapped), for: .touchUpInside)
     }
     
     @objc private func cancelTapped() {
@@ -113,12 +121,15 @@ extension AddTransactionViewController {
     }
     
     private func didAddTransaction(transaction: Transaction) {
-        print("Added transaction successfully!")
         successAction()
         dismiss(animated: true, completion: nil)
     }
     
     private func didFailAddTransaction(error: Error) {
+        
+    }
+    
+    @objc private func debugTapped(_ sender: UIButton) {
         
     }
 }
