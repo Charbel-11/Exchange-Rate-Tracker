@@ -89,6 +89,57 @@ class GraphView: UIView {
         lineChartView.data = data
     }
     
+    func setDataSets(entries: [[ChartDataEntry]], labels: [String]) {
+        let colors = ChartColorTemplates.vordiplom()[0..<entries.count]
+        
+        let dataSets = (0..<entries.count).map { i -> LineChartDataSet in
+            let set = LineChartDataSet(entries: entries[i], label: labels[i])
+            set.drawCirclesEnabled = false
+            set.mode = .cubicBezier
+            set.lineWidth = 3.0
+            set.setColor(colors[i])
+            set.fillColor = colors[i]
+            set.fillAlpha = 0.7
+            set.drawFilledEnabled = true
+            set.drawHorizontalHighlightIndicatorEnabled = false
+            
+            return set
+        }
+        
+        let data = LineChartData(dataSets: dataSets)
+        data.setValueFont(.systemFont(ofSize: 7, weight: .light))
+        lineChartView.data = data
+    }
+    
+    func setDataSets(_ count: Int, range: UInt32) {
+        let colors = ChartColorTemplates.vordiplom()[0...2]
+        
+        let block: (Int) -> ChartDataEntry = { (i) -> ChartDataEntry in
+            let val = Double(arc4random_uniform(range) + 3)
+            return ChartDataEntry(x: Double(i), y: val)
+        }
+        let dataSets = (0..<3).map { i -> LineChartDataSet in
+            let yVals = (0..<count).map(block)
+            let set = LineChartDataSet(entries: yVals, label: "DataSet \(i)")
+            set.lineWidth = 2.5
+            set.circleRadius = 4
+            set.circleHoleRadius = 2
+            let color = colors[i % colors.count]
+            set.setColor(color)
+            set.setCircleColor(color)
+            
+            return set
+        }
+        
+        dataSets[0].lineDashLengths = [5, 5]
+        dataSets[0].colors = ChartColorTemplates.vordiplom()
+        dataSets[0].circleColors = ChartColorTemplates.vordiplom()
+        
+        let data = LineChartData(dataSets: dataSets)
+        data.setValueFont(.systemFont(ofSize: 7, weight: .light))
+        lineChartView.data = data
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

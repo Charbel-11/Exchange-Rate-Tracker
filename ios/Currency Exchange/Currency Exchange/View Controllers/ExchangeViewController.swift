@@ -25,6 +25,7 @@ class ExchangeViewController: UIViewController {
     let graphView = GraphView()
     
     let authentication = Authentication()
+    let graph = Graph()
     let voyage = Voyage()
     
     var buyUsd: Float = -1
@@ -240,7 +241,8 @@ extension ExchangeViewController {
 // MARK: Fetching Graph
 extension ExchangeViewController {
     private func fetchGraph() {
-        let days: Int = (90 / graphView.segmentedControl.selectedSegmentIndex)
+        let days: Int = 90 / (graphView.segmentedControl.selectedSegmentIndex+1)
+        print("DAYS: \(days)")
         
         voyage.get(with: URL(string: "\(K.url)/graph/usd_to_lbp/\(days)")!,
                    completion: didFetchUsdToLbpGraph(graphRates:),
@@ -251,7 +253,7 @@ extension ExchangeViewController {
     private func didFetchUsdToLbpGraph(graphRates: [GraphRate]) {
         usdToLbpGraphRates = graphRates
         
-        let days: Int = (90 / graphView.segmentedControl.selectedSegmentIndex)
+        let days: Int = 90 / (graphView.segmentedControl.selectedSegmentIndex+1)
         
         voyage.get(with: URL(string: "\(K.url)/graph/lbp_to_usd/\(days)")!,
                    completion: didFetchLbpToUsdGraph(graphRates:),
@@ -262,7 +264,10 @@ extension ExchangeViewController {
     private func didFetchLbpToUsdGraph(graphRates: [GraphRate]) {
         lbpToUsdGraphRates = graphRates
         
-//        let usdToLbpEntries =
+        let usdToLbpEntries = graph.createChartDataEntries(from: usdToLbpGraphRates)
+        let lbpToUsdEntries = graph.createChartDataEntries(from: lbpToUsdGraphRates)
+        
+        graphView.setDataSets(entries: [usdToLbpEntries, lbpToUsdEntries], labels: ["Sell USD", "Buy USD"])
     }
     
     private func didFailFetchGraph(error: Error) {
