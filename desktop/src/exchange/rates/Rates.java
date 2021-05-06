@@ -17,7 +17,6 @@ import retrofit2.Response;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
 
 
 public class Rates implements Initializable {
@@ -68,6 +67,7 @@ public class Rates implements Initializable {
         ExchangeService.exchangeApi().addTransaction(transaction, authHeader).enqueue(new Callback<Object>() {
               @Override
               public void onResponse(Call<Object> call, Response<Object> response) {
+                  // TODO: problem with the call
                   fetchRates();
                   Platform.runLater(() -> {
                       usdTextField.setText("");

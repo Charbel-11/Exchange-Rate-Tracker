@@ -1,9 +1,6 @@
 package exchange.api;
 
-import exchange.api.model.ExchangeRates;
-import exchange.api.model.Token;
-import exchange.api.model.Transaction;
-import exchange.api.model.User;
+import exchange.api.model.*;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -25,6 +22,6 @@ public interface Exchange {
     @GET("/transaction")
     Call<List<Transaction>> getTransactions(@Header("Authorization") String authorization);
 
-//    @GET("/stats")
-//    Call<>
+    @GET("/stats/{numberOfDays}")
+    Call<Stat> getStats(@Path("numberOfDays")Integer number);
 }

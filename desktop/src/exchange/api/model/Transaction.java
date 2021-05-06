@@ -29,8 +29,8 @@ public class Transaction {
         return usdAmount;
     }
 
-    public String getLbpAmount() {
-        return lbpAmount.toString();
+    public Float getLbpAmount() {
+        return lbpAmount;
     }
 
     public String getAddedDate() {

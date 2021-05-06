@@ -6,9 +6,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.skin.TableHeaderRow?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="exchange.stats.Stats"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="475.0" prefWidth="600.0">
+
+
+    <TableView
+            fx:id="tableView"
+            AnchorPane.bottomAnchor="4"
+            AnchorPane.leftAnchor="4"
+            AnchorPane.rightAnchor="4"
+            AnchorPane.topAnchor="4">
+        <columns>
+            <TableColumn text="Stats" fx:id="stats"
+                         prefWidth="200"/>
+
+            <TableColumn text="LBP to USD" fx:id="lbpToUsd"
+                         prefWidth="125"/>
+
+            <TableColumn text="USD to LBP" fx:id="usdToLbp"
+                         prefWidth="125"/>
+        </columns>
+
+    </TableView>
 
 </AnchorPane>
+
+
+
