@@ -80,7 +80,7 @@ extension ExchangeViewController {
         
         calculatorButton.setTitle("Exchange Calculator", for: .normal)
         
-        statisticsButton.setTitle("Statistics", for: .normal)
+        statisticsButton.setTitle("More Statistics", for: .normal)
         statisticsButton.layer.opacity = 0
         
         graphView.translatesAutoresizingMaskIntoConstraints = false

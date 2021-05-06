@@ -41,7 +41,7 @@ class GraphView: UIView {
         lineChartView.xAxis.labelTextColor = .label
         lineChartView.xAxis.axisLineColor = .label
         
-        lineChartView.animate(xAxisDuration: 2.5)
+//        lineChartView.animate(xAxisDuration: 2.5)
 
         self.addSubview(lineChartView)
         self.addSubview(segmentedControl)
@@ -108,6 +108,7 @@ class GraphView: UIView {
         
         let data = LineChartData(dataSets: dataSets)
         data.setValueFont(.systemFont(ofSize: 7, weight: .light))
+        
         lineChartView.data = data
     }
     

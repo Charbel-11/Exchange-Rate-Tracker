@@ -65,7 +65,7 @@ extension AddTransactionViewController {
         segmentedControl.selectedSegmentIndex = 0
         
         addButton.setTitle("Add Transaction", for: .normal)
-        debugButton.setTitle("Add 10 Random Transaction", for: .normal)
+        debugButton.setTitle("Add 10 Random Transactions", for: .normal)
     }
     
     private func setupLayout() {
@@ -73,7 +73,8 @@ extension AddTransactionViewController {
             usdTextField,
             lbpTextField,
             segmentedControl,
-            addButton
+            addButton,
+            debugButton
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
