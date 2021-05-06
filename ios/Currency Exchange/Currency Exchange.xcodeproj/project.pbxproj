@@ -20,6 +20,8 @@
 		230FDB03263C9B450007A856 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB02263C9B450007A856 /* Statistics.swift */; };
 		230FDB09263D69C40007A856 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB08263D69C40007A856 /* StatisticsView.swift */; };
 		230FDB0B263DD4C20007A856 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FDB0A263DD4C20007A856 /* GraphView.swift */; };
+		2343BB462642AFBE007A2CBF /* Calendar+NumberOfDays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2343BB452642AFBE007A2CBF /* Calendar+NumberOfDays.swift */; };
+		2343BB482642B25A007A2CBF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2343BB472642B25A007A2CBF /* Graph.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
 		236240FB263EC8F500263D1F /* GraphRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236240FA263EC8F500263D1F /* GraphRate.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
@@ -50,6 +52,8 @@
 		230FDB02263C9B450007A856 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		230FDB08263D69C40007A856 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		230FDB0A263DD4C20007A856 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		2343BB452642AFBE007A2CBF /* Calendar+NumberOfDays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+NumberOfDays.swift"; sourceTree = "<group>"; };
+		2343BB472642B25A007A2CBF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		236240FA263EC8F500263D1F /* GraphRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRate.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 			children = (
 				2309D4FD2620629400BF816F /* Constants.swift */,
 				2309D500262078C500BF816F /* UITextField+ContentType.swift */,
+				2343BB452642AFBE007A2CBF /* Calendar+NumberOfDays.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -167,6 +172,7 @@
 			children = (
 				23719AC82638A6710045DE41 /* Voyage.swift */,
 				23FE671F261C341C00B36C85 /* Authentication.swift */,
+				2343BB472642B25A007A2CBF /* Graph.swift */,
 				23FE6723261C342300B36C85 /* Model */,
 			);
 			path = API;
@@ -253,6 +259,7 @@
 				230FDB01263C93420007A856 /* CalculatorViewController.swift in Sources */,
 				23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */,
 				230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */,
+				2343BB482642B25A007A2CBF /* Graph.swift in Sources */,
 				23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */,
 				23719AC92638A6710045DE41 /* Voyage.swift in Sources */,
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
@@ -271,6 +278,7 @@
 				2309D4F12620587200BF816F /* ExchangeRates.swift in Sources */,
 				23FE671A261C2F2300B36C85 /* FilledButton.swift in Sources */,
 				2309D4F4262058A800BF816F /* User.swift in Sources */,
+				2343BB462642AFBE007A2CBF /* Calendar+NumberOfDays.swift in Sources */,
 				230FDB0B263DD4C20007A856 /* GraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

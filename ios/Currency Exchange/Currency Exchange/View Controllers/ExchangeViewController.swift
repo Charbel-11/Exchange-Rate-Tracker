@@ -30,6 +30,9 @@ class ExchangeViewController: UIViewController {
     var buyUsd: Float = -1
     var sellUsd: Float = -1
     
+    var usdToLbpGraphRates = [GraphRate]()
+    var lbpToUsdGraphRates = [GraphRate]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -196,7 +199,7 @@ extension ExchangeViewController {
         let addTransactionVC = AddTransactionViewController(successAction: {
             self.fetchRates()
         })
-        present(addTransactionVC, animated: true, completion: nil)
+        present(UINavigationController(rootViewController: addTransactionVC), animated: true, completion: nil)
     }
     
     @objc private func calculatorTapped(_ sender: UIButton) {
@@ -237,17 +240,32 @@ extension ExchangeViewController {
 // MARK: Fetching Graph
 extension ExchangeViewController {
     private func fetchGraph() {
-        voyage.get(with: URL(string: "\(K.url)/graph/usd_to_lbp/90")!,
+        let days: Int = (90 / graphView.segmentedControl.selectedSegmentIndex)
+        
+        voyage.get(with: URL(string: "\(K.url)/graph/usd_to_lbp/\(days)")!,
                    completion: didFetchUsdToLbpGraph(graphRates:),
-                   fail: didFailFetchUsdToLbpGraph(error:),
+                   fail: didFailFetchGraph(error:),
                    bearerToken: authentication.getToken())
     }
     
     private func didFetchUsdToLbpGraph(graphRates: [GraphRate]) {
-        print("Fetched graph!")
+        usdToLbpGraphRates = graphRates
+        
+        let days: Int = (90 / graphView.segmentedControl.selectedSegmentIndex)
+        
+        voyage.get(with: URL(string: "\(K.url)/graph/lbp_to_usd/\(days)")!,
+                   completion: didFetchLbpToUsdGraph(graphRates:),
+                   fail: didFailFetchGraph(error:),
+                   bearerToken: authentication.getToken())
     }
     
-    private func didFailFetchUsdToLbpGraph(error: Error) {
+    private func didFetchLbpToUsdGraph(graphRates: [GraphRate]) {
+        lbpToUsdGraphRates = graphRates
         
+//        let usdToLbpEntries =
+    }
+    
+    private func didFailFetchGraph(error: Error) {
+        print(error)
     }
 }
