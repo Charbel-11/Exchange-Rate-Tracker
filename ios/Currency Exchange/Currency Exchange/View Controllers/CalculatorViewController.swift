@@ -108,7 +108,7 @@ class CalculatorViewController: UIViewController {
                 startCurrency = "USD"
                 endCurrency = "LBP"
             } else {
-                convertedAmount = amount * buyUsd
+                convertedAmount = amount / buyUsd
                 startCurrency = "LBP"
                 endCurrency = "USD"
             }

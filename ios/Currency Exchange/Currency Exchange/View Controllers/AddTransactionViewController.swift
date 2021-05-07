@@ -72,7 +72,7 @@ extension AddTransactionViewController {
         userListButton.isHidden = authentication.getToken() == nil
         
         addButton.setTitle("Add Transaction", for: .normal)
-        debugButton.setTitle("Add 10 Random Transactions", for: .normal)
+        debugButton.setTitle("DEBUG: Add 10 Random Transactions", for: .normal)
     }
     
     private func setupLayout() {
@@ -110,7 +110,8 @@ extension AddTransactionViewController {
     @objc private func userListTapped() {
         voyage.get(with: URL(string: "\(K.url)/users")!,
                    completion: didFetchUsers(users:),
-                   fail: failFetchUsers(error:))
+                   fail: failFetchUsers(error:),
+                   bearerToken: authentication.getToken())
     }
     
     private func didFetchUsers(users: [User]) {
