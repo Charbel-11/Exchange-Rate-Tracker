@@ -210,7 +210,7 @@ extension ExchangeViewController {
     }
     
     @objc private func pastTransactionsTapped(_ sender: UIButton) {
-        let transactionsVC = TransactionsViewController()
+        let transactionsVC = DetailedStatisticsViewController()
         show(transactionsVC, sender: self)
     }
     

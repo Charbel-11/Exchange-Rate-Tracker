@@ -1,5 +1,5 @@
 //
-//  TransactionsViewController.swift
+//  DetailedStatisticsViewController.swift
 //  Currency Exchange
 //
 //  Created by Omar Khodr on 4/29/21.
@@ -7,9 +7,11 @@
 
 import UIKit
 
-class TransactionsViewController: UIViewController {
+class DetailedStatisticsViewController: UIViewController {
     
     var transactions = [Transaction]()
+    var userTransactions = [UserTransaction]()
+    
     let tableView = UITableView()
     let statisticsView = StatisticsView()
     
@@ -23,6 +25,7 @@ class TransactionsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupNavBar()
         setupTableView()
+        setupTargets()
         fetchTransactions()
         fetchStatistics()
     }
@@ -40,7 +43,7 @@ class TransactionsViewController: UIViewController {
         statisticsView.backgroundColor = .secondarySystemBackground
         statisticsView.translatesAutoresizingMaskIntoConstraints = false
         statisticsView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        statisticsView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        statisticsView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         tableView.tableHeaderView = statisticsView
         
         tableView.tableFooterView = UIView()
@@ -57,14 +60,8 @@ class TransactionsViewController: UIViewController {
 }
 
 
-// MARK: Delegate
-extension TransactionsViewController: UITableViewDelegate {
-    
-}
-
-
 // MARK: Data Source
-extension TransactionsViewController: UITableViewDataSource {
+extension DetailedStatisticsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactions.count
@@ -105,10 +102,24 @@ extension TransactionsViewController: UITableViewDataSource {
 }
 
 
+// MARK: Targets + Actions
+extension DetailedStatisticsViewController {
+    private func setupTargets() {
+        statisticsView.segmentedControl.addTarget(self, action: #selector(changedFilter(_:)), for: .valueChanged)
+    }
+    
+    @objc private func changedFilter(_ sender: UISegmentedControl) {
+        fetchTransactions()
+    }
+}
+
+
 // MARK: Networking
-extension TransactionsViewController {
+extension DetailedStatisticsViewController {
     private func fetchTransactions() {
-        voyage.get(with: URL(string: "\(K.url)/transaction")!,
+        let endpoints = ["/transaction", "/userTransactions"]
+        
+        voyage.get(with: URL(string: "\(K.url)\(endpoints[statisticsView.segmentedControl.selectedSegmentIndex])")!,
                    completion: didFetchTransactions(transactions:),
                    fail: failFetchTransactions(error:),
                    bearerToken: authentication.getToken())

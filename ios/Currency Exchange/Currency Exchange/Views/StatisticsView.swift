@@ -12,6 +12,8 @@ class StatisticsView: UIView {
     var sellUsdLabels = [UILabel]()
     var buyUsdLabels = [UILabel]()
     
+    var segmentedControl: UISegmentedControl! = nil
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -56,6 +58,11 @@ extension StatisticsView {
             
             buyUsdLabels.append(label)
         }
+        
+        let segmentItems = ["All Transactions", "Between Users"]
+        segmentedControl = UISegmentedControl(items: segmentItems)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.selectedSegmentIndex = 0
     }
 }
 
@@ -89,11 +96,17 @@ extension StatisticsView {
         hStack.spacing = 16
         
         self.addSubview(hStack)
+        self.addSubview(segmentedControl)
+        
         NSLayoutConstraint.activate([
             hStack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
             hStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
 //            hStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
 //            hStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+            
+            segmentedControl.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 20),
+            segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            segmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
         ])
     }
 }

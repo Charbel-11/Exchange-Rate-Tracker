@@ -13,7 +13,9 @@ class AddTransactionViewController: UIViewController {
     let lbpTextField = BoldBorderlessTextField(placeholder: "LBP Amount")
     
     var segmentedControl: UISegmentedControl! = nil
+    
     let userListButton: ListButton = ListButton(title: "Send to User")
+    var selectedUserIndex: Int? = nil
     
     let addButton = FilledButton(textColor: .white, backgroundColor: .systemOrange)
     let debugButton = FilledButton(textColor: .white, backgroundColor: .systemPurple)
@@ -67,6 +69,8 @@ extension AddTransactionViewController {
         segmentedControl = UISegmentedControl(items: segmentItems)
         segmentedControl.selectedSegmentIndex = 0
         
+        userListButton.isHidden = authentication.getToken() == nil
+        
         addButton.setTitle("Add Transaction", for: .normal)
         debugButton.setTitle("Add 10 Random Transactions", for: .normal)
     }
@@ -104,8 +108,33 @@ extension AddTransactionViewController {
     }
     
     @objc private func userListTapped() {
-        let userListVC = UserListViewController()
+        voyage.get(with: URL(string: "\(K.url)/users")!,
+                   completion: didFetchUsers(users:),
+                   fail: failFetchUsers(error:))
+    }
+    
+    private func didFetchUsers(users: [User]) {
+        // new array with only usernames of fetched users
+        let userNames: [String] = users.map { user in
+            return user.userName
+        }
+        
+        let userListVC = OptionListViewController(options: userNames,
+                                                  selectedRow: selectedUserIndex,
+                                                  callBack: selectedUser(username:newSelectedIndex:))
+        userListVC.view.backgroundColor = .systemGroupedBackground
+        userListVC.navigationItem.title = "Send to User"
+        
         show(userListVC, sender: self)
+    }
+    
+    private func selectedUser(username: String?, newSelectedIndex: Int?) {
+        selectedUserIndex = newSelectedIndex
+        userListButton.chosenOptionLabel.text = username == nil ? "None" : username
+    }
+    
+    private func failFetchUsers(error: Error) {
+        print("Failed to fetch users: \(error)")
     }
     
     @objc private func cancelTapped() {
@@ -122,7 +151,7 @@ extension AddTransactionViewController {
                                           lbpAmount: lbpAmount,
                                           usdToLbp: usdToLbp)
             
-            let url = URL(string: "\(K.url)/transaction")!
+            let url = addTransactionURL()
             voyage.post(with: url,
                         body: transaction,
                         completion: didAddTransaction(transaction:),
@@ -141,7 +170,7 @@ extension AddTransactionViewController {
     }
     
     @objc private func debugTapped(_ sender: UIButton) {
-        let url = URL(string: "\(K.url)/transaction")!
+        let url = addTransactionURL()
         
         for _ in 0..<10 {
             let usdToLbp = Bool.random()
@@ -168,5 +197,16 @@ extension AddTransactionViewController {
     
     private func nothing(transaction: Transaction) {
         
+    }
+    
+    private func addTransactionURL() -> URL {
+        var urlString: String = ""
+        if selectedUserIndex == nil {
+            urlString =  "\(K.url)/transaction"
+        } else {
+            urlString =  "\(K.url)/userTransaction/\(userListButton.chosenOptionLabel.text!)"
+        }
+        
+        return URL(string: urlString)!
     }
 }

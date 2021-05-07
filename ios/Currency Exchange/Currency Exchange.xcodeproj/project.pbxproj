@@ -23,13 +23,13 @@
 		2343BB482642B25A007A2CBF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2343BB472642B25A007A2CBF /* Graph.swift */; };
 		23591714261DB54300F14399 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23591713261DB54300F14399 /* AuthenticationViewController.swift */; };
 		235957EB2645412E0003E5A2 /* ListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235957EA2645412E0003E5A2 /* ListButton.swift */; };
-		235957ED2645422E0003E5A2 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235957EC2645422E0003E5A2 /* UserListViewController.swift */; };
 		235957EF26454A380003E5A2 /* OptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235957EE26454A380003E5A2 /* OptionListViewController.swift */; };
+		235957F12645A8900003E5A2 /* UserTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235957F02645A8900003E5A2 /* UserTransaction.swift */; };
 		236240FB263EC8F500263D1F /* GraphRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236240FA263EC8F500263D1F /* GraphRate.swift */; };
 		23719AC92638A6710045DE41 /* Voyage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719AC82638A6710045DE41 /* Voyage.swift */; };
 		23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACA2638B3CB0045DE41 /* NewTransaction.swift */; };
 		23719ACD2638B57B0045DE41 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACC2638B57B0045DE41 /* Transaction.swift */; };
-		23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */; };
+		23719ACF263AA7B30045DE41 /* DetailedStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23719ACE263AA7B30045DE41 /* DetailedStatisticsViewController.swift */; };
 		23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66F8261C0FF600B36C85 /* AppDelegate.swift */; };
 		23FE66FB261C0FF600B36C85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */; };
 		23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FE66FC261C0FF600B36C85 /* ExchangeViewController.swift */; };
@@ -57,13 +57,13 @@
 		2343BB472642B25A007A2CBF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		23591713261DB54300F14399 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		235957EA2645412E0003E5A2 /* ListButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListButton.swift; sourceTree = "<group>"; };
-		235957EC2645422E0003E5A2 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		235957EE26454A380003E5A2 /* OptionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionListViewController.swift; sourceTree = "<group>"; };
+		235957F02645A8900003E5A2 /* UserTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTransaction.swift; sourceTree = "<group>"; };
 		236240FA263EC8F500263D1F /* GraphRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRate.swift; sourceTree = "<group>"; };
 		23719AC82638A6710045DE41 /* Voyage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voyage.swift; sourceTree = "<group>"; };
 		23719ACA2638B3CB0045DE41 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
 		23719ACC2638B57B0045DE41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
+		23719ACE263AA7B30045DE41 /* DetailedStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedStatisticsViewController.swift; sourceTree = "<group>"; };
 		23FE66F5261C0FF600B36C85 /* Currency Exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Exchange.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FE66F8261C0FF600B36C85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23FE66FA261C0FF600B36C85 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,10 +138,9 @@
 				23FE6710261C189E00B36C85 /* AddTransactionViewController.swift */,
 				23591713261DB54300F14399 /* AuthenticationViewController.swift */,
 				230FDB00263C93420007A856 /* CalculatorViewController.swift */,
-				23719ACE263AA7B30045DE41 /* TransactionsViewController.swift */,
+				23719ACE263AA7B30045DE41 /* DetailedStatisticsViewController.swift */,
 				230FDAEE263B4A6C0007A856 /* TransactionCell.swift */,
 				235957EE26454A380003E5A2 /* OptionListViewController.swift */,
-				235957EC2645422E0003E5A2 /* UserListViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -167,6 +166,7 @@
 				2309D4F02620587200BF816F /* ExchangeRates.swift */,
 				23719ACA2638B3CB0045DE41 /* NewTransaction.swift */,
 				23719ACC2638B57B0045DE41 /* Transaction.swift */,
+				235957F02645A8900003E5A2 /* UserTransaction.swift */,
 				230FDB02263C9B450007A856 /* Statistics.swift */,
 				236240FA263EC8F500263D1F /* GraphRate.swift */,
 			);
@@ -259,15 +259,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				235957F12645A8900003E5A2 /* UserTransaction.swift in Sources */,
 				2309D4EE2620584B00BF816F /* Token.swift in Sources */,
 				23FE6720261C341C00B36C85 /* Authentication.swift in Sources */,
 				230FDB03263C9B450007A856 /* Statistics.swift in Sources */,
 				230FDB01263C93420007A856 /* CalculatorViewController.swift in Sources */,
-				23719ACF263AA7B30045DE41 /* TransactionsViewController.swift in Sources */,
+				23719ACF263AA7B30045DE41 /* DetailedStatisticsViewController.swift in Sources */,
 				230FDAEF263B4A6C0007A856 /* TransactionCell.swift in Sources */,
 				2343BB482642B25A007A2CBF /* Graph.swift in Sources */,
 				23719ACB2638B3CB0045DE41 /* NewTransaction.swift in Sources */,
-				235957ED2645422E0003E5A2 /* UserListViewController.swift in Sources */,
 				23719AC92638A6710045DE41 /* Voyage.swift in Sources */,
 				23FE66FD261C0FF600B36C85 /* ExchangeViewController.swift in Sources */,
 				23FE66F9261C0FF600B36C85 /* AppDelegate.swift in Sources */,

@@ -14,6 +14,7 @@ class TransactionCell: UITableViewCell {
     let exchangeTypeLabel = UILabel()
     let rateLabel = UILabel()
     let dateLabel = UILabel()
+    let secondUserLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,6 +51,12 @@ class TransactionCell: UITableViewCell {
         dateLabel.font = .preferredFont(forTextStyle: .caption1)
         dateLabel.numberOfLines = 1
         dateLabel.text = "January 21 2021"
+        
+        secondUserLabel.translatesAutoresizingMaskIntoConstraints = false
+        secondUserLabel.textColor = .secondaryLabel
+        secondUserLabel.font = .preferredFont(forTextStyle: .caption2)
+        secondUserLabel.numberOfLines = 1
+        secondUserLabel.text = "exchanged with @cat"
     }
     
     private func setupLayout() {
@@ -64,6 +71,7 @@ class TransactionCell: UITableViewCell {
         contentView.addSubview(wrapper)
         contentView.addSubview(rateLabel)
         contentView.addSubview(dateLabel)
+        contentView.addSubview(secondUserLabel)
         
         NSLayoutConstraint.activate([
             wrapper.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -72,9 +80,13 @@ class TransactionCell: UITableViewCell {
             rateLabel.topAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: 8),
             rateLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             rateLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            rateLabel.trailingAnchor.constraint(lessThanOrEqualTo: secondUserLabel.leadingAnchor),
             
             dateLabel.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            dateLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
+            secondUserLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 3),
+            secondUserLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     
