@@ -18,10 +18,10 @@ Follow the steps below to setup your backend:
 2. Make sure you have Flask installed. Check this link to know more : https://phoenixnap.com/kb/install-flask
 3. By now, you'll find the folder cloned into your new folder. Using Command Prompt, write cd/exchange-rate/backend
 4. To install the dependencies needed to run the application, run "pip install -r requirements.txt" using Command Prompt. Note that this step is done only once
-4. To run the flask application, write:
+5. To run the flask application, write:
     1. set FLASK_APP=server.py
     2. flask run
-5.The flask application will be running on localhost:5000 by now
+6.The flask application will be running on localhost:5000 by now
 
 ## Database Models
 The database has 3 models:
