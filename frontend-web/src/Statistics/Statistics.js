@@ -122,9 +122,9 @@ export default function Statistics({ SERVER_URL }) {
 
             <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 15 }}>Rates over Time</Typography>
 
-            <Paper >
+            <Paper>
                 <Tabs
-                    style={{marginBottom: 15}}
+                    style={{ marginBottom: 15 }}
                     value={graphDayCnt}
                     onChange={(event, nDays) => setGraphDayCnt(nDays)}
                     indicatorColor="primary"
@@ -136,17 +136,17 @@ export default function Statistics({ SERVER_URL }) {
                     <Tab label="90 days" value={90} />
                 </Tabs>
 
-            <ResponsiveContainer width="100%" height={350}>
-                <LineChart data={graphData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
-                    <Line type="monotone" dataKey="usdToLbp" name="USD to LBP" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="lbpToUsd" name="LBP to USD" stroke="#8884d8" />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Legend />
-                    <Tooltip />
-                </LineChart>
-            </ResponsiveContainer>
+                <ResponsiveContainer width="100%" height={350}>
+                    <LineChart data={graphData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
+                        <Line type="monotone" dataKey="usdToLbp" name="USD to LBP" stroke="#82ca9d" />
+                        <Line type="monotone" dataKey="lbpToUsd" name="LBP to USD" stroke="#8884d8" />
+                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Legend />
+                        <Tooltip />
+                    </LineChart>
+                </ResponsiveContainer>
             </Paper>
 
         </div>

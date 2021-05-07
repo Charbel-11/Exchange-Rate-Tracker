@@ -1,16 +1,32 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect, useCallback } from "react";
-import { Button, Typography, Box, Select, MenuItem, TextField } from '@material-ui/core';
+import { Button, Typography, Box, Select, MenuItem, TextField, Tab, Tabs } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function Transactions({ userToken, SERVER_URL, back }) {
   let [lbpInput, setLbpInput] = useState("");
   let [usdInput, setUsdInput] = useState("");
   let [transactionType, setTransactionType] = useState("usd-to-lbp");
-  let [errorMsg, setErrorMsg] = useState("");
-  let [userTransactions, setUserTransactions] = useState([]);
-  let [allUsers, setAllUsers] = useState([]);
   let [otherUser, setOtherUser] = useState("");
+  let [errorMsg, setErrorMsg] = useState("");
+  let [allUsers, setAllUsers] = useState([]);
+  let [userTransactions, setUserTransactions] = useState([]);
+  let [tableType, setTableType] = useState(0);
+
+  const columnsTable1 = [
+    { field: "added_date", headerName: "Added Date", width: 200 },
+    { field: "lbp_amount", headerName: "LBP Amount", width: 175 },
+    { field: "usd_amount", headerName: "USD Amount", width: 175 },
+    { field: "type", headerName: "Type", width: 175 }
+  ];
+  const columnsTable2 = [
+    { field: "added_date", headerName: "Added Date", width: 200 },
+    { field: "lbp_amount", headerName: "LBP Amount", width: 175 },
+    { field: "usd_amount", headerName: "USD Amount", width: 175 },
+    { field: "user_name", headerName: "Other User", width: 175 },
+    { field: "type", headerName: "Type", width: 175 }
+  ];
 
   function fetchAllUsers() {
     return fetch(`${SERVER_URL}/users`, {
@@ -41,6 +57,7 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
 
     var path = `${SERVER_URL}/transaction`;
     if (otherUser != "") { path = `${SERVER_URL}/userTransaction/` + otherUser; }
+
     return fetch(path, {
       method: 'POST',
       headers: h,
@@ -58,7 +75,9 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
   }
 
   const fetchUserTransactions = useCallback(() => {
-    fetch(`${SERVER_URL}/transaction`, {
+    console.log(tableType);
+    var route = tableType == 0 ? "transaction" : "userTransactions";
+    fetch(`${SERVER_URL}/` + route, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -68,16 +87,18 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
         for (var i = 0; i < transactions.length; i++) {
           transactions[i]["added_date"] = new Date(transactions[i]["added_date"]).toLocaleString();
           transactions[i]["type"] = transactions[i]["usd_to_lbp"] ? "USD to LBP" : "LBP to USD";
+          transactions[i]["id"] = i;
         }
+        console.log(transactions);
         setUserTransactions(transactions);
       }
       );
-  }, [userToken]);
+  }, [userToken, tableType]);
   useEffect(() => {
     if (userToken) {
       fetchUserTransactions();
     }
-  }, [fetchUserTransactions, userToken]);
+  }, [fetchUserTransactions, userToken, tableType]);
 
   return (
     <div className="wrapper">
@@ -118,15 +139,23 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
       {userToken && (
         <div>
           <Typography variant="h5" style={{ fontWeight: 600, marginTop: 40, marginBottom: 20 }}>Your Transactions</Typography>
+          <Paper>
+            <Tabs
+              value={tableType}
+              onChange={(event, nType) => setTableType(nType)}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="All Transactions" value={0} />
+              <Tab label="Between Users" value={1} />
+            </Tabs>
+          </Paper>
+
           <DataGrid
             pageSize={10}
             rows={userTransactions}
-            columns={[
-              { field: "added_date", headerName: "Added Date", width: 200 },
-              { field: "lbp_amount", headerName: "LBP Amount", width: 175 },
-              { field: "usd_amount", headerName: "USD Amount", width: 175 },
-              { field: "type", headerName: "Type", width: 175 }
-            ]}
+            columns={tableType == 0 ? columnsTable1 : columnsTable2}
             autoHeight
           />
         </div>
