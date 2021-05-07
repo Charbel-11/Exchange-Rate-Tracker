@@ -21,7 +21,6 @@ Follow the steps below to setup your backend:
 5. To run the flask application, write:
     1. set FLASK_APP=server.py
     2. flask run
-6.The flask application will be running on localhost:5000 by now
 
 ## Database Models
 The database has 3 models:
