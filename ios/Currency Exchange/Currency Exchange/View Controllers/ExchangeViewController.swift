@@ -194,6 +194,7 @@ extension ExchangeViewController {
     private func setupTargets() {
         calculatorButton.addTarget(self, action: #selector(calculatorTapped(_:)), for: .touchUpInside)
         statisticsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
+        graphView.segmentedControl.addTarget(self, action: #selector(graphSegmentedControlValueChanged(_:)), for: .valueChanged)
     }
     
     @objc private func addTransactionTapped() {
@@ -211,6 +212,10 @@ extension ExchangeViewController {
     @objc private func pastTransactionsTapped(_ sender: UIButton) {
         let transactionsVC = TransactionsViewController()
         show(transactionsVC, sender: self)
+    }
+    
+    @objc private func graphSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        fetchGraph()
     }
 }
 
