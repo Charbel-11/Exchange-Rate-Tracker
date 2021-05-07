@@ -81,7 +81,7 @@
            GridPane.rowIndex="14"/>
 
     <ChoiceBox GridPane.columnIndex="1" GridPane.rowIndex="12"
-               fx:id="conversionType">
+               fx:id="conversionType" >
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="USD"/>

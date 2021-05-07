@@ -1,4 +1,4 @@
-package exchange.api.model;
+package exchange.api.helperClasses;
 
 import com.google.gson.annotations.SerializedName;
 

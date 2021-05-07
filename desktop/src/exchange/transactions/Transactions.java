@@ -1,7 +1,7 @@
 package exchange.transactions;
 import exchange.Authentication;
 import exchange.api.ExchangeService;
-import exchange.api.model.Transaction;
+import exchange.api.models.Transaction;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

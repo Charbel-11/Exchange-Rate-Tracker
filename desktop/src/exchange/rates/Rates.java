@@ -2,8 +2,8 @@ package exchange.rates;
 
 import exchange.Authentication;
 import exchange.api.ExchangeService;
-import exchange.api.model.ExchangeRates;
-import exchange.api.model.Transaction;
+import exchange.api.models.ExchangeRates;
+import exchange.api.models.Transaction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

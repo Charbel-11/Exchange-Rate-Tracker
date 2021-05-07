@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="exchange.Statistics.Statistics"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <BorderPane prefHeight="300.0" prefWidth="400.0"
+                AnchorPane.topAnchor="4">
+        <center>
+            <LineChart fx:id="graph" title="Rate Comparison Chart"  BorderPane.alignment="CENTER"
+                        onSwipeRight="#onSwipeRightHandler"
+                        onZoom="#onZoomHandler">
+                <xAxis>
+                    <CategoryAxis fx:id="xAxis" side="BOTTOM"
+                                    animated="false"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yAxis" side="LEFT"
+                                animated="false" />
+                </yAxis>
+
+            </LineChart>
+        </center>
+    </BorderPane>
+
+    <TableView
+            fx:id="tableView"
+            AnchorPane.bottomAnchor="4"
+            AnchorPane.leftAnchor="4"
+            AnchorPane.rightAnchor="4"
+            AnchorPane.topAnchor="320">
+        <columns>
+            <TableColumn text="Statistic" fx:id="stats"
+                         prefWidth="170"/>
+
+            <TableColumn text="LBP to USD" fx:id="lbpToUsd"
+                         prefWidth="135"/>
+
+            <TableColumn text="USD to LBP" fx:id="usdToLbp"
+                         prefWidth="135"/>
+        </columns>
+    </TableView>
+
+
+
+
+</AnchorPane>

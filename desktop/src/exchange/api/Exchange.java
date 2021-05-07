@@ -1,6 +1,6 @@
 package exchange.api;
 
-import exchange.api.model.*;
+import exchange.api.models.*;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -23,7 +23,7 @@ public interface Exchange {
     Call<List<Transaction>> getTransactions(@Header("Authorization") String authorization);
 
     @GET("/stats/{numberOfDays}")
-    Call<Stat> getStats(@Path("numberOfDays")Integer number);
+    Call<Stats> getStats(@Path("numberOfDays")Integer number);
 
     @GET("/graph/usd_to_lbp/{numberOfDays}")
     Call<List<GraphPoint>> getUsdToLbpGraph(@Path("numberOfDays")Integer number);

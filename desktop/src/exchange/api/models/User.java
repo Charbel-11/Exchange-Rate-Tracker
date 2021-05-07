@@ -1,4 +1,4 @@
-package exchange.api.model;
+package exchange.api.models;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
