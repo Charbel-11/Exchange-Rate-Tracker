@@ -27,7 +27,7 @@ class StatisticsView: UIView {
 
 extension StatisticsView {
     private func setupSubviews() {
-        let types = ["Min", "Max", "Stdev"]
+        let types = ["Max", "Med", "Stdev"]
         
         for i in 0..<4 {
             let label = UILabel()
@@ -86,7 +86,7 @@ extension StatisticsView {
         let hStack = UIStackView(arrangedSubviews: [sellVStack, separator, buyVStack])
         hStack.translatesAutoresizingMaskIntoConstraints = false
         hStack.axis = .horizontal
-        hStack.spacing = 5
+        hStack.spacing = 16
         
         self.addSubview(hStack)
         NSLayoutConstraint.activate([

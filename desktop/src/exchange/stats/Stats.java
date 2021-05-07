@@ -27,6 +27,7 @@ public class Stats implements Initializable {
         lbpToUsd.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("lbpToUsd"));
         usdToLbp.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("usdToLbp"));
 
+        // TODO: fix number of days
         Integer numDays = 30; //Integer.parseInt(numberOfDays.getText());
         ExchangeService.exchangeApi().getStats(numDays).enqueue(new Callback<Stat>() {
             @Override

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.skin.TableHeaderRow?>
+<?import javafx.scene.chart.CategoryAxis?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="exchange.stats.Stats"
@@ -30,7 +31,12 @@
                          prefWidth="125"/>
         </columns>
 
+
     </TableView>
+
+
+
+
 
 </AnchorPane>
 

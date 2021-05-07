@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Statistics {
+struct Statistics: Codable {
     let maxUsdToLbp: Float
     let maxLbpToUsd: Float
     

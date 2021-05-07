@@ -24,4 +24,10 @@ public interface Exchange {
 
     @GET("/stats/{numberOfDays}")
     Call<Stat> getStats(@Path("numberOfDays")Integer number);
+
+    @GET("/graph/usd_to_lbp/{numberOfDays}")
+    Call<List<GraphPoint>> getUsdToLbpGraph(@Path("numberOfDays")Integer number);
+
+    @GET("/graph/lbp_to_usd/{numberOfDays}")
+    Call<List<GraphPoint>> getLbpToUsdGraph(@Path("numberOfDays")Integer number);
 }

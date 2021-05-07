@@ -38,5 +38,7 @@ public class Transactions implements Initializable {
                     public void onFailure(Call<List<Transaction>> call, Throwable throwable) {
                     }
                 });
+        //TODO: Add option to filter table
+
     }
 }

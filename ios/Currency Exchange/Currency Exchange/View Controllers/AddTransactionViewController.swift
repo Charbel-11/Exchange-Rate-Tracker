@@ -11,7 +11,10 @@ class AddTransactionViewController: UIViewController {
     
     let usdTextField = BoldBorderlessTextField(placeholder: "USD Amount")
     let lbpTextField = BoldBorderlessTextField(placeholder: "LBP Amount")
+    
     var segmentedControl: UISegmentedControl! = nil
+    let userListButton: ListButton = ListButton(title: "Send to User")
+    
     let addButton = FilledButton(textColor: .white, backgroundColor: .systemOrange)
     let debugButton = FilledButton(textColor: .white, backgroundColor: .systemPurple)
     
@@ -73,6 +76,7 @@ extension AddTransactionViewController {
             usdTextField,
             lbpTextField,
             segmentedControl,
+            userListButton,
             addButton,
             debugButton
         ])
@@ -94,8 +98,14 @@ extension AddTransactionViewController {
 // MARK: Targets + Actions
 extension AddTransactionViewController {
     private func setupTargets() {
+        userListButton.addTarget(self, action: #selector(userListTapped), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
         debugButton.addTarget(self, action: #selector(debugTapped), for: .touchUpInside)
+    }
+    
+    @objc private func userListTapped() {
+        let userListVC = UserListViewController()
+        show(userListVC, sender: self)
     }
     
     @objc private func cancelTapped() {
@@ -127,10 +137,36 @@ extension AddTransactionViewController {
     }
     
     private func didFailAddTransaction(error: Error) {
-        
+        print("Failed to add transaction: \(error)")
     }
     
     @objc private func debugTapped(_ sender: UIButton) {
+        let url = URL(string: "\(K.url)/transaction")!
+        
+        for _ in 0..<10 {
+            let usdToLbp = Bool.random()
+            let usdAmount = 1
+            let lbpAmount = Int.random(in: 8000...20000)
+            
+            let transaction = NewTransaction(usdAmount: Float(usdAmount),
+                                             lbpAmount: Float(lbpAmount),
+                                             usdToLbp: usdToLbp)
+            
+            voyage.post(with: url,
+                        body: transaction,
+                        completion: nothing(transaction:),
+                        fail: didFailAddTransaction(error:),
+                        bearerToken: authentication.getToken())
+        }
+        successAction()
+        let alert = UIAlertController(title: "Debug Action",
+                                      message: "10 (almost) random transactions added!",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func nothing(transaction: Transaction) {
         
     }
 }

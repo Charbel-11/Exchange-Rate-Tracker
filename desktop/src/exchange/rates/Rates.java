@@ -7,10 +7,7 @@ import exchange.api.model.Transaction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,13 +21,14 @@ public class Rates implements Initializable {
     public Label sellUsdRateLabel;
     public TextField lbpTextField;
     public TextField usdTextField;
-    public ToggleGroup transactionType;
+    public ChoiceBox transactionType;
     public TextField numberOfDays;
 
     //calculator
     public TextField calculatorInput;
     public Label calculatorOutputLabel;
-    public ToggleGroup conversionType;
+    public ChoiceBox conversionType;
+//    public ToggleGroup conversionType;
 
     private void fetchRates() {
         Integer numDays = Integer.parseInt(numberOfDays.getText());
@@ -59,7 +57,7 @@ public class Rates implements Initializable {
         Transaction transaction = new Transaction(
                 Float.parseFloat(usdTextField.getText()),
                 Float.parseFloat(lbpTextField.getText()),
-                ((RadioButton) transactionType.getSelectedToggle()).getText().equals("Sell USD")
+                transactionType.getValue().equals("Sell USD")
         );
         String userToken = Authentication.getInstance().getToken();
         String authHeader = userToken != null ? "Bearer " + userToken : null;
@@ -82,7 +80,7 @@ public class Rates implements Initializable {
 
     public void calculateExchange(ActionEvent actionEvent){
         Float calcInput = Float.parseFloat(calculatorInput.getText());
-        Boolean isUsd = ((RadioButton) conversionType.getSelectedToggle()).getText().equals("USD");
+        Boolean isUsd = conversionType.getValue().equals("USD");
 
         String calculatorOutput = calcInput.toString() + (isUsd ? " USD " : " LBP ") + "is equivalent to ";
 

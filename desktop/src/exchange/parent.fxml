@@ -29,6 +29,11 @@
                     text="Stats"
                     onAction="#statsSelected"/>
 
+            <Button fx:id="graphButton"
+                    styleClass="nav-button"
+                    text="Graphs"
+                    onAction="#graphsSelected"/>
+
             <Button fx:id="loginButton"
                     styleClass="nav-button"
                     text="Login"
@@ -43,6 +48,8 @@
                     styleClass="nav-button"
                     text="Logout"
                     onAction="#logoutSelected"/>
+
+
 
         </VBox>
     </left>

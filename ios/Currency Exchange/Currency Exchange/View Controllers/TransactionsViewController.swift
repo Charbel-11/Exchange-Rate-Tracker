@@ -11,9 +11,12 @@ class TransactionsViewController: UIViewController {
     
     var transactions = [Transaction]()
     let tableView = UITableView()
+    let statisticsView = StatisticsView()
     
     let authentication = Authentication()
     let voyage = Voyage()
+    
+    let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,30 +24,24 @@ class TransactionsViewController: UIViewController {
         setupNavBar()
         setupTableView()
         fetchTransactions()
+        fetchStatistics()
     }
     
     private func setupNavBar() {
         navigationItem.title = "Past Transactions"
-        
-        let graphButton = UIBarButtonItem(title: "Graph", style: .plain, target: self, action: #selector(graphTapped))
-        navigationItem.rightBarButtonItem = graphButton
-    }
-    
-    @objc private func graphTapped() {
-        let graphVC = GraphViewController()
-        show(graphVC, sender: self)
     }
     
     private func setupTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(TransactionCell.self, forCellReuseIdentifier: TransactionCell.reuseIdentifier)
         tableView.dataSource = self
+        tableView.allowsSelection = false
         
-        let header = StatisticsView()
-        header.translatesAutoresizingMaskIntoConstraints = false
-        header.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        header.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        tableView.tableHeaderView = header
+        statisticsView.backgroundColor = .secondarySystemBackground
+        statisticsView.translatesAutoresizingMaskIntoConstraints = false
+        statisticsView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        statisticsView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        tableView.tableHeaderView = statisticsView
         
         tableView.tableFooterView = UIView()
 
@@ -97,7 +94,11 @@ extension TransactionsViewController: UITableViewDataSource {
         fullString.append(NSAttributedString(string: " LBP\(lbpAmountText)"))
         cell.rateLabel.attributedText = fullString
         
-        cell.dateLabel.text = transaction.addedDate
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let date = dateFormatter.date(from: transaction.addedDate)!
+        
+        dateFormatter.dateFormat = "MMM d yyyy, h:mm a"
+        cell.dateLabel.text = dateFormatter.string(from: date)
         
         return cell
     }
@@ -120,5 +121,26 @@ extension TransactionsViewController {
     
     private func failFetchTransactions(error: Error) {
         print("Failed to fetch past transactions: \(error)")
+    }
+    
+    private func fetchStatistics() {
+        voyage.get(with: URL(string: "\(K.url)/stats/30")!,
+                   completion: didFetchStatistics(statistics:),
+                   fail: failFetchStatistics(error:),
+                   bearerToken: authentication.getToken())
+    }
+    
+    private func didFetchStatistics(statistics: Statistics) {
+        statisticsView.sellUsdLabels[1].text = String(format: "Max: %.2f", statistics.maxUsdToLbp)
+        statisticsView.sellUsdLabels[2].text = String(format: "Med: %.2f", statistics.medianUsdToLbp)
+        statisticsView.sellUsdLabels[3].text = String(format: "Stdev: %.2f", statistics.stdevUsdToLbp)
+        
+        statisticsView.buyUsdLabels[1].text = String(format: "Max: %.2f", statistics.maxLbpToUsd)
+        statisticsView.buyUsdLabels[2].text = String(format: "Med: %.2f", statistics.medianLbpToUsd)
+        statisticsView.buyUsdLabels[3].text = String(format: "Stdev: %.2f", statistics.stdevLbpToUsd)
+    }
+    
+    private func failFetchStatistics(error: Error) {
+        print("Failed to fetch statistics: \(error)")
     }
 }
