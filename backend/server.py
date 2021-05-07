@@ -6,6 +6,7 @@ from api.features import app_features
 
 app = create_app()
 
+
 app.register_blueprint(app_user)
 app.register_blueprint(app_transaction)
 app.register_blueprint(app_user_transaction)

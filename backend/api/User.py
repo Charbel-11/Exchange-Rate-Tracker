@@ -1,7 +1,8 @@
-from flask import request, jsonify, abort, Blueprint
+from flask import request, jsonify, abort, Blueprint, Response
 from app import db, bcrypt
 from api.helper import create_token, decode_token, extract_auth_token
 from models.User import User, UserSchema
+from sqlalchemy import not_
 
 user_schema = UserSchema()
 
@@ -28,9 +29,15 @@ def add_user():
 #Get the user_names of all users in the database
 @app_user.route('/users', methods = ['GET'])
 def get_users():
+    token = extract_auth_token(request)
+    user_id = decode_token(token)
     users = User.query.with_entities(User.user_name, User.id)
-    return jsonify(users_schema.dump(users))
-
+    res = []
+    for user in users:
+        if user.id == user_id:
+            continue
+        res.append(user)
+    return jsonify(users_schema.dump(res))
 
 #Authenticate a User
 @app_user.route('/authentication', methods = ['POST'])
