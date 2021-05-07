@@ -51,4 +51,4 @@ To check the documentation :
 2. Run your flask application as mentioned in the Setup section above.
 3. Using any browser, go to http://localhost:5000/apidocs/
 
-You should something like this : ![](Documentation.png)
+You should something like this : ![ScreenShot](Documentation.png)
