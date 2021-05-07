@@ -129,12 +129,24 @@ def get_User_Transactions():
 
             for user_transaction in user_transactions1:
                 transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
-                current = [user_transaction.user2_name,transaction.usd_amount,transaction.lbp_amount,transaction.usd_to_lbp,transaction.added_date.strftime("%d %b %Y ")]
+                current = {
+                    "user_name" : user_transaction.user2_name,
+                    "usd_amount" : transaction.usd_amount,
+                    "lbp_amount" : transaction.lbp_amount,
+                    "usd_to_lbp" : transaction.usd_to_lbp,
+                    "added_date" :transaction.added_date.strftime("%d %b %Y ")
+                }
                 allUserTransactions.append(current)
             
             for user_transaction in user_transactions2:
                 transaction = Transaction.query.filter_by(id = user_transaction.transaction_id).first()
-                current = [user_transaction.user1_name,transaction.usd_amount,transaction.lbp_amount,transaction.usd_to_lbp,transaction.added_date.strftime("%d %b %Y ")]
+                current = {
+                    "user_name" : user_transaction.user1_name,
+                    "usd_amount" : transaction.usd_amount,
+                    "lbp_amount" : transaction.lbp_amount,
+                    "usd_to_lbp" : transaction.usd_to_lbp,
+                    "added_date" :transaction.added_date.strftime("%d %b %Y ")
+                }
                 allUserTransactions.append(current)
 
             return jsonify(allUserTransactions)
