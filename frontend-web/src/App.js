@@ -5,9 +5,9 @@ import { Alert } from "@material-ui/lab";
 import UserCredentialsDialog from "./UserCredentialsDialog/UserCredentialsDialog";
 import { getUserToken, saveUserToken } from "./localStorage";
 import Transactions from "./Transactions/Transactions"
-import Conversion from "./Conversion"
-import ExchangeRates from "./ExchangeRates"
-import Statistics from "./Statistics"
+import Conversion from "./Conversions/Conversion"
+import ExchangeRates from "./Statistics/ExchangeRates"
+import Statistics from "./Statistics/Statistics"
 
 var SERVER_URL = "http://127.0.0.1:5000";
 
@@ -137,7 +137,6 @@ function App() {
           <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
           <hr />
           <Conversion
-            SERVER_URL={SERVER_URL}
             rates={rates}
             back={() => setPageState(PageStates.MAIN)}
           />

@@ -75,6 +75,8 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
         <Box mt={1}><Button id="add-button" variant="contained" color="primary" onClick={addItem}>Add</Button></Box>
       </form>
 
+      <hr />
+      
       {userToken && (
         <div className="wrapper">
           <Box mb={2}><Typography variant="h5" style={{ fontWeight: 600 }}>Your Transactions</Typography></Box>

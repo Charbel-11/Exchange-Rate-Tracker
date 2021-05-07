@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Typography, Box, Select, MenuItem, TextField } from '@material-ui/core';
 
-export default function Conversion({ SERVER_URL, rates, back }) {
+export default function Conversion({ rates, back }) {
   let [conversionInput, setConversionInput] = useState(0);
   let [conversionOutput, setConversionOutput] = useState(0);
   let [conversionType, setConversionType] = useState("usd-to-lbp");
@@ -17,7 +17,7 @@ export default function Conversion({ SERVER_URL, rates, back }) {
 
   return (
     <div>
-      <Typography variant="h5" style={{ fontWeight: 600 }}>Rate Calculator</Typography>
+      <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 10 }}>Rate Calculator</Typography>
       <form name="conversion-entry">
         <div>
           <TextField
@@ -37,13 +37,13 @@ export default function Conversion({ SERVER_URL, rates, back }) {
       </div>
 
       <Box my={2}>
-        <Select id="conversion-type" value={conversionType} onChange={e => { setConversionType(e.target.value); setConversionOutput(0); setConversionInput(0); }}>
+        <Select value={conversionType} onChange={e => { setConversionType(e.target.value); setConversionOutput(0); setConversionInput(0); }}>
           <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
           <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
         </Select>
       </Box>
 
-      <Button id="convert-button" variant="contained" color="primary" onClick={convert}>Convert</Button>
+      <Button variant="contained" color="primary" onClick={convert}>Convert</Button>
 
       <div>
         <br/> <br/>
