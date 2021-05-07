@@ -55,7 +55,7 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
   //TODO: Fix the error color
   return (
     <div className="wrapper">
-      <Typography variant="h5" style={{ fontWeight: 600 }}>Record a recent transaction</Typography>
+      <Typography variant="h5" style={{ fontWeight: 600 }}>Record a new transaction</Typography>
       <form name="transaction-entry">
         <div>
           <TextField id="lbp-amount" label="LBP Amount" value={lbpInput} onChange={e => setLbpInput(e.target.value)} />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Typography } from '@material-ui/core';
+import { Typography, Tab, Tabs } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,13 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Statistics({ SERVER_URL }) {
     let [rows, setRows] = useState([]);
     let [graphUsdToLbpData, setGraphUsdToLbpData] = useState([]);
     let [graphLbpToUsdData, setGraphLbptoUsdData] = useState([]);
     let [graphData, setGraphData] = useState([])
+    let [graphDayCnt, setGraphDayCnt] = useState(30);
 
     function createData(name, max, median, stdev, mode, variance) {
         return { name, max, median, stdev, mode, variance };
@@ -37,8 +38,14 @@ export default function Statistics({ SERVER_URL }) {
     }
     useEffect(fetchStats, []);
 
-    function fetchGraph1() {
-        return fetch(`${SERVER_URL}/graph/usd_to_lbp/20`)
+    function fetchGraphs() {
+        fetchGraph1(graphDayCnt);
+        fetchGraph2(graphDayCnt);
+    }
+    useEffect(fetchGraphs, [graphDayCnt]);
+
+    function fetchGraph1(nDays) {
+        return fetch(`${SERVER_URL}/graph/usd_to_lbp/` + nDays)
             .then(response => response.json())
             .then(data => {
                 var usdToLbpArr = []
@@ -48,10 +55,9 @@ export default function Statistics({ SERVER_URL }) {
                 setGraphUsdToLbpData(usdToLbpArr);
             });
     }
-    useEffect(fetchGraph1, []);
 
-    function fetchGraph2() {
-        return fetch(`${SERVER_URL}/graph/lbp_to_usd/20`)
+    function fetchGraph2(nDays) {
+        return fetch(`${SERVER_URL}/graph/lbp_to_usd/` + nDays)
             .then(response => response.json())
             .then(data => {
                 var lbpToUsdArr = []
@@ -61,7 +67,6 @@ export default function Statistics({ SERVER_URL }) {
                 setGraphLbptoUsdData(lbpToUsdArr);
             });
     }
-    useEffect(fetchGraph2, []);
 
     function setGraph() {
         if (graphLbpToUsdData.length == 0 || graphLbpToUsdData.length != graphUsdToLbpData.length) {
@@ -117,15 +122,33 @@ export default function Statistics({ SERVER_URL }) {
 
             <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 15 }}>Rates over Time</Typography>
 
-            <LineChart width={900} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <Line type="monotone" dataKey="usdToLbp" name="USD to LBP" stroke="#82ca9d" />
-                <Line type="monotone" dataKey="lbpToUsd" name="LBP to USD" stroke="#8884d8" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Legend />
-                <Tooltip />
-            </LineChart>
+            <Paper >
+                <Tabs
+                    style={{marginBottom: 15}}
+                    value={graphDayCnt}
+                    onChange={(event, nDays) => setGraphDayCnt(nDays)}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="30 days" value={30} />
+                    <Tab label="60 days" value={60} />
+                    <Tab label="90 days" value={90} />
+                </Tabs>
+
+            <ResponsiveContainer width="100%" height={350}>
+                <LineChart data={graphData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
+                    <Line type="monotone" dataKey="usdToLbp" name="USD to LBP" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="lbpToUsd" name="LBP to USD" stroke="#8884d8" />
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Legend />
+                    <Tooltip />
+                </LineChart>
+            </ResponsiveContainer>
+            </Paper>
+
         </div>
     );
 }
