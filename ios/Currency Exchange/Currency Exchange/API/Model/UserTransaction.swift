@@ -8,9 +8,9 @@
 import Foundation
 
 struct UserTransaction: Codable {
-    let secondUsername: String
+    let userName: String
     let usdAmount: Float
     let lbpAmount: Float
     let usdToLbp: Bool
-    let date: String
+    let addedDate: String
 }
