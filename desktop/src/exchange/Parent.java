@@ -42,8 +42,6 @@ public class Parent implements Initializable, OnPageCompleteListener{
         swapContent(Section.STATS);
     }
 
-    public void graphsSelected() { swapContent(Section.GRAPH); }
-
     public void logoutSelected() {
         Authentication.getInstance().deleteToken();
         swapContent(Section.RATES);
@@ -86,16 +84,14 @@ public class Parent implements Initializable, OnPageCompleteListener{
         TRANSACTIONS,
         LOGIN,
         REGISTER,
-        STATS,
-        GRAPH;
+        STATS;
         public String getResource() {
             return switch (this) {
                 case RATES -> "/exchange/rates/rates.fxml";
                 case TRANSACTIONS -> "/exchange/transactions/transactions.fxml";
                 case LOGIN -> "/exchange/login/login.fxml";
                 case REGISTER -> "/exchange/register/register.fxml";
-                case STATS -> "/exchange/stats/stats.fxml";
-                case GRAPH -> "/exchange/graph/graph.fxml";
+                case STATS -> "/exchange/Statistics/Statistics.fxml";
                 default -> null;
             };
         }

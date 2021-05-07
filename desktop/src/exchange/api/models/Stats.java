@@ -1,11 +1,12 @@
-package exchange.api.model;
+package exchange.api.models;
 
 import com.google.gson.annotations.SerializedName;
+import exchange.api.helperClasses.StatTableObj;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stat {
+public class Stats {
     @SerializedName("max_usd_to_lbp")
     public Float usd_numbers;
 
@@ -39,11 +40,11 @@ public class Stat {
     public List<StatTableObj> toStatTableObj(){
         List<StatTableObj> result = new ArrayList<>();
 
-        StatTableObj maxStat = new StatTableObj("max", usd_numbers, lbp_numbers);
-        StatTableObj medianStat = new StatTableObj("median", median_usd_to_lbp, median_lbp_to_usd);
-        StatTableObj stddevStat = new StatTableObj("std dev", std_dev_usd_to_lbp, std_dev_lbp_to_usd);
-        StatTableObj varianceStat = new StatTableObj("variance", variance_usd_to_lbp, variance_lbp_to_usd);
-        StatTableObj modeStat = new StatTableObj("mode", mode_usd_to_lbp, mode_lbp_to_usd);
+        StatTableObj maxStat = new StatTableObj("Maximum", usd_numbers, lbp_numbers);
+        StatTableObj medianStat = new StatTableObj("Median", median_usd_to_lbp, median_lbp_to_usd);
+        StatTableObj stddevStat = new StatTableObj("Standard Deviation", std_dev_usd_to_lbp, std_dev_lbp_to_usd);
+        StatTableObj varianceStat = new StatTableObj("Variance", variance_usd_to_lbp, variance_lbp_to_usd);
+        StatTableObj modeStat = new StatTableObj("Mode", mode_usd_to_lbp, mode_lbp_to_usd);
 
         result.add(maxStat);
         result.add(medianStat);
