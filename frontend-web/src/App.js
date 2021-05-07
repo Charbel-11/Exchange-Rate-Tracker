@@ -127,7 +127,7 @@ function App() {
 
           <div style={{textAlign: "center", marginTop: 40}}>
             <Button variant="contained" color="primary" onClick={() => setPageState(PageStates.TRANSACTIONS)}> Transactions </Button>
-            <Button style={{marginLeft: 50}} variant="contained" color="primary" onClick={() => setPageState(PageStates.CONVERSION)}> Conversions </Button>
+            <Button style={{marginLeft: 50, width: 150}} variant="contained" color="primary" onClick={() => setPageState(PageStates.CONVERSION)}> Convert </Button>
           </div>
         </div>
       }

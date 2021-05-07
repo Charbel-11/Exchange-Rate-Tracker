@@ -17,7 +17,7 @@ export default function Conversion({ rates, back }) {
 
   return (
     <div>
-      <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 10 }}>Rate Calculator</Typography>
+      <Typography variant="h5" style={{ fontWeight: 600, marginBottom: 10 }}> Exchange Rate Calculator </Typography>
       <form name="conversion-entry">
         <div>
           <TextField

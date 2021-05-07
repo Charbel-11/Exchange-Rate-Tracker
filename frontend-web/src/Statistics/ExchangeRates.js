@@ -19,7 +19,9 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
   return (
     <div>
       <Typography variant="h5" style={{ fontWeight: 600 }}>Today's Exchange Rate</Typography>
-      <p>LBP to USD Exchange Rate</p>
+      <div className="subTitle">
+        <p>LBP to USD Exchange Rate</p>
+      </div>
       <h3>Buy 1 USD with <span id="buy-usd-rate">{
         buyUsdRate == -1 ? "??" : buyUsdRate.toFixed(2)
       }</span> LBP</h3>
