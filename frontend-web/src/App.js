@@ -1,6 +1,5 @@
 import './App.css';
 import { AppBar, Toolbar, Button, Typography, Snackbar, Tabs, Tab } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 import UserCredentialsDialog from "./UserCredentialsDialog/UserCredentialsDialog";
@@ -97,7 +96,6 @@ function App() {
           <Typography variant="h5">LBP Exchange Tracker</Typography>
 
           <Tabs
-            variant="fullWidth"
             value={pageState}
             onChange={(event, nState) => setPageState(nState)}
           >
@@ -144,18 +142,13 @@ function App() {
         <div className="wrapper">
           <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
           <hr />
-          <Conversion
-            rates={rates}
-          />
+          <Conversion rates={rates} />
         </div>
       }
 
       {pageState == PageStates.TRANSACTIONS &&
-        <div>
-          <Transactions
-            userToken={userToken}
-            SERVER_URL={SERVER_URL}
-          />
+        <div className="wrapper">
+          <Transactions userToken={userToken} SERVER_URL={SERVER_URL} />
         </div>
       }
     </div>

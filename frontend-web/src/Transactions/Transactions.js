@@ -101,7 +101,7 @@ export default function Transactions({ userToken, SERVER_URL }) {
   }, [fetchUserTransactions, userToken, tableType]);
 
   return (
-    <div className="wrapper">
+    <div>
       <Typography variant="h5" style={{ fontWeight: 600 }}>Record a new transaction</Typography>
       <form name="transaction-entry">
         <div>
