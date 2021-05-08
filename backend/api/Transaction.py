@@ -1,6 +1,7 @@
 from flask import request, jsonify, abort, Blueprint, Response
 from app import db, bcrypt
 from models.User import User
+from models.UserTransaction import UserTransactions
 from models.Transaction import Transaction, TransactionSchema
 from api.helper import create_token, extract_auth_token, decode_token
 import datetime
@@ -90,10 +91,24 @@ def getTransactions():
 
     token = extract_auth_token(request)
     if(token):
-        try:
-            user_id = decode_token(token)
-            transactions = Transaction.query.filter_by(user_id = user_id).all()
-            return jsonify(transactions_schema.dump(transactions))
-        except :
-            return Response("{ 'Message' : 'Invalid Token :(' }", status=400, mimetype='application/json')
+      try:     
+          user_id = decode_token(token)
+          user_name = User.query.filter_by(id = user_id).first().user_name
+          sold_transactions = UserTransactions.query.filter_by(user2_name = user_name).all()
+          user_transactions = []
+          for transaction in sold_transactions:
+                cur_transaction = Transaction.query.filter_by(id = transaction.transaction_id).first()
+                user_transactions.append(cur_transaction)
+          transactions = Transaction.query.filter_by(user_id = user_id).all()
+
+          res = []
+          for transaction in transactions:
+                res.append(transaction_schema.dump(transaction))
+          for transaction in user_transactions:
+                res.append(transaction_schema.dump(transaction))
+          return jsonify(res)
+      except : 
+          return Response("{ 'Message' : 'Invalid Input :(' }", status=400, mimetype='application/json')
+  
+    
 
