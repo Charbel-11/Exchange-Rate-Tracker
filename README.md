@@ -1,5 +1,5 @@
-# exchange-rate
-Exchange Rate 430L Project
+# Currency Exchange Rate
+EECE 430L Project developed for Web, Desktop and iOS.
 
 ## Functional Documentation
 
