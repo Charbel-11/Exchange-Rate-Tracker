@@ -6,6 +6,8 @@
 
 The application has no dependencies or package frameworks (i.e. Cocoapods, Carthage) incorporated.
 
+The backend component also needs to be running locally since it currently isn't deployed, refer to the corresponding README for running instructions.
+
 ## Functional Documentation
 
 ### Main View
