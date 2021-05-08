@@ -4,7 +4,7 @@ import { Button, Typography, Box, Select, MenuItem, TextField, Tab, Tabs } from 
 import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function Transactions({ userToken, SERVER_URL, back }) {
+export default function Transactions({ userToken, SERVER_URL }) {
   let [lbpInput, setLbpInput] = useState("");
   let [usdInput, setUsdInput] = useState("");
   let [transactionType, setTransactionType] = useState("usd-to-lbp");
@@ -160,11 +160,6 @@ export default function Transactions({ userToken, SERVER_URL, back }) {
           />
         </div>
       )}
-
-      <div>
-        <br />
-        <Button variant="contained" color="primary" onClick={back}> Back </Button>
-      </div>
     </div >
   );
 }

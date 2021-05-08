@@ -1,5 +1,6 @@
 import './App.css';
-import { AppBar, Toolbar, Button, Typography, Snackbar } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Typography, Snackbar, Tabs, Tab } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 import UserCredentialsDialog from "./UserCredentialsDialog/UserCredentialsDialog";
@@ -19,14 +20,14 @@ function App() {
     USER_AUTHENTICATED: "USER_AUTHENTICATED",
   }
   const PageStates = {
-    MAIN: "MAIN",
+    STATISTICS: "STATISTICS",
     TRANSACTIONS: "TRANSACTIONS",
     CONVERSION: "CONVERSION",
   }
 
   let [userToken, setUserToken] = useState(getUserToken());
   let [authState, setAuthState] = useState(AuthStates.PENDING);
-  let [pageState, setPageState] = useState(PageStates.MAIN);
+  let [pageState, setPageState] = useState(PageStates.STATISTICS);
   let [rates, setRates] = useState({});
 
   function login(username, password) {
@@ -91,9 +92,20 @@ function App() {
         <Alert severity="success">Success</Alert>
       </Snackbar>
 
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar classes={{ root: "nav" }}>
           <Typography variant="h5">LBP Exchange Tracker</Typography>
+
+          <Tabs
+            variant="fullWidth"
+            value={pageState}
+            onChange={(event, nState) => setPageState(nState)}
+          >
+            <Tab label="Statistics" value={PageStates.STATISTICS} />
+            <Tab label="Transactions" value={PageStates.TRANSACTIONS} />
+            <Tab label="Conversions" value={PageStates.CONVERSION} />
+          </Tabs>
+
           <div>
             {userToken !== null ? (
               <Button color="inherit" onClick={logout}>
@@ -119,16 +131,12 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      {pageState === PageStates.MAIN &&
+
+      {pageState === PageStates.STATISTICS &&
         <div className="wrapper">
           <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
           <br />
           <Statistics SERVER_URL={SERVER_URL} />
-
-          <div style={{textAlign: "center", marginTop: 40}}>
-            <Button variant="contained" color="primary" onClick={() => setPageState(PageStates.TRANSACTIONS)}> Transactions </Button>
-            <Button style={{marginLeft: 50, width: 150}} variant="contained" color="primary" onClick={() => setPageState(PageStates.CONVERSION)}> Convert </Button>
-          </div>
         </div>
       }
 
@@ -138,7 +146,6 @@ function App() {
           <hr />
           <Conversion
             rates={rates}
-            back={() => setPageState(PageStates.MAIN)}
           />
         </div>
       }
@@ -148,7 +155,6 @@ function App() {
           <Transactions
             userToken={userToken}
             SERVER_URL={SERVER_URL}
-            back={() => setPageState(PageStates.MAIN)}
           />
         </div>
       }

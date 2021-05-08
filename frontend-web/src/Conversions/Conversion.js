@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Typography, Box, Select, MenuItem, TextField } from '@material-ui/core';
 
-export default function Conversion({ rates, back }) {
+export default function Conversion({ rates }) {
   let [conversionInput, setConversionInput] = useState(0);
   let [conversionOutput, setConversionOutput] = useState(0);
   let [conversionType, setConversionType] = useState("usd-to-lbp");
@@ -44,11 +44,6 @@ export default function Conversion({ rates, back }) {
       </Box>
 
       <Button variant="contained" color="primary" onClick={convert}>Convert</Button>
-
-      <div>
-        <br/> <br/>
-        <Button variant="contained" color="primary" onClick={back}> Back </Button>
-      </div>
     </div>
   );
 }
