@@ -14,6 +14,8 @@ class StatisticsView: UIView {
     
     var segmentedControl: UISegmentedControl! = nil
     
+    let authentication = Authentication()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -63,6 +65,7 @@ extension StatisticsView {
         segmentedControl = UISegmentedControl(items: segmentItems)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.isHidden = authentication.getToken() == nil
     }
 }
 

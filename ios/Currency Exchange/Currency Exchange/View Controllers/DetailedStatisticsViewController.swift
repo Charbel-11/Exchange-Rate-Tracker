@@ -44,7 +44,9 @@ class DetailedStatisticsViewController: UIViewController {
         statisticsView.backgroundColor = .secondarySystemBackground
         statisticsView.translatesAutoresizingMaskIntoConstraints = false
         statisticsView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        statisticsView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        // greater height for segmented control in case user is logged in
+        let height: CGFloat = authentication.getToken() == nil ? 150 : 200
+        statisticsView.heightAnchor.constraint(equalToConstant: height).isActive = true
         tableView.tableHeaderView = statisticsView
         
         tableView.tableFooterView = UIView()
