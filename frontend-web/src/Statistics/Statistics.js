@@ -14,6 +14,7 @@ export default function Statistics({ SERVER_URL }) {
     let [graphUsdToLbpData, setGraphUsdToLbpData] = useState([]);
     let [graphLbpToUsdData, setGraphLbptoUsdData] = useState([]);
     let [graphData, setGraphData] = useState([])
+    let [statsDayCnt, setStatsDayCnt] = useState(30);
     let [graphDayCnt, setGraphDayCnt] = useState(30);
 
     function createData(name, max, median, stdev, mode, variance) {
@@ -21,7 +22,7 @@ export default function Statistics({ SERVER_URL }) {
     }
 
     function fetchStats() {
-        return fetch(`${SERVER_URL}/stats/30`)
+        return fetch(`${SERVER_URL}/stats/` + statsDayCnt)
             .then(response => response.json())
             .then(data => {
                 setRows(
@@ -36,7 +37,7 @@ export default function Statistics({ SERVER_URL }) {
                 )
             });
     }
-    useEffect(fetchStats, []);
+    useEffect(fetchStats, [statsDayCnt]);
 
     function fetchGraphs() {
         fetchGraph1(graphDayCnt);
@@ -91,6 +92,18 @@ export default function Statistics({ SERVER_URL }) {
 
             <br />
             <TableContainer component={Paper}>
+                <Tabs
+                    style={{ marginBottom: 15 }}
+                    value={statsDayCnt}
+                    onChange={(event, nDays) => setStatsDayCnt(nDays)}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="30 days" value={30} />
+                    <Tab label="60 days" value={60} />
+                    <Tab label="90 days" value={90} />
+                </Tabs>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>

@@ -85,7 +85,7 @@ export default function Transactions({ userToken, SERVER_URL }) {
       .then((response) => response.json())
       .then((transactions) => {
         for (var i = 0; i < transactions.length; i++) {
-          transactions[i]["added_date"] = new Date(transactions[i]["added_date"]).toLocaleString();
+          transactions[i]["added_date"] = new Date(transactions[i]["added_date"]).toLocaleDateString();
           transactions[i]["type"] = transactions[i]["usd_to_lbp"] ? "USD to LBP" : "LBP to USD";
           transactions[i]["id"] = i;
         }
