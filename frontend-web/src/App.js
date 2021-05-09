@@ -98,6 +98,7 @@ function App() {
           <Tabs
             value={pageState}
             onChange={(event, nState) => setPageState(nState)}
+            variant="scrollable"
           >
             <Tab label="Statistics" value={PageStates.STATISTICS} />
             <Tab label="Transactions" value={PageStates.TRANSACTIONS} />
