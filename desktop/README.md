@@ -13,7 +13,8 @@
 Please refer to the corresponding backend README.md file.
 
 ### Step 2 : Additional Library
-ControlsFx 8.40.11 was used as an external library. 
+ControlsFx 8.40.11 was used as an additional library.
+It was used in the Add Transaction section, for the autocompletion feature in the "Send to User" TextField.
 * Download it here: `https://javalibs.com/artifact/org.controlsfx/controlsfx`
 * The documentation can be found here: `https://controlsfx.github.io/` 
 * Add the library to the Project Structure.
