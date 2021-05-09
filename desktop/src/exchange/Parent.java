@@ -15,7 +15,6 @@ public class Parent implements Initializable, OnPageCompleteListener{
     public Button registerButton;
     public Button logoutButton;
     public Button statsButton;
-    public Button graphButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,7 +88,7 @@ public class Parent implements Initializable, OnPageCompleteListener{
                 case TRANSACTIONS -> "/exchange/transactions/transactions.fxml";
                 case LOGIN -> "/exchange/login/login.fxml";
                 case REGISTER -> "/exchange/register/register.fxml";
-                case STATS -> "/exchange/statistics/Statistics.fxml";
+                case STATS -> "/exchange/statistics/statistics.fxml";
                 default -> null;
             };
         }

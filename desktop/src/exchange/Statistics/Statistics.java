@@ -28,21 +28,25 @@ public class Statistics implements Initializable {
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
 
-    public ChoiceBox numberOfDays;
+    public ChoiceBox numberOfDaysStats;
+    public ChoiceBox numberOfDaysGraph;
 
     public TableColumn<StatTableObj, String> stats;
     public TableColumn<StatTableObj, Float> lbpToUsd;
     public TableColumn<StatTableObj, Float> usdToLbp;
     public TableView tableView;
 
-    private Integer getNumDays(){
-        String numDaysStr = (String) numberOfDays.getValue();
+    /**
+     * Action Event that responds to the "numberOfDaysGraph" ChoiceBox onAction Event
+     * - Fetches the Graph Points (date, rate) corresponding to the daily exchange rate for selling and buying USD rates for the past "numberOfDaysGraph" Days
+     * - Creates new series for both selling and buying USD Rates, and adds those series to the "graph" LineChart
+     * API Call Parameters:
+     *      - String: numberOfDaysGraph.value
+     *              - Example: "Past dd Days"
+     **/
+    public void fetchGraphs(ActionEvent actionEvent) {
+        String numDaysStr = (String) numberOfDaysGraph.getValue();
         Integer numDays = Integer.parseInt(numDaysStr.substring(5, 7));
-        return numDays;
-    }
-
-    private void fetchGraphs() {
-        Integer numDays = getNumDays();
 
         //USD to LBP Rates
         ExchangeService.exchangeApi().getUsdToLbpGraph(numDays).enqueue(new Callback<List<GraphPoint>>() {
@@ -54,6 +58,7 @@ public class Statistics implements Initializable {
                         series.getData().add(new XYChart.Data(point.date.replace("2021", ""), point.rate));
                     }
                     series.setName("USD to LBP rates");
+                    graph.getData().clear();
                     graph.getData().add(series);
                 });
             }
@@ -79,8 +84,17 @@ public class Statistics implements Initializable {
         });
     }
 
-    private void fetchStats() {
-        Integer numDays = getNumDays();
+    /**
+     * Responds to the "numberOfDaysStats" ChoiceBox onAction Event
+     * - Fetches the Statistics corresponding to the daily exchange rate for selling and buying USD rates for the past "numberOfDaysStats" Days
+     * - Using the StatTableObj helper class, the response.body() Stat object is converted to an intermediate format for the TableView
+     * API Call Parameters:
+     *      - String: numberOfDaysStats.value
+     *              - Example: "Past dd Days"
+     **/
+    public void fetchStats(ActionEvent actionEvent) {
+        String numDaysStr = (String) numberOfDaysStats.getValue();
+        Integer numDays = Integer.parseInt(numDaysStr.substring(5, 7));
 
         // Get the statistics
         ExchangeService.exchangeApi().getStats(numDays).enqueue(new Callback<Stats>() {
@@ -95,13 +109,6 @@ public class Statistics implements Initializable {
         });
     }
 
-    public void fetchStatistics(ActionEvent actionEvent) {
-        graph.getData().clear();
-        fetchStats();
-        fetchGraphs();
-    }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,10 +119,8 @@ public class Statistics implements Initializable {
         xAxis.setLabel("Date");
         yAxis.setLabel("Rate");
 
-
-        numberOfDays.setValue("Last 30 Days");
-        graph.getData().clear();
-        //TODO if time, fix colors
+        numberOfDaysStats.setValue("Last 30 Days");
+        numberOfDaysGraph.setValue("Last 30 Days");
     }
 
 }

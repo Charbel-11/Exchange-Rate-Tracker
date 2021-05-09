@@ -19,6 +19,12 @@ public class Register implements PageCompleter {
     public PasswordField passwordTextField;
     private OnPageCompleteListener onPageCompleteListener;
 
+    /**
+     * Registers a user into the platform
+     * API Call Parameters:
+     *      - Username
+     *      - Password
+     **/
     public void register(ActionEvent actionEvent) {
         User user = new User(usernameTextField.getText(), passwordTextField.getText());
 

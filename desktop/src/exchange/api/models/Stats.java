@@ -37,6 +37,12 @@ public class Stats {
     @SerializedName("variance_lbp_to_usd")
     public Float variance_lbp_to_usd;
 
+    @SerializedName("predict_usd_to_lbp")
+    public Float prediction_usd_to_lbp;
+
+    @SerializedName("predict_lbp_to_usd")
+    public Float prediction_lbp_to_usd;
+
     public List<StatTableObj> toStatTableObj(){
         List<StatTableObj> result = new ArrayList<>();
 
@@ -45,12 +51,14 @@ public class Stats {
         StatTableObj stddevStat = new StatTableObj("Standard Deviation", std_dev_usd_to_lbp, std_dev_lbp_to_usd);
         StatTableObj varianceStat = new StatTableObj("Variance", variance_usd_to_lbp, variance_lbp_to_usd);
         StatTableObj modeStat = new StatTableObj("Mode", mode_usd_to_lbp, mode_lbp_to_usd);
+        StatTableObj prediction = new StatTableObj("Prediction", prediction_usd_to_lbp, prediction_lbp_to_usd);
 
         result.add(maxStat);
         result.add(medianStat);
         result.add(stddevStat);
         result.add(varianceStat);
         result.add(modeStat);
+        result.add(prediction);
 
         return result;
     }

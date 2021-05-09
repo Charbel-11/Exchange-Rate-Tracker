@@ -4,7 +4,6 @@ import exchange.Authentication;
 import exchange.api.ExchangeService;
 import exchange.api.models.Transaction;
 import exchange.api.models.User;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -34,10 +33,18 @@ public class Transactions implements Initializable {
     public TextField otherUser;
     public ChoiceBox transactionType;
 
+
     public Button userTransactionsButton;
     public Button allTransactionsButton;
 
-
+    /**
+     * - Fetches a list of Transactions associated with the authenticated user
+     * - After Fetching the Transactions, they are displayed to the TableView and userTransactionsButton is now visible
+     * - If the user is not authenticated or does not have any registered transaction,
+     *      a placeholder message is displayed accordingly to the tableView
+     *  API Call Parameters:
+     *      - String: authHeader
+     **/
     public void fetchTransactions(){
         otherUserCol.setVisible(false);
         lbpAmount.setPrefWidth(100);
@@ -67,6 +74,14 @@ public class Transactions implements Initializable {
         });
     }
 
+    /**
+     * - Fetches a list of Transactions associated with the authenticated user and sent to another user
+     * - After Fetching the Transactions, they are displayed to the TableView and allTransactionsButton is now visible
+     * - If the user is not authenticated or does not have any registered transaction,
+     *      a placeholder message is displayed accordingly to the tableView
+     *  API Call Parameters:
+     *      - String: authHeader
+     **/
     public void fetchUserTransactions(ActionEvent actionEvent) {
         otherUserCol.setVisible(true);
         lbpAmount.setPrefWidth(80);
@@ -97,6 +112,14 @@ public class Transactions implements Initializable {
         });
     }
 
+
+    /**
+     * - Adds a new Transaction
+     * - if the user is authenticated, the added transaction will be associated to him
+     * - Being authenticated also permits him to send the transaction to another user
+     *  API Call Parameters:
+     *      - Transaction: transaction
+     **/
     public void addTransaction(ActionEvent actionEvent) {
         Transaction transaction = new Transaction(
                 otherUser.getText(),
@@ -114,11 +137,6 @@ public class Transactions implements Initializable {
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     fetchTransactions();
-                    Platform.runLater(() -> {
-                        usdTextField.setText("USD Amount");
-                        lbpTextField.setText("LBP Amount");
-                        otherUser.setText("Send to User");
-                    });
                 }
 
                 @Override
@@ -130,11 +148,6 @@ public class Transactions implements Initializable {
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     fetchTransactions();
-                    Platform.runLater(() -> {
-                        usdTextField.setText("USD Amount");
-                        lbpTextField.setText("LBP Amount");
-                        otherUser.setText("Send to User");
-                    });
                 }
                 @Override
                 public void onFailure(Call<Object> call, Throwable throwable) {
@@ -144,7 +157,13 @@ public class Transactions implements Initializable {
 
     }
 
-
+    /**
+     * - Fetches usernames of all users in the database and populates the "otherUser" TextField
+     *      Autocomplete feature using the controlsfx.control.textfield package.
+     *      This facilitates the search for users when sending a Transaction
+     *  API Call Parameters:
+     *      - String: authHeader
+     **/
     public void fetchUsernames(){
         String userToken = Authentication.getInstance().getToken();
         String authHeader = userToken != null ? "Bearer " + userToken : null;
@@ -160,7 +179,7 @@ public class Transactions implements Initializable {
                     }
                     TextFields.bindAutoCompletion(otherUser, users);
                 }else{
-                    otherUser.setText("Login send to Transactions to users");
+                    otherUser.setPromptText("Login to send Transactions to users");
                 }
             }
             @Override
@@ -172,7 +191,6 @@ public class Transactions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         lbpAmount.setCellValueFactory(new PropertyValueFactory<Transaction, Float>("lbpAmount"));
         usdAmount.setCellValueFactory(new PropertyValueFactory<Transaction, Float>("usdAmount"));
         transactionDate.setCellValueFactory(new PropertyValueFactory<Transaction, String>("addedDate"));
@@ -181,7 +199,5 @@ public class Transactions implements Initializable {
 
         fetchTransactions();
         fetchUsernames();
-
-
     }
 }

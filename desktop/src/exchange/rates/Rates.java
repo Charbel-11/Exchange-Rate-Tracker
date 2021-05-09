@@ -27,6 +27,11 @@ public class Rates implements Initializable {
     public Label calculatorOutputLabel;
     public ChoiceBox conversionType;
 
+    /**
+     * Fetches Exchange Rates from the backend and sets the values of buyUsdRateLabel and sellUsdRateLabel
+     * API Call Parameters:
+     *      - numDays: the number of days included in the Exchange Rate
+     **/
     private void fetchRates() {
         Integer numDays = 3;
         if(numberOfDays.getText() != ""){
@@ -44,15 +49,25 @@ public class Rates implements Initializable {
              }
              @Override
              public void onFailure(Call<ExchangeRates> call, Throwable throwable) {
-
              }
         });
     }
 
+    /**
+     * Responds to the "Get Rates" Button onClick event
+     * Calls fetchRates()
+     **/
     public void fetchRatesActionEvent(ActionEvent actionEvent){
         fetchRates();
     }
 
+    /**
+     * Responds to the "Convert" Button onClick event
+     * Converts the input to the complementary currency based on the rates fetched by "fetchRates()"
+     * Parameters:
+     *      - Float: calculatorInput
+     *      - String: conversionType (USD or LBP)
+     **/
     public void calculateExchange(ActionEvent actionEvent){
         Float calcInput = Float.parseFloat(calculatorInput.getText());
         Boolean isUsd = conversionType.getValue().equals("USD");

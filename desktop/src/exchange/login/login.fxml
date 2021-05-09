@@ -18,5 +18,6 @@
     <TextField fx:id="usernameTextField"/>
     <Label text="Password"/>
     <PasswordField fx:id="passwordTextField"/>
+    <Label fx:id="loginMessage" text=""/>
     <Button text="Login" onAction="#login"/>
 </FlowPane>
