@@ -8,6 +8,7 @@ This is EECE 430L project's Desktop Frontend. Developped by Maria Mattar with th
 * JavaFx SDK 11.0.2 
 * Retrofit 2.9.0
 * Java jdk-15.0.2
+* ControlsFx 8.40.11 (Please refer to Setup/'Step 2' below)
 * Please refer to the documentation found here in order to add the above libraries to the Project Structure `https://www.jetbrains.com/help/idea/javafx.html#add-javafx-lib`
 
 ## Setup
