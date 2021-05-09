@@ -4,6 +4,7 @@ from flask import request, jsonify, abort, Blueprint
 from models.User import User
 from models.Transaction import Transaction, TransactionSchema
 from models.UserTransaction import UserTransactions
+from api.helper import predict_rate
 
 app_features = Blueprint('app_features', __name__)
 
@@ -105,6 +106,19 @@ def get_stats(number):
     stats["mode_lbp_to_usd"] = statistics.mode(lbp_numbers)
     stats["variance_usd_to_lbp"] = statistics.variance(usd_numbers)
     stats["variance_lbp_to_usd"] = statistics.variance(lbp_numbers)
+
+    data = []
+    for i in range(len(usd_numbers)):
+        data.append([i,usd_numbers[i]])
+    res1 = predict_rate(data)
+
+    data2 = []
+    for i in range(len(lbp_numbers)):
+        data.append([i,lbp_numbers[i]])
+    res2 = predict_rate(data)
+
+    stats["predict_usd_to_lbp"] = res1
+    stats["predict_lbp_to_usd"] = res2
 
 
     return jsonify(stats)
