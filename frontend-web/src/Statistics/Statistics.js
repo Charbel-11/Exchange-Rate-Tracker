@@ -21,6 +21,7 @@ export default function Statistics({ SERVER_URL }) {
         return { name, max, median, stdev, mode, variance, prediction };
     }
 
+    //Fetches statistics from the backend and populate the table rows accordingly
     function fetchStats() {
         return fetch(`${SERVER_URL}/stats/` + statsDayCnt)
             .then(response => response.json())
@@ -47,6 +48,7 @@ export default function Statistics({ SERVER_URL }) {
     }
     useEffect(fetchGraphs, [graphDayCnt]);
 
+    //Gets the Usd to Lbp average rate per day for the previous <nDays>
     function fetchGraph1(nDays) {
         return fetch(`${SERVER_URL}/graph/usd_to_lbp/` + nDays)
             .then(response => response.json())
@@ -59,6 +61,7 @@ export default function Statistics({ SERVER_URL }) {
             });
     }
 
+    //Gets the Lbp to Usd average rate per day for the previous <nDays>
     function fetchGraph2(nDays) {
         return fetch(`${SERVER_URL}/graph/lbp_to_usd/` + nDays)
             .then(response => response.json())
@@ -71,6 +74,7 @@ export default function Statistics({ SERVER_URL }) {
             });
     }
 
+    //Sets the points in the graph
     function setGraph() {
         if (graphLbpToUsdData.length == 0 || graphLbpToUsdData.length != graphUsdToLbpData.length) {
             return;

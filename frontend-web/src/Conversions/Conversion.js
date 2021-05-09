@@ -6,6 +6,7 @@ export default function Conversion({ rates }) {
   let [conversionOutput, setConversionOutput] = useState(0);
   let [conversionType, setConversionType] = useState("usd-to-lbp");
 
+  //Computes the converted rate and displays it
   function convert() {
     if (conversionType === "usd-to-lbp") {
       setConversionOutput(conversionInput * rates.usd_to_lbp);

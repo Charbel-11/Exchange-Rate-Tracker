@@ -7,6 +7,7 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
   let [sellUsdRate, setSellUsdRate] = useState(-1);
   let [daysConsidered, setDaysConsidered] = useState(3);
 
+  //Fetches the exchange rate for the last <daysConsidered> days
   function fetchRates() {
     return fetch(`${SERVER_URL}/exchangeRate/` + daysConsidered)
       .then(response => response.json())
