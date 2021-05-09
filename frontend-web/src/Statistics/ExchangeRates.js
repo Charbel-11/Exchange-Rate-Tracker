@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { Typography } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 
 export default function ExchangeRates({ SERVER_URL, setRates }) {
   let [buyUsdRate, setBuyUsdRate] = useState(-1);
   let [sellUsdRate, setSellUsdRate] = useState(-1);
+  let [daysConsidered, setDaysConsidered] = useState(3);
 
+  //Fetches the exchange rate for the last <daysConsidered> days
   function fetchRates() {
-    return fetch(`${SERVER_URL}/exchangeRate/30`)
+    return fetch(`${SERVER_URL}/exchangeRate/` + daysConsidered)
       .then(response => response.json())
       .then(data => {
         setRates(data);
@@ -14,7 +17,7 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
         setBuyUsdRate(data.lbp_to_usd);
       });
   }
-  useEffect(fetchRates, []);
+  useEffect(fetchRates, [daysConsidered]);
 
   return (
     <div>
@@ -22,12 +25,20 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
       <div className="subTitle">
         <p>LBP to USD Exchange Rate</p>
       </div>
-      <h3>Buy 1 USD with <span id="buy-usd-rate">{
-        buyUsdRate == -1 ? "??" : buyUsdRate.toFixed(2)
-      }</span> LBP</h3>
-      <h3>Sell 1 USD for <span id="sell-usd-rate">{
-        sellUsdRate == -1 ? "??" : sellUsdRate.toFixed(2)
-      }</span> LBP</h3>
+      <h3>Buy USD Rate: <span id="buy-usd-rate">{
+        buyUsdRate == -1 ? "Not available yet" : buyUsdRate.toFixed(2)
+      }</span></h3>
+      <h3>Sell USD Rate: <span id="sell-usd-rate">{
+        sellUsdRate == -1 ? "Not available yet" : sellUsdRate.toFixed(2)
+      }</span></h3>
+
+      <Typography variant="inherit">Days Considered:
+      <Input
+          style={{ width: "8%", marginLeft: 10 }}
+          value={daysConsidered}
+          onChange={({ target: { value } }) => setDaysConsidered(value)}
+          type="number" />
+      </Typography>
     </div>
   );
 }

@@ -42,6 +42,13 @@ The database has 3 models:
         * user1_name : Foreign Key to User(user_name)
         * user2_name : Foreign Key to User(user_name)
 
+## Architecture
+
+Below is a simple diagram that shows that backend architecture. Feel free to read more about every platform used in their corresponding Readme.md file
+
+![alt text](https://github.com/OmarKhodr/exchange-rate/blob/main/backend/Archi.PNG?raw=true)
+
+
 ## Documentation
 For API documentation, Swagger UI was used. Swagger UI allows anyone — be it your development team or your end consumers — to visualize and interact with the API’s resources without having any of the implementation logic in place. It’s automatically generated from your OpenAPI (formerly known as Swagger) Specification, with the visual documentation making it easy for back end implementation and client side consumption.
 
@@ -53,3 +60,5 @@ To check the documentation :
 You should see something like this :
 
 ![alt text](https://github.com/OmarKhodr/exchange-rate/blob/main/backend/Documentation.PNG?raw=true)
+
+

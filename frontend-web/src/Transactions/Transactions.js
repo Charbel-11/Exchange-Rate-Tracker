@@ -28,6 +28,7 @@ export default function Transactions({ userToken, SERVER_URL }) {
     { field: "type", headerName: "Type", width: 175 }
   ];
 
+  //Fetches all the users available for transactions between users
   function fetchAllUsers() {
     return fetch(`${SERVER_URL}/users`, {
       headers: {
@@ -39,6 +40,7 @@ export default function Transactions({ userToken, SERVER_URL }) {
   }
   useEffect(fetchAllUsers, []);
 
+  //Sends a new transaction to the backend.
   function addItem() {
     var ratio = lbpInput / usdInput;
     if (isNaN(ratio) || ratio == Infinity || ratio == 0) {
@@ -74,6 +76,8 @@ export default function Transactions({ userToken, SERVER_URL }) {
       })
   }
 
+  //Fetches all the transactions from the backend (if tableType == 0)
+  //Or all transactions between users (if tableType == 1)
   const fetchUserTransactions = useCallback(() => {
     console.log(tableType);
     var route = tableType == 0 ? "transaction" : "userTransactions";
@@ -85,7 +89,7 @@ export default function Transactions({ userToken, SERVER_URL }) {
       .then((response) => response.json())
       .then((transactions) => {
         for (var i = 0; i < transactions.length; i++) {
-          transactions[i]["added_date"] = new Date(transactions[i]["added_date"]).toLocaleString();
+          transactions[i]["added_date"] = new Date(transactions[i]["added_date"]).toLocaleDateString();
           transactions[i]["type"] = transactions[i]["usd_to_lbp"] ? "USD to LBP" : "LBP to USD";
           transactions[i]["id"] = i;
         }

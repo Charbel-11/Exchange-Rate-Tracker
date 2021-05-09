@@ -14,29 +14,33 @@ export default function Statistics({ SERVER_URL }) {
     let [graphUsdToLbpData, setGraphUsdToLbpData] = useState([]);
     let [graphLbpToUsdData, setGraphLbptoUsdData] = useState([]);
     let [graphData, setGraphData] = useState([])
+    let [statsDayCnt, setStatsDayCnt] = useState(30);
     let [graphDayCnt, setGraphDayCnt] = useState(30);
 
-    function createData(name, max, median, stdev, mode, variance) {
-        return { name, max, median, stdev, mode, variance };
+    function createData(name, max, median, stdev, mode, variance, prediction) {
+        return { name, max, median, stdev, mode, variance, prediction };
     }
 
+    //Fetches statistics from the backend and populate the table rows accordingly
     function fetchStats() {
-        return fetch(`${SERVER_URL}/stats/30`)
+        return fetch(`${SERVER_URL}/stats/` + statsDayCnt)
             .then(response => response.json())
             .then(data => {
                 setRows(
                     [
                         createData("USD to LBP", data.max_usd_to_lbp.toFixed(2),
                             data.median_usd_to_lbp.toFixed(2), data.stdev_usd_to_lbp.toFixed(2),
-                            data.mode_usd_to_lbp.toFixed(2), data.variance_usd_to_lbp.toFixed(2)),
+                            data.mode_usd_to_lbp.toFixed(2), data.variance_usd_to_lbp.toFixed(2),
+                            data.predict_usd_to_lbp.toFixed(2)),
                         createData("LBP to USD", data.max_lbp_to_usd.toFixed(2),
                             data.median_lbp_to_usd.toFixed(2), data.stdev_lbp_to_usd.toFixed(2),
-                            data.mode_lbp_to_usd.toFixed(2), data.variance_lbp_to_usd.toFixed(2))
+                            data.mode_lbp_to_usd.toFixed(2), data.variance_lbp_to_usd.toFixed(2),
+                            data.predict_lbp_to_usd.toFixed(2))
                     ]
                 )
             });
     }
-    useEffect(fetchStats, []);
+    useEffect(fetchStats, [statsDayCnt]);
 
     function fetchGraphs() {
         fetchGraph1(graphDayCnt);
@@ -44,6 +48,7 @@ export default function Statistics({ SERVER_URL }) {
     }
     useEffect(fetchGraphs, [graphDayCnt]);
 
+    //Gets the Usd to Lbp average rate per day for the previous <nDays>
     function fetchGraph1(nDays) {
         return fetch(`${SERVER_URL}/graph/usd_to_lbp/` + nDays)
             .then(response => response.json())
@@ -56,6 +61,7 @@ export default function Statistics({ SERVER_URL }) {
             });
     }
 
+    //Gets the Lbp to Usd average rate per day for the previous <nDays>
     function fetchGraph2(nDays) {
         return fetch(`${SERVER_URL}/graph/lbp_to_usd/` + nDays)
             .then(response => response.json())
@@ -68,6 +74,7 @@ export default function Statistics({ SERVER_URL }) {
             });
     }
 
+    //Sets the points in the graph
     function setGraph() {
         if (graphLbpToUsdData.length == 0 || graphLbpToUsdData.length != graphUsdToLbpData.length) {
             return;
@@ -91,6 +98,18 @@ export default function Statistics({ SERVER_URL }) {
 
             <br />
             <TableContainer component={Paper}>
+                <Tabs
+                    style={{ marginBottom: 15 }}
+                    value={statsDayCnt}
+                    onChange={(event, nDays) => setStatsDayCnt(nDays)}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="30 days" value={30} />
+                    <Tab label="60 days" value={60} />
+                    <Tab label="90 days" value={90} />
+                </Tabs>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -100,6 +119,7 @@ export default function Statistics({ SERVER_URL }) {
                             <TableCell align="right">Stdev</TableCell>
                             <TableCell align="right">Mode</TableCell>
                             <TableCell align="right">Variance</TableCell>
+                            <TableCell align="right">Prediction</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -113,6 +133,7 @@ export default function Statistics({ SERVER_URL }) {
                                 <TableCell align="right">{row.stdev}</TableCell>
                                 <TableCell align="right">{row.mode}</TableCell>
                                 <TableCell align="right">{row.variance}</TableCell>
+                                <TableCell align="right">{row.prediction}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

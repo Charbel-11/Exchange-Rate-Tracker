@@ -98,6 +98,7 @@ function App() {
           <Tabs
             value={pageState}
             onChange={(event, nState) => setPageState(nState)}
+            variant="scrollable"
           >
             <Tab label="Statistics" value={PageStates.STATISTICS} />
             <Tab label="Transactions" value={PageStates.TRANSACTIONS} />
@@ -138,6 +139,12 @@ function App() {
         </div>
       }
 
+      {pageState == PageStates.TRANSACTIONS &&
+        <div className="wrapper">
+          <Transactions userToken={userToken} SERVER_URL={SERVER_URL} />
+        </div>
+      }
+
       {pageState === PageStates.CONVERSION &&
         <div className="wrapper">
           <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
@@ -146,11 +153,6 @@ function App() {
         </div>
       }
 
-      {pageState == PageStates.TRANSACTIONS &&
-        <div className="wrapper">
-          <Transactions userToken={userToken} SERVER_URL={SERVER_URL} />
-        </div>
-      }
     </div>
   );
 }

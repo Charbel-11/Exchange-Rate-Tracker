@@ -75,7 +75,7 @@ def get_stats(number):
         description : The range of days the function needs to work on. 7 means the last week ...
     responses:
       200:
-        description: Returns stats as Maximum, Median, Stdev, Mode, and Variance
+        description: Returns stats as Maximum, Median, Stdev, Mode, and Variance. It also shows the predicition of the next usd_to_lbp transaction rate as well as lbp_to_usd
 
       400:
         description : The input is invalid. Make sure you have passed a number in the path.
@@ -96,16 +96,31 @@ def get_stats(number):
     # Dictionary to store the stats calculated
     stats = {}
 
-    stats["max_usd_to_lbp"] = max(usd_numbers)
-    stats["max_lbp_to_usd"] = max(lbp_numbers)
-    stats["median_usd_to_lbp"] = statistics.median(usd_numbers)
-    stats["median_lbp_to_usd"] = statistics.median(lbp_numbers)
-    stats["stdev_usd_to_lbp"] = statistics.stdev(usd_numbers)
-    stats["stdev_lbp_to_usd"] = statistics.stdev(lbp_numbers)
-    stats["mode_usd_to_lbp"] = statistics.mode(usd_numbers)
-    stats["mode_lbp_to_usd"] = statistics.mode(lbp_numbers)
-    stats["variance_usd_to_lbp"] = statistics.variance(usd_numbers)
-    stats["variance_lbp_to_usd"] = statistics.variance(lbp_numbers)
+    if(len(usd_numbers) > 0):
+        stats["max_usd_to_lbp"] = max(usd_numbers)
+        stats["median_usd_to_lbp"] = statistics.median(usd_numbers)
+        stats["stdev_usd_to_lbp"] = statistics.stdev(usd_numbers)
+        stats["mode_usd_to_lbp"] = statistics.mode(usd_numbers)
+        stats["variance_usd_to_lbp"] = statistics.variance(usd_numbers)
+    else :
+        stats["max_usd_to_lbp"] = -1
+        stats["median_usd_to_lbp"] = -1
+        stats["stdev_usd_to_lbp"] = -1
+        stats["mode_usd_to_lbp"] = -1
+        stats["variance_usd_to_lbp"] = -1
+
+    if(len(lbp_numbers) > 0):
+        stats["max_lbp_to_usd"] = max(lbp_numbers)
+        stats["median_lbp_to_usd"] = statistics.median(lbp_numbers)
+        stats["stdev_lbp_to_usd"] = statistics.stdev(lbp_numbers)
+        stats["mode_lbp_to_usd"] = statistics.mode(lbp_numbers)
+        stats["variance_lbp_to_usd"] = statistics.variance(lbp_numbers)
+    else:
+        stats["max_lbp_to_usd"] = -1
+        stats["median_lbp_to_usd"] = -1
+        stats["stdev_lbp_to_usd"] = -1
+        stats["mode_lbp_to_usd"] = -1
+        stats["variance_lbp_to_usd"] = -1
 
     data = []
     for i in range(len(usd_numbers)):
@@ -117,8 +132,8 @@ def get_stats(number):
         data2.append([i,lbp_numbers[i]])
     res2 = predict_rate(data2)
 
-    stats["predict_usd_to_lbp"] = res1
-    stats["predict_lbp_to_usd"] = res2
+    stats["predict_usd_to_lbp"] = max(res1,0)
+    stats["predict_lbp_to_usd"] = max(res2,0)
 
 
     return jsonify(stats)
