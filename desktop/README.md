@@ -1,5 +1,8 @@
 # Frontend - Desktop
 
+## About
+This is EECE 430L project's Desktop Frontend. Developped by Maria Mattar with the help of the instructor Mohammad Chehab and my teammates Charbel Chucri, Hussein Jaber, and Omar Khodr
+
 ## Technologies and Libraries
 * The project was built using IntelliJ IDEA 
 * JavaFx SDK 11.0.2 
@@ -21,3 +24,5 @@ It was used in the Add Transaction section, for the autocompletion feature in th
 * Add to your VM the following  `--add-exports javafx.base/com.sun.javafx.event=ALL-UNNAMED`
 
 ### Step 3 : Run the project
+
+## Project Structure (TODO)
