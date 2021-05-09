@@ -29,6 +29,9 @@ def decode_token(token):
     return payload['sub']
 
 def predict_rate(data):
+    print(len(data))
+    if(len(data) == 0):
+        return 0
     X = np.array(data)[:,0].reshape(-1,1)
     y = np.array(data)[:,1].reshape(-1,1)
     to_predict_x= len(data)
