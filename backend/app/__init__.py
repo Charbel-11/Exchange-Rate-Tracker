@@ -14,7 +14,9 @@ def create_app():
     CORS(app)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Arsenal.123@localhost:3306/exchange'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234567qW!@localhost:3306/exchange'
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:lobster@localhost:3306/exchange'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql@localhost:3306/exchange'
 
     db.init_app(app)
     ma.init_app(app)
