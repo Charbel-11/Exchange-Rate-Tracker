@@ -75,7 +75,7 @@ def get_stats(number):
         description : The range of days the function needs to work on. 7 means the last week ...
     responses:
       200:
-        description: Returns stats as Maximum, Median, Stdev, Mode, and Variance
+        description: Returns stats as Maximum, Median, Stdev, Mode, and Variance. It also shows the predicition of the next usd_to_lbp transaction rate as well as lbp_to_usd
 
       400:
         description : The input is invalid. Make sure you have passed a number in the path.
