@@ -25,3 +25,8 @@ The statistics section displays a graph that plots the daily average exchange US
 
 ### Exchange Rate Calculator
 The calculator allows the user to convert a specific amount of a given currency (LBP or USD) to the other at the exchange rate shown on the main view (USD/LBP exchange rates averaged over the last three days).
+
+### Architecture
+Below is a simple diagram that shows that whole system architecture. Feel free to read more about every platform used in their corresponding Readme.md file
+
+![alt text](https://github.com/OmarKhodr/exchange-rate/blob/main/Archi.PNG?raw=true)
