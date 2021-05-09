@@ -138,6 +138,12 @@ function App() {
         </div>
       }
 
+      {pageState == PageStates.TRANSACTIONS &&
+        <div className="wrapper">
+          <Transactions userToken={userToken} SERVER_URL={SERVER_URL} />
+        </div>
+      }
+
       {pageState === PageStates.CONVERSION &&
         <div className="wrapper">
           <ExchangeRates SERVER_URL={SERVER_URL} setRates={setRates} />
@@ -146,11 +152,6 @@ function App() {
         </div>
       }
 
-      {pageState == PageStates.TRANSACTIONS &&
-        <div className="wrapper">
-          <Transactions userToken={userToken} SERVER_URL={SERVER_URL} />
-        </div>
-      }
     </div>
   );
 }
