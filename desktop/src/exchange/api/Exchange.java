@@ -22,6 +22,17 @@ public interface Exchange {
     @GET("/transaction")
     Call<List<Transaction>> getTransactions(@Header("Authorization") String authorization);
 
+    @POST("/userTransaction/{username}")
+    Call<Object> addUserTransaction(@Body Transaction transaction, @Header("Authorization") String authorization,
+                                @Path("username")String username);
+
+
+    @GET("/userTransactions")
+    Call<List<Transaction>> getUserTransactions(@Header("Authorization") String authorization);
+
+    @GET("/users")
+    Call<List<User>> getUsers(@Header("Authorization") String authorization);
+
     @GET("/stats/{numberOfDays}")
     Call<Stats> getStats(@Path("numberOfDays")Integer number);
 
@@ -30,4 +41,5 @@ public interface Exchange {
 
     @GET("/graph/lbp_to_usd/{numberOfDays}")
     Call<List<GraphPoint>> getLbpToUsdGraph(@Path("numberOfDays")Integer number);
+
 }

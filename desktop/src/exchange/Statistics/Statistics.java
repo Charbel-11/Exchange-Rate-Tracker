@@ -1,20 +1,20 @@
-package exchange.Statistics;
+package exchange.statistics;
 
 import exchange.api.ExchangeService;
+import exchange.api.helperClasses.StatTableObj;
 import exchange.api.models.GraphPoint;
 import exchange.api.models.Stats;
-import exchange.api.helperClasses.StatTableObj;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.SwipeEvent;
-import javafx.scene.input.ZoomEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,26 +28,21 @@ public class Statistics implements Initializable {
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
 
+    public ChoiceBox numberOfDays;
+
     public TableColumn<StatTableObj, String> stats;
     public TableColumn<StatTableObj, Float> lbpToUsd;
     public TableColumn<StatTableObj, Float> usdToLbp;
     public TableView tableView;
 
+    private Integer getNumDays(){
+        String numDaysStr = (String) numberOfDays.getValue();
+        Integer numDays = Integer.parseInt(numDaysStr.substring(5, 7));
+        return numDays;
+    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        xAxis.setLabel("Date");
-        yAxis.setLabel("Rate");
-
-        stats.setCellValueFactory(new PropertyValueFactory<StatTableObj, String>("statName"));
-        lbpToUsd.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("lbpToUsd"));
-        usdToLbp.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("usdToLbp"));
-
-        //TODO if time, fix colors
-
-        //TODO: fix number of days
-        Integer numDays = 30; //Integer.parseInt(numberOfDays.getText());
+    private void fetchGraphs() {
+        Integer numDays = getNumDays();
 
         //USD to LBP Rates
         ExchangeService.exchangeApi().getUsdToLbpGraph(numDays).enqueue(new Callback<List<GraphPoint>>() {
@@ -82,6 +77,10 @@ public class Statistics implements Initializable {
             @Override
             public void onFailure(Call<List<GraphPoint>> call, Throwable throwable) { }
         });
+    }
+
+    private void fetchStats() {
+        Integer numDays = getNumDays();
 
         // Get the statistics
         ExchangeService.exchangeApi().getStats(numDays).enqueue(new Callback<Stats>() {
@@ -96,11 +95,27 @@ public class Statistics implements Initializable {
         });
     }
 
-    //TODO: support those if you have time
-    public void onSwipeRightHandler(SwipeEvent swipeEvent) {
-
+    public void fetchStatistics(ActionEvent actionEvent) {
+        graph.getData().clear();
+        fetchStats();
+        fetchGraphs();
     }
 
-    public void onZoomHandler(ZoomEvent zoomEvent) {
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        stats.setCellValueFactory(new PropertyValueFactory<StatTableObj, String>("statName"));
+        lbpToUsd.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("lbpToUsd"));
+        usdToLbp.setCellValueFactory(new PropertyValueFactory<StatTableObj, Float>("usdToLbp"));
+
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Rate");
+
+
+        numberOfDays.setValue("Last 30 Days");
+        graph.getData().clear();
+        //TODO if time, fix colors
     }
+
 }

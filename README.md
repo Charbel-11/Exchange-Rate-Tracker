@@ -1,5 +1,11 @@
 # Currency Exchange Rate
 EECE 430L Project developed for Web, Desktop and iOS.
+Supervised by Dr. Mohamad Chehab.
+Developed by:
+- Hussein Jaber
+- Maria Mattar
+- Charbel Chucri
+- Omar Khodr.
 
 ## Functional Documentation
 

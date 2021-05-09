@@ -69,8 +69,6 @@ public class Parent implements Initializable, OnPageCompleteListener{
 
     private void updateNavigation() {
         boolean authenticated = Authentication.getInstance().getToken() != null;
-        transactionButton.setManaged(authenticated);
-        transactionButton.setVisible(authenticated);
         loginButton.setManaged(!authenticated);
         loginButton.setVisible(!authenticated);
         registerButton.setManaged(!authenticated);
@@ -91,7 +89,7 @@ public class Parent implements Initializable, OnPageCompleteListener{
                 case TRANSACTIONS -> "/exchange/transactions/transactions.fxml";
                 case LOGIN -> "/exchange/login/login.fxml";
                 case REGISTER -> "/exchange/register/register.fxml";
-                case STATS -> "/exchange/Statistics/Statistics.fxml";
+                case STATS -> "/exchange/statistics/Statistics.fxml";
                 default -> null;
             };
         }

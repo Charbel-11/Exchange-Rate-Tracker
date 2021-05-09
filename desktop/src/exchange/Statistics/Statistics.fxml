@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.lang.Integer?>
+<?import java.lang.String?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="exchange.Statistics.Statistics"
+            fx:controller="exchange.statistics.Statistics"
             prefHeight="400.0" prefWidth="600.0">
 
     <BorderPane prefHeight="300.0" prefWidth="400.0"
                 AnchorPane.topAnchor="4">
         <center>
-            <LineChart fx:id="graph" title="Rate Comparison Chart"  BorderPane.alignment="CENTER"
-                        onSwipeRight="#onSwipeRightHandler"
-                        onZoom="#onZoomHandler">
+            <LineChart fx:id="graph" title="Rate Comparison Chart"  BorderPane.alignment="CENTER">
                 <xAxis>
                     <CategoryAxis fx:id="xAxis" side="BOTTOM"
                                     animated="false"/>
@@ -25,10 +25,23 @@
                     <NumberAxis fx:id="yAxis" side="LEFT"
                                 animated="false" />
                 </yAxis>
-
             </LineChart>
         </center>
     </BorderPane>
+
+    <ChoiceBox fx:id="numberOfDays"
+               AnchorPane.leftAnchor="300"
+               AnchorPane.rightAnchor="50"
+               AnchorPane.topAnchor="8"
+               onAction="#fetchStatistics">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Last 30 Days"/>
+                <String fx:value="Last 60 Days"/>
+                <String fx:value="Last 90 Days"/>
+            </FXCollections>
+        </items>
+    </ChoiceBox>
 
     <TableView
             fx:id="tableView"

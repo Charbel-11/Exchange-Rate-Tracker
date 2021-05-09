@@ -8,6 +8,7 @@ import exchange.api.models.Token;
 import exchange.api.models.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,7 +16,7 @@ import retrofit2.Response;
 
 public class Register implements PageCompleter {
     public TextField usernameTextField;
-    public TextField passwordTextField;
+    public PasswordField passwordTextField;
     private OnPageCompleteListener onPageCompleteListener;
 
     public void register(ActionEvent actionEvent) {
