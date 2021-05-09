@@ -25,7 +25,7 @@ The statistics section displays a graph that plots the daily average exchange US
 A table that lists all past transactions is also displayed. The table can be filtered to only show transactions done between users.
 
 ### Exchange Rate Calculator
-The calculator allows the user to convert a specific amount of a given currency (LBP or USD) to the other at the exchange rate shown on the main view (USD/LBP exchange rates averaged over the last three days).
+The calculator allows the user to convert a specific amount of a given currency (LBP or USD) to the other at the exchange rate shown on the main view (USD/LBP exchange rates averaged over the last *N* days).
 
 ### Architecture
 Below is a simple diagram that shows that whole system architecture. Feel free to read more about every platform used in their corresponding Readme.md file
