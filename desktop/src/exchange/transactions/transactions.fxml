@@ -1,30 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import java.lang.String?>
+<?import java.text.*?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="exchange.transactions.Transactions"
+            stylesheets="/exchange/transactions/transactions.css"
             prefHeight="400.0" prefWidth="600.0">
+
+    <Label styleClass="value-label" text="Your Transactions"
+           AnchorPane.leftAnchor="150"
+           AnchorPane.topAnchor="4"/>
+
+    <Button fx:id="userTransactionsButton"
+            text="Users Transactions"
+            AnchorPane.leftAnchor="320"
+            AnchorPane.rightAnchor="10"
+            AnchorPane.topAnchor="8"
+            onAction="#fetchUserTransactions"/>
+
+    <Button fx:id="allTransactionsButton"
+            text="All Transactions"
+            AnchorPane.leftAnchor="320"
+            AnchorPane.rightAnchor="10"
+            AnchorPane.topAnchor="8"
+            onAction="#fetchTransactions"/>
 
     <TableView
             fx:id="tableView"
-            AnchorPane.bottomAnchor="4"
-            AnchorPane.leftAnchor="4"
-            AnchorPane.rightAnchor="4"
-            AnchorPane.topAnchor="4">
+            AnchorPane.bottomAnchor="200"
+            AnchorPane.leftAnchor="10"
+            AnchorPane.rightAnchor="10"
+            AnchorPane.topAnchor="50">
+
         <columns>
             <TableColumn text="USD Amount" fx:id="usdAmount"
-                         prefWidth="150"/>
+                         prefWidth="77"/>
 
             <TableColumn text="LBP Amount" fx:id="lbpAmount"
-                         prefWidth="150"/>
+                         prefWidth="78"/>
 
-            <TableColumn text="Transaction Date" fx:id="transactionDate"
-                         prefWidth="150"/>
+            <TableColumn text="Type" fx:id="transactionTypeCol"
+                         prefWidth="70"/>
+
+            <TableColumn text="Sent To" fx:id="otherUserCol"
+                         prefWidth="70"/>
+
+            <TableColumn text="Date" fx:id="transactionDate"
+                         prefWidth="130"/>
         </columns>
     </TableView>
+
+    <Label styleClass="value-label" text="Add a new Transaction"
+           AnchorPane.leftAnchor="120"
+           AnchorPane.topAnchor="290"/>
+
+    <TextField fx:id="usdTextField"
+               AnchorPane.leftAnchor="10"
+               AnchorPane.rightAnchor="250"
+               AnchorPane.topAnchor="330">
+        <promptText>USD Amount</promptText>
+    </TextField>
+
+    <TextField fx:id="lbpTextField"
+               AnchorPane.leftAnchor="220"
+               AnchorPane.rightAnchor="10"
+               AnchorPane.topAnchor="330">
+        <promptText>LBP Amount</promptText>
+    </TextField>
+
+    <TextField fx:id="otherUser"
+               AnchorPane.leftAnchor="10"
+               AnchorPane.rightAnchor="250"
+               AnchorPane.topAnchor="360">
+        <promptText>Send to User</promptText>
+    </TextField>
+
+    <ChoiceBox fx:id="transactionType"
+               AnchorPane.leftAnchor="10"
+               AnchorPane.rightAnchor="360"
+               AnchorPane.topAnchor="400">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Buy USD"/>
+                <String fx:value="Sell USD"/>
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+
+    <Button text="Add Transaction"
+            AnchorPane.leftAnchor="100"
+            AnchorPane.topAnchor="400"
+            onAction="#addTransaction"/>
+
+
+
+
 </AnchorPane>

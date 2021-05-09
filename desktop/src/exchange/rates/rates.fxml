@@ -11,13 +11,13 @@
            GridPane.rowIndex="1"
            GridPane.halignment="CENTER"/>
 
-    <Label styleClass="text-label" text="Choose number of days included in the Exchange Rate"
+    <Label styleClass="text-label" text=""
            GridPane.columnSpan="2"
            textAlignment="CENTER"
            GridPane.rowIndex="2"/>
 
-    <TextField fx:id="numberOfDays" text="3" GridPane.columnIndex="0" GridPane.rowIndex="3">
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField fx:id="numberOfDays" GridPane.columnIndex="0" GridPane.rowIndex="3">
+        <promptText>Past days included (default: 3) </promptText>
     </TextField>
 
     <Button text="Get Rates" GridPane.columnIndex="1" GridPane.rowIndex="3"
@@ -40,41 +40,11 @@
     <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
                GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
-
-
-    <TextField fx:id="usdTextField" text="enter USD value" GridPane.columnIndex="0" GridPane.rowIndex="7">
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-    </TextField>
-
-    <TextField fx:id="lbpTextField" text="enter LBP value" GridPane.columnIndex="0" GridPane.rowIndex="8">
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="8"/>
-    </TextField>
-
-    <ChoiceBox GridPane.columnIndex="1" GridPane.rowIndex="7"
-               fx:id="transactionType">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Buy USD"/>
-                <String fx:value="Sell USD"/>
-            </FXCollections>
-        </items>
-    </ChoiceBox>
-
-    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="9"
-            onAction="#addTransaction"/>
-
-
-
-    <Separator orientation="HORIZONTAL" GridPane.RowIndex="10"
-               GridPane.columnIndex="0" GridPane.columnSpan="2"/>
-
-
-
     <Label styleClass="value-label" text="Exchange Calculator" GridPane.columnIndex="0"
            GridPane.rowIndex="11"/>
 
-    <TextField fx:id="calculatorInput" text="Amount" GridPane.columnIndex="0" GridPane.rowIndex="12">
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+    <TextField fx:id="calculatorInput" GridPane.columnIndex="0" GridPane.rowIndex="12">
+        <promptText>Amount to convert</promptText>
     </TextField>
 
     <Label fx:id="calculatorOutputLabel" styleClass="value" text="" GridPane.columnSpan="2"

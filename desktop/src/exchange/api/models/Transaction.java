@@ -19,7 +19,11 @@ public class Transaction {
     @SerializedName("added_date")
     String addedDate;
 
-    public Transaction(Float usdAmount, Float lbpAmount, Boolean usdToLbp) {
+    @SerializedName("user_name")
+    String otherUser;
+
+    public Transaction(String username, Float usdAmount, Float lbpAmount, Boolean usdToLbp) {
+        this.otherUser = username;
         this.usdAmount = usdAmount;
         this.lbpAmount = lbpAmount;
         this.usdToLbp = usdToLbp;
@@ -34,7 +38,29 @@ public class Transaction {
     }
 
     public String getAddedDate() {
-        return addedDate;
+        if(addedDate.charAt(2) == ' '){
+            return addedDate;
+        }
+        String formattedDate =  new String(addedDate.substring(9, 10) + " - " +
+                                                    addedDate.substring(5, 7) + " - " +
+                                                    addedDate.substring(0, 4));
+        return formattedDate;
     }
+
+    public String getType() {
+        if(usdToLbp == true){
+            return "Sell USD";
+        }
+        return "Buy USD";
+    }
+
+    public String getOtherUser(){
+        return otherUser;
+    }
+
+    public void setOtherUser(String username){
+        this.otherUser = username;
+    }
+
 
 }

@@ -10,5 +10,6 @@
     <orderEntry type="library" name="com.squareup.retrofit2:retrofit:2.9.0" level="project" />
     <orderEntry type="library" name="com.squareup.retrofit2:converter-gson:2.9.0" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="controlsfx-8.40.11" level="project" />
   </component>
 </module>
