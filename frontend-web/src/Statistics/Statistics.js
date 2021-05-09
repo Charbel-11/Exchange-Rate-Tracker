@@ -17,8 +17,8 @@ export default function Statistics({ SERVER_URL }) {
     let [statsDayCnt, setStatsDayCnt] = useState(30);
     let [graphDayCnt, setGraphDayCnt] = useState(30);
 
-    function createData(name, max, median, stdev, mode, variance) {
-        return { name, max, median, stdev, mode, variance };
+    function createData(name, max, median, stdev, mode, variance, prediction) {
+        return { name, max, median, stdev, mode, variance, prediction };
     }
 
     function fetchStats() {
@@ -29,10 +29,12 @@ export default function Statistics({ SERVER_URL }) {
                     [
                         createData("USD to LBP", data.max_usd_to_lbp.toFixed(2),
                             data.median_usd_to_lbp.toFixed(2), data.stdev_usd_to_lbp.toFixed(2),
-                            data.mode_usd_to_lbp.toFixed(2), data.variance_usd_to_lbp.toFixed(2)),
+                            data.mode_usd_to_lbp.toFixed(2), data.variance_usd_to_lbp.toFixed(2),
+                            data.predict_usd_to_lbp.toFixed(2)),
                         createData("LBP to USD", data.max_lbp_to_usd.toFixed(2),
                             data.median_lbp_to_usd.toFixed(2), data.stdev_lbp_to_usd.toFixed(2),
-                            data.mode_lbp_to_usd.toFixed(2), data.variance_lbp_to_usd.toFixed(2))
+                            data.mode_lbp_to_usd.toFixed(2), data.variance_lbp_to_usd.toFixed(2),
+                            data.predict_lbp_to_usd.toFixed(2))
                     ]
                 )
             });
@@ -113,6 +115,7 @@ export default function Statistics({ SERVER_URL }) {
                             <TableCell align="right">Stdev</TableCell>
                             <TableCell align="right">Mode</TableCell>
                             <TableCell align="right">Variance</TableCell>
+                            <TableCell align="right">Prediction</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -126,6 +129,7 @@ export default function Statistics({ SERVER_URL }) {
                                 <TableCell align="right">{row.stdev}</TableCell>
                                 <TableCell align="right">{row.mode}</TableCell>
                                 <TableCell align="right">{row.variance}</TableCell>
+                                <TableCell align="right">{row.prediction}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

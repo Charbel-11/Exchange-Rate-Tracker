@@ -33,7 +33,7 @@ export default function ExchangeRates({ SERVER_URL, setRates }) {
 
       <Typography variant="inherit">Days Considered:
       <Input
-          style={{ width: "10%", marginLeft: 10 }}
+          style={{ width: "8%", marginLeft: 10 }}
           value={daysConsidered}
           onChange={({ target: { value } }) => setDaysConsidered(value)}
           type="number" />
