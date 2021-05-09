@@ -114,8 +114,8 @@ def get_stats(number):
 
     data2 = []
     for i in range(len(lbp_numbers)):
-        data.append([i,lbp_numbers[i]])
-    res2 = predict_rate(data)
+        data2.append([i,lbp_numbers[i]])
+    res2 = predict_rate(data2)
 
     stats["predict_usd_to_lbp"] = res1
     stats["predict_lbp_to_usd"] = res2
