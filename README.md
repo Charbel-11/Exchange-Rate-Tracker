@@ -18,7 +18,7 @@ The app supports performing transactions anonymously or through an account which
 Adding a transaction is done by specifying the USD and LBP amounts, the direction of the transaction as well as if it is directed to a specific user (this option is only available when the user is logged in).
 
 ### Exchange Rates
-See the USD/LBP exchange rates (how much LBP to buy/sell 1 USD) averaged over the last *N* days where *N* is specified by the user.
+See the USD/LBP exchange rates (how much LBP to buy/sell 1 USD) averaged over the last *N* days where *N* is specified by the user (it is 3 by default).
 
 ### Statistics
 The statistics section displays a graph that plots the daily average exchange USD/LBP rates over variable ranges (30, 60 or 90 days) as well as detailed statistics which display the max, average and standard devitation of both exchange rates from the last 30/60/90 days as well as a prediction of the next transaction's value.
