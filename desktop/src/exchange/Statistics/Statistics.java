@@ -87,7 +87,7 @@ public class Statistics implements Initializable {
 
     /**
      * Responds to the "numberOfDaysStats" ChoiceBox onAction Event
-     * - Fetches the Statistics corresponding to the daily exchange rate for selling and buying USD rates for the past "numberOfDaysStats" Days
+     * - Fetches the statistics corresponding to the daily exchange rate for selling and buying USD rates for the past "numberOfDaysStats" Days
      * - Using the StatTableObj helper class, the response.body() Stat object is converted to an intermediate format for the TableView
      * API Call Parameters:
      *      - String: numberOfDaysStats.value
@@ -120,8 +120,10 @@ public class Statistics implements Initializable {
         xAxis.setLabel("Date");
         yAxis.setLabel("Rate");
 
-        numberOfDaysStats.setValue("Last 30 Days");
+//        numberOfDaysStats.setValue("Last 30 Days");
 //        numberOfDaysGraph.setValue("Last 30 Days");
+        fetchStats(null);
+        fetchGraphs(null);
     }
 
 }

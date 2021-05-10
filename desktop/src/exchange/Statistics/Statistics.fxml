@@ -18,7 +18,7 @@
     <BorderPane prefHeight="280.0" prefWidth="380.0"
                 AnchorPane.topAnchor="4">
         <center>
-            <LineChart fx:id="graph" title="Rate Comparison Chart"  BorderPane.alignment="CENTER">
+            <LineChart fx:id="graph" title="Rates Over Time"  BorderPane.alignment="CENTER">
                 <xAxis>
                     <CategoryAxis fx:id="xAxis" side="BOTTOM"
                                     animated="false"/>
@@ -35,7 +35,8 @@
                AnchorPane.leftAnchor="300"
                AnchorPane.rightAnchor="50"
                AnchorPane.topAnchor="8"
-               onAction="#fetchGraphs">
+               onAction="#fetchGraphs"
+               value="Last 30 Days">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Last 30 Days"/>
@@ -55,7 +56,8 @@
                AnchorPane.leftAnchor="310"
                AnchorPane.rightAnchor="50"
                AnchorPane.topAnchor="280"
-               onAction="#fetchStats">
+               onAction="#fetchStats"
+               value="Last 30 Days">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Last 30 Days"/>

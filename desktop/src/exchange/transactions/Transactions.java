@@ -131,12 +131,16 @@ public class Transactions implements Initializable {
         String userToken = Authentication.getInstance().getToken();
         String authHeader = userToken != null ? "Bearer " + userToken : null;
 
-        if(otherUser.getText() == "Send to User" && otherUser.getText() == ""){
+        if(otherUser.getText() == "Login to send Transactions to users" || otherUser.getText() == "Send to User" || otherUser.getText() == "" || otherUser.getText() == null){
             transaction.setOtherUser("-");
             ExchangeService.exchangeApi().addTransaction(transaction, authHeader).enqueue(new Callback<>() {
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     fetchTransactions();
+                    lbpTextField.setText("");
+                    usdTextField.setText("");
+                    otherUser.setText("");
+
                 }
 
                 @Override
@@ -148,6 +152,9 @@ public class Transactions implements Initializable {
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     fetchTransactions();
+                    lbpTextField.setText("");
+                    usdTextField.setText("");
+                    otherUser.setText("");
                 }
                 @Override
                 public void onFailure(Call<Object> call, Throwable throwable) {
@@ -196,6 +203,7 @@ public class Transactions implements Initializable {
         transactionDate.setCellValueFactory(new PropertyValueFactory<Transaction, String>("addedDate"));
         transactionTypeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("type"));
         otherUserCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("otherUser"));
+
 
         transactionType.setValue("Buy USD");
         fetchTransactions();
