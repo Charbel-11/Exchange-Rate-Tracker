@@ -42,7 +42,9 @@ View controller used for both login and signup functionality with parameters to 
 ### `DetailedStatisticsViewController.swift`
 View controller that shows `StatisticsView.swift` as the header view for the transactions table view that displays past transactions.
 
-
+# App Architecture
+This is a visual representation of the MVC architecture the app is based on to de-couple business logic and UI components.
+![MVC Architecture](https://github.com/OmarKhodr/exchange-rate/blob/main/ios/app-architecture.png)
 
 
 
