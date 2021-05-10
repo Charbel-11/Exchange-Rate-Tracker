@@ -87,6 +87,7 @@ public class Rates implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        conversionType.setValue("USD");
         fetchRates();
     }
 }

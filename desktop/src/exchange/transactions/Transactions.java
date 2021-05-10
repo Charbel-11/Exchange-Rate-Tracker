@@ -197,6 +197,7 @@ public class Transactions implements Initializable {
         transactionTypeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("type"));
         otherUserCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("otherUser"));
 
+        transactionType.setValue("Buy USD");
         fetchTransactions();
         fetchUsernames();
     }

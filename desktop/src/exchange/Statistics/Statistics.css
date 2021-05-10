@@ -2,14 +2,11 @@
     -fx-font-size: 18px;
 }
 
-.graph {
-    -fx-padding: 10px;
-}
 .graph-content {
     -fx-padding: 30px;
 }
 
-.graph-legend {
+.ch-legend {
     -fx-background-color:  transparent;
     -fx-padding: 20px;
 }

@@ -45,6 +45,8 @@ public class Statistics implements Initializable {
      *              - Example: "Past dd Days"
      **/
     public void fetchGraphs(ActionEvent actionEvent) {
+        graph.getData().removeAll();
+        graph.getData().clear();
         String numDaysStr = (String) numberOfDaysGraph.getValue();
         Integer numDays = Integer.parseInt(numDaysStr.substring(5, 7));
 
@@ -58,7 +60,6 @@ public class Statistics implements Initializable {
                         series.getData().add(new XYChart.Data(point.date.replace("2021", ""), point.rate));
                     }
                     series.setName("USD to LBP rates");
-                    graph.getData().clear();
                     graph.getData().add(series);
                 });
             }
@@ -120,7 +121,7 @@ public class Statistics implements Initializable {
         yAxis.setLabel("Rate");
 
         numberOfDaysStats.setValue("Last 30 Days");
-        numberOfDaysGraph.setValue("Last 30 Days");
+//        numberOfDaysGraph.setValue("Last 30 Days");
     }
 
 }
