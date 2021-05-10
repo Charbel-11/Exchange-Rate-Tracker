@@ -41,7 +41,7 @@ class GraphView: UIView {
         lineChartView.xAxis.labelTextColor = .label
         lineChartView.xAxis.axisLineColor = .label
         
-//        lineChartView.animate(xAxisDuration: 2.5)
+//        lineChartView.animate(xAxisDuration: 1)
 
         self.addSubview(lineChartView)
         self.addSubview(segmentedControl)

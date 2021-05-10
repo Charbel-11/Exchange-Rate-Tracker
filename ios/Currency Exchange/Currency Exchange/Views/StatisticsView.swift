@@ -8,6 +8,8 @@
 import UIKit
 
 class StatisticsView: UIView {
+    
+    var daysSegmentedControl: UISegmentedControl! = nil
 
     var sellUsdLabels = [UILabel]()
     var buyUsdLabels = [UILabel]()
@@ -31,6 +33,10 @@ class StatisticsView: UIView {
 
 extension StatisticsView {
     private func setupSubviews() {
+        daysSegmentedControl = UISegmentedControl(items: ["90 days", "60 days", "30 days"])
+        daysSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        daysSegmentedControl.selectedSegmentIndex = 2
+        
         let types = ["Max", "Med", "Stdev"]
         
         for i in 0..<4 {
@@ -61,8 +67,7 @@ extension StatisticsView {
             buyUsdLabels.append(label)
         }
         
-        let segmentItems = ["All Transactions", "Between Users"]
-        segmentedControl = UISegmentedControl(items: segmentItems)
+        segmentedControl = UISegmentedControl(items: ["All Transactions", "Between Users"])
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.isHidden = authentication.getToken() == nil
@@ -98,11 +103,16 @@ extension StatisticsView {
         hStack.axis = .horizontal
         hStack.spacing = 16
         
+        self.addSubview(daysSegmentedControl)
         self.addSubview(hStack)
         self.addSubview(segmentedControl)
         
         NSLayoutConstraint.activate([
-            hStack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
+            daysSegmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            daysSegmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            daysSegmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            
+            hStack.topAnchor.constraint(equalTo: daysSegmentedControl.bottomAnchor, constant: 20),
             hStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
 //            hStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
 //            hStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)

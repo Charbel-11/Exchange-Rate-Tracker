@@ -12,3 +12,4 @@
 The backend component also needs to be running locally since it currently isn't deployed, refer to the corresponding README for running instructions.
 
 # TODO: Design Doc
+![Project File Structure](https://github.com/OmarKhodr/exchange-rate/tree/main/ios/project-structure.png)

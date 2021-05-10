@@ -13,6 +13,8 @@ class ExchangeViewController: UIViewController {
     var registerButton: UIBarButtonItem! = nil
     var logoutButton: UIBarButtonItem! = nil
     
+    let daysTextField = BoldBorderlessTextField(placeholder: "Days")
+    
     let buyUsdLabel = UILabel()
     let buyUsdAmountLabel = UILabel()
     
@@ -68,6 +70,9 @@ extension ExchangeViewController {
 // MARK: Subviews Config
 extension ExchangeViewController {
     private func setupSubviews() {
+        daysTextField.setupForPriceContent()
+        daysTextField.delegate = self
+        
         buyUsdLabel.text = "Buy USD"
         buyUsdLabel.font = .preferredFont(forTextStyle: .title2)
         buyUsdAmountLabel.font = .preferredFont(forTextStyle: .subheadline)
@@ -88,18 +93,27 @@ extension ExchangeViewController {
 }
 
 
+// MARK: TextField Delegate
+extension ExchangeViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+
 // MARK: Layout
 extension ExchangeViewController {
     private func setupLayout() {
         let buyVStack = createVStack([buyUsdLabel, buyUsdAmountLabel])
         let sellVStack = createVStack([sellUsdLabel, sellUsdAmountLabel])
         
-        let rateHStack = UIStackView(arrangedSubviews: [buyVStack, sellVStack])
+        let rateHStack = UIStackView(arrangedSubviews: [daysTextField, buyVStack, sellVStack])
         rateHStack.translatesAutoresizingMaskIntoConstraints = false
         rateHStack.axis = .horizontal
         rateHStack.distribution = .fillEqually
         rateHStack.alignment = .top
-        rateHStack.spacing = 60
+        rateHStack.spacing = 25
         
         let separator = UIView()
         separator.backgroundColor = .quaternaryLabel
@@ -192,9 +206,14 @@ extension ExchangeViewController {
 // MARK: Actions
 extension ExchangeViewController {
     private func setupTargets() {
+        daysTextField.addTarget(self, action: #selector(daysChanged), for: .editingChanged)
         calculatorButton.addTarget(self, action: #selector(calculatorTapped(_:)), for: .touchUpInside)
         statisticsButton.addTarget(self, action: #selector(pastTransactionsTapped(_:)), for: .touchUpInside)
         graphView.segmentedControl.addTarget(self, action: #selector(graphSegmentedControlValueChanged(_:)), for: .valueChanged)
+    }
+    
+    @objc private func daysChanged() {
+        fetchRates()
     }
     
     @objc private func addTransactionTapped() {
@@ -223,7 +242,10 @@ extension ExchangeViewController {
 // MARK: Fetching Exchange Rates
 extension ExchangeViewController {
     private func fetchRates() {
-        let url = URL(string: "\(K.url)/exchangeRate/3")!
+        print("Fetching rates")
+        let days = Int(daysTextField.text ?? "") ?? 3
+        print("\(daysTextField.text) becomes \(days)")
+        let url = URL(string: "\(K.url)/exchangeRate/\(days)")!
         voyage.get(with: url, completion: didFetchRates(exchangeRates:), fail: didFailToFetchRates(error:), bearerToken: authentication.getToken())
     }
     

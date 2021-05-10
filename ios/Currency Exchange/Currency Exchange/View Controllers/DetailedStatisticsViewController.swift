@@ -45,7 +45,7 @@ class DetailedStatisticsViewController: UIViewController {
         statisticsView.translatesAutoresizingMaskIntoConstraints = false
         statisticsView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         // greater height for segmented control in case user is logged in
-        let height: CGFloat = authentication.getToken() == nil ? 150 : 200
+        let height: CGFloat = authentication.getToken() == nil ? 150 : 250
         statisticsView.heightAnchor.constraint(equalToConstant: height).isActive = true
         tableView.tableHeaderView = statisticsView
         
@@ -160,7 +160,12 @@ extension DetailedStatisticsViewController: UITableViewDataSource {
 // MARK: Targets + Actions
 extension DetailedStatisticsViewController {
     private func setupTargets() {
+        statisticsView.daysSegmentedControl.addTarget(self, action: #selector(changedDays(_:)), for: .valueChanged)
         statisticsView.segmentedControl.addTarget(self, action: #selector(changedFilter(_:)), for: .valueChanged)
+    }
+    
+    @objc private func changedDays(_ sender: UISegmentedControl) {
+        fetchStatistics()
     }
     
     @objc private func changedFilter(_ sender: UISegmentedControl) {
@@ -172,7 +177,9 @@ extension DetailedStatisticsViewController {
 // MARK: Statistics
 extension DetailedStatisticsViewController {
     private func fetchStatistics() {
-        voyage.get(with: URL(string: "\(K.url)/stats/30")!,
+        let days: Int = 90 / (statisticsView.daysSegmentedControl.selectedSegmentIndex+1)
+        
+        voyage.get(with: URL(string: "\(K.url)/stats/\(days)")!,
                    completion: didFetchStatistics(statistics:),
                    fail: failFetchStatistics(error:),
                    bearerToken: authentication.getToken())
