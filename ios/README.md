@@ -44,6 +44,8 @@ View controller that shows `StatisticsView.swift` as the header view for the tra
 
 # App Architecture
 This is a visual representation of the MVC architecture the app is based on to de-couple business logic and UI components.
+
+
 ![MVC Architecture](https://github.com/OmarKhodr/exchange-rate/blob/main/ios/app-architecture.png)
 
 
